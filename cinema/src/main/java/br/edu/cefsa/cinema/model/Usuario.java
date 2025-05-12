@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.cefsa.edu.br.hotelaria.model;
+package br.edu.cefsa.cinema.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import jakarta.persistence.Basic;
@@ -15,15 +14,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "TB_USUARIO", schema = "CINEMA")
+@Getter
+@Setter
 
 public class Usuario implements Serializable{
     
+    public Usuario(UUID idPadrao, String nome, String email, String apelido) {
+        this.idPadrao = idPadrao;
+        this.nome = nome;
+        this.email = email;
+        this.apelido = apelido;
+    }
+    
     private static final long serialVersionUID = 1L;
-
+    
     /////////////////////////////////////////////////////////
     @Id
     @Basic(optional = false)
@@ -38,7 +48,7 @@ public class Usuario implements Serializable{
     private String email;
     /////////////////////////////////////////////////////////
     @Column(name = "NICKNAME", nullable = false)
-    private String apelida;
+    private String apelido;
     /////////////////////////////////////////////////////////
 
 
