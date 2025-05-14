@@ -19,17 +19,16 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "TB_USUARIO", schema = "CINEMA")
+@Table(name = "TB_USUARIO")
 @Getter
 @Setter
-
 public class Usuario implements Serializable{
     
-    public Usuario(UUID idPadrao, String nome, String email, String apelido) {
-        this.idPadrao = idPadrao;
+    public Usuario(String nome, String email, String apelido, String senha) {
         this.nome = nome;
         this.email = email;
         this.apelido = apelido;
+        this.senha = senha;
     }
     
     private static final long serialVersionUID = 1L;
@@ -50,7 +49,8 @@ public class Usuario implements Serializable{
     @Column(name = "NICKNAME", nullable = false)
     private String apelido;
     /////////////////////////////////////////////////////////
-
+    @Column(name = "SENHA", nullable = false)
+    private String senha;
 
    
 }
