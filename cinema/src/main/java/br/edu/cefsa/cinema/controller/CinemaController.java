@@ -15,6 +15,6 @@ public class CinemaController {
 
     @GetMapping("/cadastro")
     public String mostrarCadastro() {
-        return "fragments/cadastro"; // caminho dentro da pasta templates
+        return "contas/cadastro"; // caminho dentro da pasta templates
     }
 }
