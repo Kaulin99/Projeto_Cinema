@@ -40,13 +40,13 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/usuarios/login", "/usuarios/cadastro").permitAll()  // libera index, login e cadastro
-                .anyRequest().authenticated()  // qualquer outro requer autenticação
+                .requestMatchers("/", "/usuarios/login", "/usuarios/cadastro", "/css/**", "/js/**","/images/**", "/webjars/**").permitAll()
+                .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/usuarios/login")             // sua página customizada de login
-                .loginProcessingUrl("/usuarios/login")    // url para processar o POST do login
-                .defaultSuccessUrl("/", true)              // para onde vai depois do login com sucesso
+                .loginPage("/usuarios/login")
+                .loginProcessingUrl("/usuarios/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout

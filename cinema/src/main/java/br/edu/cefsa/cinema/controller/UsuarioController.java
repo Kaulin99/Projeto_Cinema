@@ -24,7 +24,7 @@ public class UsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/cadastro")
+    @PostMapping("cadastrar")
     public String cadastro(@ModelAttribute Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioService.salvarUsuario(usuario);
@@ -32,7 +32,7 @@ public class UsuarioController {
     }
 
 
-    @GetMapping("/login")
+    @GetMapping("/logar")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
                             @RequestParam(value = "logout", required = false) String logout,
                             @RequestParam(value = "redirect", required = false) String redirect,
@@ -46,6 +46,6 @@ public class UsuarioController {
         if (redirect != null) {
             model.addAttribute("redirect", redirect);
         }
-        return "usuarios/login";
+        return "/";
     }
 }

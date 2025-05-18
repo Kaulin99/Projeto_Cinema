@@ -15,6 +15,11 @@ public class CinemaController {
 
     @GetMapping("/usuarios/cadastro")
     public String mostrarCadastro() {
-        return "usuarios/cadastro"; // caminho dentro da pasta templates
+        return "usuarios/cadastro"; 
+    }
+
+    @GetMapping("/usuarios/login")
+    public String mostrarLogin() {
+        return "usuarios/login"; 
     }
 }
