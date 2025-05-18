@@ -26,10 +26,11 @@ public class UsuarioController {
 
     @PostMapping("/cadastro")
     public String cadastro(@ModelAttribute Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioService.salvarUsuario(usuario);
-        return "redirect:/usuarios/login";
+        return "redirect:/usuarios/login";  // redireciona para a tela de login
     }
+
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
@@ -45,6 +46,6 @@ public class UsuarioController {
         if (redirect != null) {
             model.addAttribute("redirect", redirect);
         }
-        return "login";
+        return "usuarios/login";
     }
 }

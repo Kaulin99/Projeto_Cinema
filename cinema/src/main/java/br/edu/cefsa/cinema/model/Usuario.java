@@ -30,30 +30,30 @@ public class Usuario implements Serializable {
 
     public Usuario() {}
 
-    public Usuario(String nome, String email, String apelido, String password, Set<Role> roles) {
+    public Usuario(String nome, String email, String apelido, String senha, Set<Role> roles) {
         this.nome = nome;
         this.email = email;
         this.apelido = apelido;
-        this.password = password;
+        this.senha = senha;
         this.roles = roles;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_PADRAO")
+    @Column(name = "id_padrao")
     private UUID idPadrao;
 
-    @Column(name = "Nome", nullable = false, length = 50)
+    @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
-    @Column(name = "Email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "apelido", nullable = false)
     private String apelido;
 
-    @Column(name = "Password", nullable = false)
-    private String password;
+    @Column(name = "senha", nullable = false)
+    private String senha;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tb_usuario_role", joinColumns = @JoinColumn(name = "usuario_id"))
@@ -61,8 +61,8 @@ public class Usuario implements Serializable {
     @Column(name = "role")
     private Set<Role> roles;
 
-    public String getPassword() {
-        return password;
+    public String getSenha() {
+        return senha;
     }
 
     public Set<Role> getRoles() {

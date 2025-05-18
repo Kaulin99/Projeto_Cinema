@@ -1,8 +1,6 @@
 package br.edu.cefsa.cinema.config;
 
-
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,18 +23,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    // Lista de rotas que devem redirecionar para login com parâmetro redirect
-    private static final List<String> PROTECTED_REDIRECT_PATHS = List.of(
-            "/perfil",
-            "/minha-conta",
-            "/carrinho"
-    );
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(
-                "/error",
-                "/favicon.ico"
+            "/error",
+            "/favicon.ico",
+            "/h2-console/**"   // liberar h2 console se estiver usando
         );
     }
 
@@ -48,20 +40,13 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/plataforma/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/usuarios/perfil", "/api/usuarios/perfil/**", "/minha-conta", "/api/carrinho")
-                .authenticated()
-                .requestMatchers(
-                    "/", 
-                    "/usuarios/**", 
-                    "/h2-console"
-                ).permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/", "/usuarios/login", "/usuarios/cadastro").permitAll()  // libera index, login e cadastro
+                .anyRequest().authenticated()  // qualquer outro requer autenticação
             )
             .formLogin(form -> form
-                .loginPage("/usuarios/login") // <- sua rota personalizada de login
-                .loginProcessingUrl("/usuarios/login") // <- para onde o form faz POST
-                .defaultSuccessUrl("/", true) // <- redireciona após login
+                .loginPage("/usuarios/login")             // sua página customizada de login
+                .loginProcessingUrl("/usuarios/login")    // url para processar o POST do login
+                .defaultSuccessUrl("/", true)              // para onde vai depois do login com sucesso
                 .permitAll()
             )
             .logout(logout -> logout
@@ -95,5 +80,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
 }

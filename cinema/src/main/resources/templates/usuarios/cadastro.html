@@ -10,7 +10,9 @@
     </div>
 
     <h1>Cadastro de Usuário</h1>
-    <form action="usuarios/login" method="post">
+    <form action="/usuarios/cadastro" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>  
+
         <label>Nome:</label><br>
         <input type="text" name="nome" required><br>
 
@@ -21,7 +23,7 @@
         <input type="text" name="apelido" required><br>
 
         <label>Senha:</label><br>
-        <input type="password" name="password" required><br><br>
+        <input type="password" name="senha" required><br><br>
 
         <button type="submit">cadastro</button>
     </form>
