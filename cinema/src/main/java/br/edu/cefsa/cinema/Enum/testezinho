@@ -1,3 +1,54 @@
+package br.edu.cefsa.cinema.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import br.edu.cefsa.cinema.model.Usuario;
+import br.edu.cefsa.cinema.service.UsuarioService;
+
+
+@Controller
+@RequestMapping("/usuarios")
+public class UsuarioController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/cadastro")
+    public String cadastro(@ModelAttribute Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuarioService.salvarUsuario(usuario);
+        return "redirect:/usuarios/login";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            @RequestParam(value = "redirect", required = false) String redirect,
+                            Model model) {
+        if (error != null) {
+            model.addAttribute("mensagem", "Credenciais inválidas.");
+        }
+        if (logout != null) {
+            model.addAttribute("mensagem", "Logout realizado com sucesso.");
+        }
+        if (redirect != null) {
+            model.addAttribute("redirect", redirect);
+        }
+        return "login"; // nome da página HTML (login.html ou login.jsp)
+    }
+}
+
 package br.edu.cefsa.cinema.config;
 
 
@@ -43,33 +94,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/plataforma/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/usuarios/perfil", "/api/usuarios/perfil/**", "/minha-conta", "/api/carrinho")
-                .authenticated()
-                .requestMatchers(
-                    "/", 
-                    "/usuarios/**", 
-                    "/h2-console"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/usuarios/login") // <- sua rota personalizada de login
-                .loginProcessingUrl("/usuarios/login") // <- para onde o form faz POST
-                .defaultSuccessUrl("/", true) // <- redireciona após login
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/usuarios/login?logout")
-                .permitAll()
-            );
-
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/plataforma/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/usuarios/perfil", "/api/usuarios/perfil/**", "/minha-conta", "/api/carrinho")
+                        .authenticated()
+                        .requestMatchers(
+                                "/",
+                                "/usuarios/**",
+                                "/h2-console"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                );
         return http.build();
     }
 

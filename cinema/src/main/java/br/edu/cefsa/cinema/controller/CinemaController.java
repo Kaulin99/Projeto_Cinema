@@ -13,8 +13,8 @@ public class CinemaController {
         return "index";  
     }
 
-    @GetMapping("/cadastro")
+    @GetMapping("/usuarios/cadastro")
     public String mostrarCadastro() {
-        return "contas/cadastro"; // caminho dentro da pasta templates
+        return "usuarios/cadastro"; // caminho dentro da pasta templates
     }
 }
