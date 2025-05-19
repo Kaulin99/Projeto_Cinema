@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/cadastro.css}">
+    <link rel="stylesheet" th:href="@{/css/bonito.css}">
     <title>Login</title>
 </head>
 <body>
+<div class="navbar">
+    <button onclick="window.location.href='/'">Home</button>
+    <button onclick="window.location.href='/outros/sobre'">Sobre</button>
+    <button onclick="window.location.href='/usuarios/cadastro'">Cadastrar</button>
+</div>
+
+<div class="separacao"></div>
+
+<div class="container_form">
     <h1>Login</h1>
 
     <form action="/logar" method="post">
-        <label for="username">Usuário:</label><br>
-        <input type="text" id="username" name="username" required /><br><br>
+        <div class="form_grupo">
+            <label for="username" class="form_label">Nickname:</label><br>
+            <input type="text" id="username" class="form_input" name="username" required/><br><br>
+        </div>
 
-        <label for="senha">Senha:</label><br>
-        <input type="password" id="senha" name="senha" required /><br><br>
+        <div class="form_grupo">
+            <label for="senha" class="form_label">Senha:</label><br>
+            <input type="password" id="senha" class="form_input" name="senha" required/><br><br>
+        </div>
 
-        <button type="submit">Entrar</button>
+        <div class="form_grupo">
+            <button type="submit">Entrar</button>
+        </div>
     </form>
 
-    <p>Não tem uma conta? <a href="/usuarios/cadastro">Cadastre-se aqui</a></p>
+    <div class="form_grupo">
+        <label class="form_label">Não tem uma conta? <a href="/usuarios/cadastro" class="link">Cadastre-se aqui</a></label>
+    </div>
+</div>
+
 </body>
 </html>

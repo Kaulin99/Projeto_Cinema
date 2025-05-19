@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -27,5 +28,58 @@
 
         <button type="submit">cadastro</button>
     </form>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/cadastro.css}">
+    <link rel="stylesheet" th:href="@{/css/bonito.css}">
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="window.location.href='/'">Home</button>
+        <button onclick="window.location.href='/outros/sobre'">Sobre</button>
+        <button onclick="window.location.href='usuarios/login'">Login</button>
+    </div>
+
+    <div class="separacaoCad"></div>
+
+    <div class="container_form">
+        <h1>Cadastro de Usuário</h1>
+
+        <form class="form" action="/usuarios/cadastrar" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div class="form_grupo">
+                <label for="nome" class="form_label">Nome</label>
+                <input type="text" name="nome" class="form_input" id="nome" placeholder="Nome" required>
+            </div>
+
+            <div class="form_grupo">
+            <label for="apelido" class="form_label">Nickname</label>
+                <input type="text" name="apelido" class="form_input" id="apelido" placeholder="Nickname" required>
+            </div>
+
+            <div class="form_grupo">
+                <label for="email" class="form_label">Email</label>
+                <input type="email" name="email" class="form_input" id="email" placeholder="seuemail@email.com" required>
+            </div>
+
+            <div class="form_grupo">
+                <label for="senha" class="form_label">Senha</label>
+                <input type="password" name="senha" class="form_input" id="senha" placeholder="********" required>
+            </div>
+
+            <div class="form_grupo">
+                <button type="submit" class="form_button">Cadastrar</button>
+            </div>
+        </form>
+
+    </div><!--container_form-->
 </body>
 </html>
