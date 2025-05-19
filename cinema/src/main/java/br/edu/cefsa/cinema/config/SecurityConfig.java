@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/administracao/**").hasRole("ADMIN")
                 .requestMatchers("/", "/usuarios/**","css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
                 .anyRequest().authenticated()
             )

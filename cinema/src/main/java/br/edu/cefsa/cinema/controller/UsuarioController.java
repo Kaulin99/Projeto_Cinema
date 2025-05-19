@@ -30,7 +30,7 @@ public class UsuarioController {
     @PostMapping("cadastrar")
     public String cadastro(@ModelAttribute Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuario.setRoles(Set.of(Role.LOGADO));
+        usuario.setRoles(Set.of(Role.ADMIN));
         usuarioService.salvarUsuario(usuario);
         return "redirect:/usuarios/login";  // redireciona para a tela de login
     }

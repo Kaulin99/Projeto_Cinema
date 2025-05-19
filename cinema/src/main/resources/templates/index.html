@@ -12,6 +12,9 @@
         <button onclick="window.location.href='/'">Home</button>
         <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
         <button onclick="window.location.href='usuarios/login'">Login</button>
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="/administracao/lista-usuarios">Painel Administrativo</a>
+        </div>
     </div>
 </header>
 
