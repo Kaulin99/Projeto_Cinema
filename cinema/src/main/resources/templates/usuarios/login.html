@@ -7,20 +7,22 @@
     <title>Login</title>
 </head>
 <body>
-<div class="navbar">
-    <button onclick="window.location.href='/'">Home</button>
-    <button onclick="window.location.href='/outros/sobre'">Sobre</button>
-    <button onclick="window.location.href='/usuarios/cadastro'">Cadastrar</button>
-</div>
+<header>
+    <div class="navbar">
+        <button onclick="window.location.href='/'">Home</button>
+        <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
+        <button onclick="window.location.href='/usuarios/cadastro'">Cadastrar</button>
+    </div>
+</header>
 
 <div class="separacao"></div>
 
-    <div class="container_form">
-        <h1>Login</h1>
+<div class="container_form">
+    <h1>Login</h1>
 
-        <form action="/usuarios/logar" method="get" th:action="@{/usuarios/logar}">
+    <form action="/usuarios/logar" method="get" th:action="@{/usuarios/logar}">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        
+
         <div class="form_grupo">
             <label for="username" class="form_label">Nickname:</label><br>
             <input type="text" id="username" class="form_input" name="username" required/><br><br>
@@ -37,7 +39,8 @@
     </form>
 
     <div class="form_grupo">
-        <label class="form_label">Não tem uma conta? <a href="/usuarios/cadastro" class="link">Cadastre-se aqui</a></label>
+        <label class="form_label">Não tem uma conta? <a href="/usuarios/cadastro" class="link">Cadastre-se
+            aqui</a></label>
     </div>
 </div>
 

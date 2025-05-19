@@ -1,21 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Página Exemplo</title>
+    <title>GamesCon</title>
     <link rel="stylesheet" th:href="@{/css/bonito.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-
+<header>
     <div class="navbar">
         <button onclick="window.location.href='/'">Home</button>
-        <button onclick="window.location.href='/outros/sobre'">Sobre</button>
+        <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
         <button onclick="window.location.href='usuarios/login'">Login</button>
     </div>
+</header>
 
-    <div class="content">
-        Hello World
+<div class="main-container">
+    <!-- Coluna Esquerda -->
+    <div class="content-left">
+        <h3>Seção de Navegação</h3>
+        <p>Links, descrições, menus, etc.</p>
     </div>
 
+    <!-- Coluna Direita com rolagem -->
+    <div class="content-right-scrollable">
+        <h2>Bem-vindo ao <strong>GamerCon</strong></h2>
+        <p>Seu site de jogos oficial.</p>
+
+        <article>
+            <p class="par_right">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mauris arcu,
+                sollicitudin non eros non, dapibus feugiat magna. Vivamus maximus erat eget luctus varius. Quisque quis
+                ipsum luctus, ultrices magna eu, lacinia diam. Sed a sapien interdum, luctus ex sed, elementum sem.
+                Aliquam ac auctor ligula. Curabitur finibus suscipit nibh in tristique. Phasellus tellus nibh,
+                ullamcorper nec ultricies sed, mattis in orci. Suspendisse id imperdiet neque. Sed in nisi sed dolor
+                fringilla aliquam sed mollis tortor. Nullam lobortis tortor ac sem iaculis iaculis. Suspendisse vitae
+                vulputate ligula, id porttitor velit. Donec arcu ligula, mollis a dapibus non, consequat sed est.</p>
+            <p class="par_right">Vivamus gravida, magna ac dictum volutpat, lectus quam convallis orci, eu malesuada
+                erat leo in nisl. Proin suscipit faucibus fringilla. Mauris sodales, enim ut imperdiet consequat, enim
+                orci sagittis nisl, vel posuere leo elit eu felis. Sed tempus risus eu velit laoreet, sed consectetur
+                lacus ultricies. Integer tincidunt congue auctor. Praesent id ullamcorper nunc, interdum posuere mi.
+                Cras at ultrices nisl. Vivamus dignissim ligula dignissim suscipit cursus.</p>
+            <p class="par_right">Fusce volutpat sit amet arcu in sagittis. Vivamus in enim sit amet lacus pharetra
+                sagittis. Suspendisse potenti. Donec mattis aliquet tempus. Nulla fermentum scelerisque erat, quis
+                pharetra arcu mattis id. Etiam ultricies odio eget urna bibendum, vestibulum imperdiet metus pretium.
+                Suspendisse eget eros id mauris rutrum euismod. Morbi vitae tristique enim.</p>
+            <p class="par_right">Quisque ut ligula eu elit facilisis hendrerit non ut augue. Mauris convallis venenatis
+                laoreet. Aenean ut finibus elit. Ut in odio vitae lectus laoreet aliquet in et purus. Cras auctor eget
+                neque ut bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean sodales faucibus
+                ultricies. Morbi a diam imperdiet, finibus nunc ut, lobortis libero. Fusce congue, erat vel vulputate
+                euismod, leo sapien varius ipsum, non faucibus magna ante quis augue. In viverra nisl non mollis
+                tincidunt. Integer non placerat risus, nec semper arcu. Mauris tortor magna, viverra sit amet ipsum
+                quis, hendrerit gravida augue. Nulla eget lacus eu ipsum vehicula fringilla. Vivamus molestie erat eu
+                nibh consequat condimentum. Vivamus lectus magna, convallis sed ante vel, accumsan rhoncus libero.
+                Praesent quis enim facilisis tortor commodo molestie.</p>
+            <p class="par_right">In pharetra tempus purus et fermentum. Nullam tortor metus, faucibus id diam id,
+                aliquam condimentum lacus. Mauris at ultricies nibh. Aenean in mi eget ex dignissim lacinia. Quisque
+                ultricies urna sapien, et luctus libero sollicitudin ac. Morbi imperdiet congue mauris et pharetra.
+                Morbi euismod arcu vel libero tincidunt ultricies. Vestibulum eu lacinia ligula. Cras eget quam id elit
+                eleifend rutrum. Nullam scelerisque sollicitudin massa, vel malesuada mauris placerat a. Nulla porta
+                felis at justo sodales, nec tincidunt lorem scelerisque. Orci varius natoque penatibus et magnis dis
+                parturient montes, nascetur ridiculus mus. Aenean finibus viverra nisl, vel tristique ante varius sit
+                amet.</p>
+        </article>
+    </div>
+</div>
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <p><strong>GamesCon.com</strong></p>
+        </div>
+        <div class="footer-center">
+            <!-- Espaço livre -->
+        </div>
+        <div class="footer-right">
+            <p><strong>Contatos:</strong></p>
+            <p class="footer_p">Email: 082220015@faculdade.cefsa.edu.br</p>
+            <p class="footer_p">Email: 082220027@faculdade.cefsa.edu.br</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

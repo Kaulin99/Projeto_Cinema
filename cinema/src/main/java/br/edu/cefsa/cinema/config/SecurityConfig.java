@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/usuarios/**","css/**", "/js/**","/images/**", "/webjars/**").permitAll()
+                .requestMatchers("/", "/usuarios/**","css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
