@@ -21,9 +21,9 @@
                 <td th:text="${usuario.nome}"></td>
                 <td th:text="${usuario.apelido}"></td>
                 <td th:text="${usuario.email}"></td>
-                <td th:text="${usuario.roles}"></td>
+                <td th:text="${usuario.roles}"></td>         
                 <td>
-                    <a th:href="@{/admin/usuario/editar/{id}(id=${usuario.idPadrao})}">Editar</a>
+                    <a th:href="@{'/administracao/editar/' + ${usuario.idPadrao}}">Editar</a>
                 </td>
             </tr>
         </tbody>

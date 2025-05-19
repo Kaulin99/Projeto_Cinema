@@ -7,16 +7,22 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-<header>
-    <div class="navbar">
-        <button onclick="window.location.href='/'">Home</button>
-        <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
-        <button onclick="window.location.href='usuarios/login'">Login</button>
-        <div sec:authorize="hasRole('ADMIN')">
-            <a th:href="/administracao/lista-usuarios">Painel Administrativo</a>
+    <header>
+        <div class="navbar">
+            <button onclick="window.location.href='/'">Home</button>
+            <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
+            <button onclick="window.location.href='usuarios/login'">Login</button>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/administracao/lista-usuarios}">Lista de Usuários</a>
+            </div>
         </div>
-    </div>
-</header>
+    
+        <div style="margin: 10px 0; text-align: right; padding-right: 20px;">
+            <span><strong>Usuário:</strong> <span sec:authentication="name"></span></span> |
+            <span><strong>Role(s):</strong> <span sec:authentication="authorities"></span></span>
+        </div>
+    </header>
+    
 
 <div class="main-container">
     <!-- Coluna Esquerda -->

@@ -30,26 +30,8 @@ public class UsuarioController {
     @PostMapping("cadastrar")
     public String cadastro(@ModelAttribute Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuario.setRoles(Set.of(Role.ADMIN));
+        usuario.setRoles(Set.of(Role.LOGADO));
         usuarioService.salvarUsuario(usuario);
         return "redirect:/usuarios/login";  // redireciona para a tela de login
-    }
-
-
-    @GetMapping("/logar")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout,
-                            @RequestParam(value = "redirect", required = false) String redirect,
-                            Model model) {
-        if (error != null) {
-            model.addAttribute("mensagem", "Credenciais inválidas.");
-        }
-        if (logout != null) {
-            model.addAttribute("mensagem", "Logout realizado com sucesso.");
-        }
-        if (redirect != null) {
-            model.addAttribute("redirect", redirect);
-        }
-        return "redirect:/"; 
     }
 }

@@ -31,7 +31,7 @@ public class AdminUsuarioController {
 
         model.addAttribute("usuario", usuarioOptional.get());
         model.addAttribute("rolesDisponiveis", Arrays.asList(Role.values()));
-        return "editar-usuario";
+        return "administracao/editar-usuario";
     }
 
     @PostMapping("/editar/{id}")
@@ -51,10 +51,10 @@ public class AdminUsuarioController {
         return "redirect:/administracao/lista";
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/lista-usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioRepository.findAll());
-        return "lista-usuarios";
+        return "administracao/lista-usuarios";
     }
 
 }
