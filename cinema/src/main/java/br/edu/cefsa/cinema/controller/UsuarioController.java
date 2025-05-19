@@ -46,6 +46,6 @@ public class UsuarioController {
         if (redirect != null) {
             model.addAttribute("redirect", redirect);
         }
-        return "/";
+        return "redirect:/"; 
     }
 }

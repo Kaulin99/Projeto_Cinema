@@ -15,10 +15,12 @@
 
 <div class="separacao"></div>
 
-<div class="container_form">
-    <h1>Login</h1>
+    <div class="container_form">
+        <h1>Login</h1>
 
-    <form action="/logar" method="post">
+        <form action="/usuarios/logar" method="get" th:action="@{/usuarios/logar}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        
         <div class="form_grupo">
             <label for="username" class="form_label">Nickname:</label><br>
             <input type="text" id="username" class="form_input" name="username" required/><br><br>
@@ -26,7 +28,7 @@
 
         <div class="form_grupo">
             <label for="senha" class="form_label">Senha:</label><br>
-            <input type="password" id="senha" class="form_input" name="senha" required/><br><br>
+            <input type="password" id="senha" class="form_input" name="password" required/><br><br>
         </div>
 
         <div class="form_grupo">
