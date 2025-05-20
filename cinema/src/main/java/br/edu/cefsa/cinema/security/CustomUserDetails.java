@@ -1,6 +1,7 @@
 package br.edu.cefsa.cinema.security;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,15 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public UUID getId() {
+        return usuario.getId();
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

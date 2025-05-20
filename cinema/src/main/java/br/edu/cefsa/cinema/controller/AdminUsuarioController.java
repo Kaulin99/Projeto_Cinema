@@ -48,7 +48,7 @@ public class AdminUsuarioController {
         usuario.setRoles(usuarioAtualizado.getRoles());
 
         usuarioRepository.save(usuario);
-        return "redirect:/administracao/lista";
+        return "redirect:/administracao/lista-usuarios";
     }
 
     @GetMapping("/lista-usuarios")

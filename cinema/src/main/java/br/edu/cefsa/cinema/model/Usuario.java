@@ -72,4 +72,13 @@ public class Usuario implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public void getIdPadrao(UUID idPadrao) {
+        this.idPadrao = idPadrao;
+    }
+
+    public UUID getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
 }

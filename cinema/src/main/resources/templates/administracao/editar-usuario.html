@@ -53,7 +53,7 @@
 <div class="container form_container">
     <h1>Editar Usuário</h1>
 
-    <form th:action="@{/admin/usuario/editar/{id}(id=${usuario.idPadrao})}" th:object="${usuario}" method="post">
+    <form th:action="@{/administracao/editar/{id}(id=${usuario.idPadrao})}" th:object="${usuario}" method="post">
         <div class="form_grupo">
             <label class="form_label">Nome:</label>
             <input type="text" class="form_input form-control" th:field="*{nome}" required/>
