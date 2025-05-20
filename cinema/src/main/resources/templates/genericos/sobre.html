@@ -46,15 +46,16 @@
             </ul>
             <div class="d-flex" sec:authorize="isAnonymous()">
                 <a class="btn btn-outline-light" href="/usuarios/login">Login</a>
+                 <a class="btn btn-outline-light" href="/usuarios/cadastro">Cadastrar</a>
             </div>
         </div>
     </div>
 </nav>
 
 <!-- USUÁRIO AUTENTICADO -->
-<div class="text-end me-4 mt-2">
-    <span><strong>Usuário:</strong> <span sec:authentication="name"></span></span> |
-    <span><strong>Role(s):</strong> <span sec:authentication="authorities"></span></span>
+<div class="text-end me-4 mt-2" sec:authorize="isAuthenticated()">
+    <span><strong>Bem-vindo </strong> <span sec:authentication="name"></span></span> |
+    <span><strong>LOGADO</strong></span>
 </div>
 
 <!-- CONTEÚDO PRINCIPAL -->
