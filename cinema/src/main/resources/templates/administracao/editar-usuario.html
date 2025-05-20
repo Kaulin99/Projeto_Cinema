@@ -1,27 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Editar Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/bonito.css}">
+    <link rel="stylesheet" th:href="@{/css/lista-usuarios.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">GamesCon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/genericos/sobre">Sobre</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" href="/administracao/lista-usuarios">Admin</a>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Conta
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/usuarios/perfil">Perfil</a></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex" sec:authorize="isAnonymous()">
+                <a class="btn btn-outline-light" href="/usuarios/login">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container form_container">
     <h1>Editar Usuário</h1>
 
     <form th:action="@{/admin/usuario/editar/{id}(id=${usuario.idPadrao})}" th:object="${usuario}" method="post">
-        <label>Nome:</label>
-        <input type="text" th:field="*{nome}" required/><br/>
+        <div class="form_grupo">
+            <label class="form_label">Nome:</label>
+            <input type="text" class="form_input form-control" th:field="*{nome}" required/>
+        </div>
 
-        <label>Apelido:</label>
-        <input type="text" th:field="*{apelido}" required/><br/>
+        <div class="form_grupo">
+            <label class="form_label">Apelido:</label>
+            <input type="text" class="form_input form-control" th:field="*{apelido}" required/>
+        </div>
 
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" required/><br/>
+        <div class="form_grupo">
+            <label class="form_label">Email:</label>
+            <input type="email" class="form_input form-control" th:field="*{email}" required/>
+        </div>
 
-        <label>Role:</label>
-        <select th:field="*{roles}" multiple>
-            <option th:each="r : ${rolesDisponiveis}" th:value="${r}" th:text="${r}"></option>
-        </select><br/>
+        <div class="form_grupo">
+            <label class="form_label">Role:</label>
+            <select multiple class="form_input form-control" th:field="*{roles}">
+                <option th:each="r : ${rolesDisponiveis}" th:value="${r}" th:text="${r}"></option>
+            </select>
+        </div>
 
-        <button type="submit">Salvar</button>
+        <div class="form_button">
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
     </form>
+</div>
+
 </body>
 </html>

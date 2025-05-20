@@ -1,0 +1,155 @@
+/*.container{
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    background-color: #363636;
+    height: 100%;
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+.container table{
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: #555;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+}
+.form_container{
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin: auto;
+    width: 50%;
+    height: 60%;
+    background-color: #363636;
+    border-radius: 10px;
+    border: 1px solid #000000;
+}
+.form_grupo{
+    text-align: justify;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 30px;
+    position: relative;
+    border-bottom: 1px solid #000000;
+}
+.form_label{
+    text-align: justify;
+    color: white;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+.form_button button{
+    background-color: #555;
+    border: none;
+    color: white;
+    width: 10%;
+    padding: 1% 2%;
+    margin: 0 4%;
+    cursor: pointer;
+    font-size: 16px;
+}
+.form_input {
+    background-color: #555;
+    color: white;
+    width: 50%;
+    margin: 0 4%;
+    cursor: pointer;
+    font-size: 16px;
+}
+h1{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: Arial, sans-serif;
+}
+*/
+.container {
+    background-color: #363636;
+    border-radius: 10px;
+    color: white;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.table {
+    background-color: #555;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.form_container {
+    background-color: #363636;
+    color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.form_grupo {
+    margin-bottom: 1.5rem;
+}
+
+.form_label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form_input, select {
+    width: 100%;
+    background-color: #555;
+    color: white;
+    border: 1px solid #888;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.form_button {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.form_button button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+footer {
+    background-color: #212529;
+    color: white;
+    padding: 1rem 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+

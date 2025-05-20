@@ -6,7 +6,8 @@
     margin: 0 auto 40px auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: #778899
+    background-color: #778899;
+    border-radius: 10px;
 }
 .section p{
     font-size: 18px;
@@ -89,4 +90,8 @@
 
 .separacao{
     heigth:100px;
+}
+article{
+    background-color: #ffffff;
+    border-radius: 10px;
 }

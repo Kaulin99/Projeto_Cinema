@@ -34,4 +34,12 @@ public class UsuarioController {
         usuarioService.salvarUsuario(usuario);
         return "redirect:/usuarios/login";  // redireciona para a tela de login
     }
+
+    @GetMapping("/perfil")
+    public String perfil(Model model) {
+        // Se quiser, pode passar o usuário logado para a view usando Spring Security
+        return "usuarios/perfil"; // Certifique-se de que o arquivo perfil.html está nesta pasta
+    }
+
+
 }

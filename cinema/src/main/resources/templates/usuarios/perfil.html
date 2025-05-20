@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Usuário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bonito.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">GamesCon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/genericos/sobre">Sobre</a></li>
+            </ul>
+            <div class="d-flex">
+                <a class="btn btn-outline-light me-2" href="/">Voltar</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTEÚDO -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow p-4">
+                <h3 class="text-center mb-4">Perfil do Usuário</h3>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nome:</label>
+                    <div th:text="${usuario.nome}">Nome do usuário</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nickname:</label>
+                    <div th:text="${usuario.apelido}">Apelido do usuário</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">E-mail:</label>
+                    <div th:text="${usuario.email}">email@exemplo.com</div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary">Voltar à Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start">
+        <div class="mb-2 mb-md-0">
+            <strong>GamesCon.com</strong>
+        </div>
+        <div>
+            <strong>Contatos:</strong><br>
+            <small>Email: 082220015@faculdade.cefsa.edu.br</small><br>
+            <small>Email: 082220027@faculdade.cefsa.edu.br</small>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

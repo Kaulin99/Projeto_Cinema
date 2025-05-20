@@ -1,100 +1,134 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/bonito.css}">
-    <link rel="stylesheet" th:href="@{/css/sobre.css}">
     <title>Cadastro de Usuário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div class="navbar">
-        <button onclick="window.location.href='/'">Home</button>
-        <button onclick="window.location.href='/genericos/sobre'">Sobre</button>
-        <button onclick="window.location.href='/usuarios/login'">Login</button>
-    </div>
-</header>
-<div class="separacao"><br><br><br></div>
 
-<div class="section inicial">
-    <h2>Sobre o site</h2>
-    <p>O site de avaliações de jogadores de E-Sports foi criado com o objetivo de oferecer uma plataforma centralizada
-        onde fãs, jogadores e entusiastas possam avaliar, comentar e acompanhar o desempenho de atletas do cenário
-        competitivo de jogos eletrônicos. A ideia surge da crescente profissionalização dos E-Sports, onde a análise de
-        desempenho e reputação dos jogadores se torna cada vez mais relevante tanto para o público quanto para
-        organizações e patrocinadores.</p>
-    <p>A plataforma funciona de forma colaborativa, permitindo que usuários cadastrados deixem suas avaliações sobre
-        jogadores de diversas modalidades, como League of Legends, Counter-Strike, Valorant, entre outros. Cada jogador
-        possui uma página própria com notas, estatísticas e comentários da comunidade. Além disso, o site conta com
-        mecanismos para evitar avaliações abusivas, promovendo um ambiente saudável e construtivo de feedback.</p>
-    <p>Este projeto foi desenvolvido como parte das atividades acadêmicas do curso de Engenharia da Computação na
-        Faculdade Engenheiro Salvador Arena – FESA. Seu principal objetivo é aplicar conceitos de desenvolvimento web,
-        usabilidade e banco de dados, ao mesmo tempo em que propõe uma solução prática e moderna para uma demanda real
-        do universo gamer. A iniciativa reforça a importância de unir teoria e prática no desenvolvimento de soluções
-        tecnológicas inovadoras.</p>
-</div>
-<br><br>
-<div class="section">
-    <h2>Desenvolvedores</h2>
-    <div class="alunoContainer">
-        <div class="container_img">
-            <img src="/img/imgAluno1.JPG" alt="Foto do Aluno 1">
-        </div>
-        <div class="container_right">
-            <h3>Aluno 1</h3>
-            <ul>
-                <li>Nome: Robson Guilherme Ferrarezi</li>
-                <li>RA: 082220015</li>
-                <li>Curso: Engenharia da Computação</li>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">GamesCon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/genericos/sobre">Sobre</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" href="/administracao/lista-usuarios">Admin</a>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Conta
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/usuarios/perfil">Perfil</a></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
             </ul>
+            <div class="d-flex" sec:authorize="isAnonymous()">
+                <a class="btn btn-outline-light" href="/usuarios/login">Login</a>
+            </div>
         </div>
     </div>
-    <br><br>
-    <div class="alunoContainer">
-        <div class="container_img">
-            <img src="/img/imgAluno2.JPG" alt="Foto do Aluno 2">
-        </div>
-        <div class="container_right">
-            <h3>Aluno 2</h3>
-            <ul>
-                <li>Nome: Kauê dos Santos Andrade</li>
-                <li>RA: 082220027</li>
-                <li>Curso: Engenharia da Computação</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<br><br><br>
+</nav>
 
-<div class="section">
-    <div class="instituicaoContainer">
-        <div class="container_img">
-            <img src="/img/cefsa.jpg" alt="Foto do Aluno 2">
-        </div>
-        <div class="container_right">
-            <h2>Instituição de Ensino</h2>
-
-            <p class="par_rig">Este projeto foi desenvolvido como parte das atividades acadêmicas da matéria
-                Lingauemde de Programação II - do curso de Engenharia da Computação da Faculdade FESA
-                - Faculdade Engenheiro Salvador Arena.
-                Parte do CEFSA – Centro Educacional da Fundação Salvador Arena.</p>
-        </div>
-    </div>
+<!-- USUÁRIO AUTENTICADO -->
+<div class="text-end me-4 mt-2">
+    <span><strong>Usuário:</strong> <span sec:authentication="name"></span></span> |
+    <span><strong>Role(s):</strong> <span sec:authentication="authorities"></span></span>
 </div>
 
-<footer class="site-footer">
-    <div class="footer-content">
-        <div class="footer-left">
-            <p><strong>GamesCon.com</strong></p>
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="container py-5">
+
+    <!-- SOBRE O SITE -->
+    <section>
+        <h2 class="mb-4">Sobre o site</h2>
+        <div class="bg-light p-4 rounded shadow-sm">
+            <p class="text-justify">O site de avaliações de jogadores de E-Sports foi criado com o objetivo de oferecer uma plataforma centralizada onde fãs, jogadores e entusiastas possam avaliar, comentar e acompanhar o desempenho de atletas do cenário competitivo de jogos eletrônicos.</p>
+            <p class="text-justify">A plataforma funciona de forma colaborativa, permitindo que usuários cadastrados deixem suas avaliações sobre jogadores de diversas modalidades...</p>
+            <p class="text-justify">Este projeto foi desenvolvido como parte das atividades acadêmicas do curso de Engenharia da Computação na Faculdade Engenheiro Salvador Arena – FESA.</p>
         </div>
-        <div class="footer-center">
-            <!-- Espaço livre -->
+    </section>
+
+    <!-- DESENVOLVEDORES -->
+    <section>
+        <h2 class="mb-4">Desenvolvedores</h2>
+        <div class="row gy-4">
+            <div class="col-12 col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="/img/imgAluno1.JPG" class="card-img-top" alt="Aluno 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Robson Guilherme Ferrarezi</h5>
+                        <ul class="list-unstyled">
+                            <li>RA: 082220015</li>
+                            <li>Curso: Engenharia da Computação</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="/img/imgAluno2.JPG" class="card-img-top" alt="Aluno 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Kauê dos Santos Andrade</h5>
+                        <ul class="list-unstyled">
+                            <li>RA: 082220027</li>
+                            <li>Curso: Engenharia da Computação</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer-right">
-            <p><strong>Contatos:</strong></p>
-            <p class="footer_p">Email: 082220015@faculdade.cefsa.edu.br</p>
-            <p class="footer_p">Email: 082220027@faculdade.cefsa.edu.br</p>
+    </section>
+
+    <!-- INSTITUIÇÃO -->
+    <section>
+        <h2 class="mb-4">Instituição de Ensino</h2>
+        <div class="row g-4 align-items-center bg-light p-4 rounded shadow-sm">
+            <div class="col-12 col-md-6">
+                <img src="/img/cefsa.jpg" alt="CEFSA" class="img-fluid rounded">
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="text-justify mb-0">Este projeto foi desenvolvido como parte das atividades acadêmicas da matéria Linguagem de Programação II, do curso de Engenharia da Computação da Faculdade FESA – Faculdade Engenheiro Salvador Arena, parte do CEFSA – Centro Educacional da Fundação Salvador Arena.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start">
+        <div class="mb-2 mb-md-0">
+            <strong>GamesCon.com</strong>
+        </div>
+        <div>
+            <strong>Contatos:</strong><br>
+            <small>Email: 082220015@faculdade.cefsa.edu.br</small><br>
+            <small>Email: 082220027@faculdade.cefsa.edu.br</small>
         </div>
     </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>
