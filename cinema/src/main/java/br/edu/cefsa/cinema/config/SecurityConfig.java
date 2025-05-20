@@ -33,31 +33,33 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/administracao/**").hasRole("ADMIN")
-                .requestMatchers("/", "/usuarios/**","css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/usuarios/login")
-                .loginProcessingUrl("/usuarios/login")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/usuarios/login?logout")
-                .permitAll()
-            );
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        )
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/administracao/**").hasRole("ADMIN")
+            .requestMatchers("/", "/usuarios/**","/css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .formLogin(form -> form
+            .loginPage("/usuarios/login")
+            .loginProcessingUrl("/usuarios/login")
+            .defaultSuccessUrl("/", true)
+            .failureUrl("/usuarios/login?erro=true") 
+            .permitAll()
+        )
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/usuarios/login?logout")
+            .permitAll()
+        );
 
-        return http.build();
-    }
+    return http.build();
+}
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
