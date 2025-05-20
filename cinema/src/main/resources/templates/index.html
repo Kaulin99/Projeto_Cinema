@@ -54,7 +54,7 @@
 </nav>
 
 <!-- USUÁRIO AUTENTICADO -->
-<div class="text-end me-4 mt-2" sec:authorize="hasRole('ADMIN') or hasRole('LOGADO')">
+<div class="text-end me-4 mt-2" sec:authorize="isAuthenticated()">
     <span><strong>Bem-vindo </strong> <span sec:authentication="name"></span></span> |
     <span><strong>LOGADO</strong></span>
 </div>

@@ -78,7 +78,6 @@ public class Usuario implements Serializable {
     }
 
     public UUID getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return idPadrao;
     }
 }
