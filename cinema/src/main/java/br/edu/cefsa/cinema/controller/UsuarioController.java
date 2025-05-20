@@ -1,8 +1,6 @@
 package br.edu.cefsa.cinema.controller;
 
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,20 +41,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil")
-    public String exibirPerfil(Model model, @AuthenticationPrincipal CustomUserDetails usuarioDetails) {
-        if (usuarioDetails == null) {
-            return "redirect:/login"; // ou outra página de erro
-        }
-
-        UUID id = usuarioDetails.getId();
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-
-        if (usuarioOptional.isEmpty()) {
-            return "redirect:/erro";
-        }
-
-        model.addAttribute("usuario", usuarioOptional.get());
-        return "usuarios/perfil"; // essa é a view que você mostrou
+    public String exibirPerfil(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Usuario usuario = userDetails.getUsuario(); // supondo que CustomUserDetails tenha getUsuario()
+        model.addAttribute("usuario", usuario);
+        return "usuarios/perfil"; // caminho do HTML (por exemplo: templates/usuario/perfil.html)
     }
 
 }
