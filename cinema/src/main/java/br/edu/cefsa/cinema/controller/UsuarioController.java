@@ -35,7 +35,7 @@ public class UsuarioController {
 
     // Cadastro de novo usuário
     @PostMapping("/cadastrar")
-    public String cadastro(@ModelAttribute Usuario usuario, Model model) {
+    public String cadastro(@ModelAttribute Usuario usuario,Model model) {
         if (usuarioRepository.findByApelido(usuario.getApelido()).isPresent()) {
             model.addAttribute("erroApelido", true);
             model.addAttribute("usuario", usuario);

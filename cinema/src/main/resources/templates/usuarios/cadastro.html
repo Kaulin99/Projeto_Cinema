@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/cadastro.css}">
@@ -57,7 +57,8 @@
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             <div class="card shadow p-4">
                 <h2 class="text-center mb-4">Cadastro</h2>
-                <form method="post" action="/usuarios/cadastrar">
+                <form method="post" th:action="@{/usuarios/cadastrar}">
+
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                     <div class="mb-3">
@@ -103,16 +104,20 @@
       </div>
     </div>
   </div>
+
+  <div id="erros" th:attr="data-erro-apelido=${erroApelido}" style="display: none;"></div>
+
   
   <script th:inline="javascript">
-      document.addEventListener("DOMContentLoaded", function () {
-          const erroApelido = /*[[${erroApelido}]]*/ false;
-          if (erroApelido) {
-              const modal = new bootstrap.Modal(document.getElementById('nicknameErroModal'));
-              modal.show();
-          }
-      });
-  </script>
-  
+    document.addEventListener("DOMContentLoaded", function () {
+        const erroApelido = /*[[${erroApelido}]]*/ false;
+        if (erroApelido) {
+            const modal = new bootstrap.Modal(document.getElementById('nicknameErroModal'));
+            modal.show();
+        }
+    });
+</script>
+
+
 </body>
 </html>

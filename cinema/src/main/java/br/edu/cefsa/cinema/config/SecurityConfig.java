@@ -41,7 +41,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         )
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/administracao/**").hasRole("ADMIN")
-            .requestMatchers("/","/usuarios/cadastro", "/usuarios/login","/css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
+            .requestMatchers("/","/usuarios/cadastrar", "/usuarios/cadastro","/usuarios/login","/css/**", "/js/**","/img/**", "/webjars/**", "/genericos/**").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin(form -> form
