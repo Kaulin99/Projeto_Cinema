@@ -16,6 +16,9 @@ import br.edu.cefsa.cinema.model.Usuario;
 import br.edu.cefsa.cinema.repository.UsuarioRepository;
 import br.edu.cefsa.cinema.security.CustomUserDetails;
 import br.edu.cefsa.cinema.service.UsuarioService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -103,5 +106,23 @@ public String salvarEdicaoPerfil(@PathVariable UUID id, @ModelAttribute Usuario 
 
     return "redirect:/usuarios/perfil";
 }
+@PostMapping("/excluir/{id}")
+public String excluirConta(@PathVariable UUID id,
+                           @AuthenticationPrincipal CustomUserDetails userDetails,
+                           HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    if (!userDetails.getUsuario().getIdPadrao().equals(id)) {
+        return "redirect:/erro";
+    }
+
+    usuarioRepository.deleteById(id);
+
+    // Invalida a sessão e faz logout manual
+    request.logout(); // isso chama o LogoutFilter do Spring Security
+    request.getSession().invalidate();
+
+    return "redirect:/"; // redireciona para a home (ou página de sucesso)
+}
+
+
 
 }
