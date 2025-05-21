@@ -86,5 +86,33 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- MODAL DE ERRO DE APELIDO -->
+<div class="modal fade" id="nicknameErroModal" tabindex="-1" aria-labelledby="nicknameErroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="nicknameErroModalLabel">Erro no Cadastro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          O nickname informado já está em uso. Por favor, escolha outro.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+          const erroApelido = /*[[${erroApelido}]]*/ false;
+          if (erroApelido) {
+              const modal = new bootstrap.Modal(document.getElementById('nicknameErroModal'));
+              modal.show();
+          }
+      });
+  </script>
+  
 </body>
 </html>

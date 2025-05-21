@@ -9,18 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import br.edu.cefsa.cinema.Enum.Role;
 import br.edu.cefsa.cinema.model.Usuario;
 import br.edu.cefsa.cinema.repository.UsuarioRepository;
 import br.edu.cefsa.cinema.security.CustomUserDetails;
 import br.edu.cefsa.cinema.service.UsuarioService;
-
 
 @Controller
 @RequestMapping("/usuarios")
@@ -35,28 +30,35 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping("cadastrar")
-    public String cadastro(@ModelAttribute Usuario usuario) {
+    // Cadastro de novo usuário
+    @PostMapping("/cadastrar")
+    public String cadastro(@ModelAttribute Usuario usuario, Model model) {
+        if (usuarioRepository.findByApelido(usuario.getApelido()).isPresent()) {
+            model.addAttribute("erroApelido", true);
+            model.addAttribute("usuario", usuario);
+            return "usuarios/cadastro";
+        }
+
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuario.setRoles(Set.of(Role.LOGADO));
         usuarioService.salvarUsuario(usuario);
-        return "redirect:/usuarios/login";  // redireciona para a tela de login
+
+        return "redirect:/usuarios/login";
     }
 
     @GetMapping("/perfil")
     public String exibirPerfil(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        Usuario usuario = userDetails.getUsuario(); // supondo que CustomUserDetails tenha getUsuario()
+        Usuario usuario = userDetails.getUsuario();
         model.addAttribute("usuario", usuario);
-        return "usuarios/perfil"; // caminho do HTML (por exemplo: templates/usuario/perfil.html)
+        return "usuarios/perfil";
     }
 
     @GetMapping("/editar/{id}")
     public String editarPerfil(@PathVariable UUID id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Usuario usuarioLogado = userDetails.getUsuario();
 
-        // Garantir que o usuário só edite a si mesmo
         if (!usuarioLogado.getIdPadrao().equals(id)) {
-            return "redirect:/erro"; // ou uma página 403 personalizada
+            return "redirect:/erro";
         }
 
         model.addAttribute("usuario", usuarioLogado);
@@ -64,28 +66,42 @@ public class UsuarioController {
     }
 
     @PostMapping("/editar/{id}")
-    public String salvarEdicaoPerfil(@PathVariable UUID id, @ModelAttribute Usuario usuarioAtualizado,
-                                    @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        Optional<Usuario> optional = usuarioRepository.findById(id);
-        if (optional.isEmpty()) {
-            return "redirect:/erro";
-        }
+public String salvarEdicaoPerfil(@PathVariable UUID id, @ModelAttribute Usuario usuarioAtualizado,
+                                 @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 
-        Usuario usuario = optional.get();
-
-        // Segurança: garante que está editando o próprio perfil
-        if (!usuario.getIdPadrao().equals(userDetails.getUsuario().getIdPadrao())) {
-            return "redirect:/erro";
-        }
-
-        // Atualiza os campos permitidos
-        usuario.setNome(usuarioAtualizado.getNome());
-        usuario.setApelido(usuarioAtualizado.getApelido());
-        usuario.setEmail(usuarioAtualizado.getEmail());
-
-        usuarioRepository.save(usuario);
-
-        return "redirect:/usuarios/perfil";
+    Optional<Usuario> optional = usuarioRepository.findById(id);
+    if (optional.isEmpty()) {
+        return "redirect:/erro";
     }
+
+    Usuario usuario = optional.get();
+
+    // Segurança: só permite edição do próprio perfil
+    if (!usuario.getIdPadrao().equals(userDetails.getUsuario().getIdPadrao())) {
+        return "redirect:/erro";
+    }
+
+    // Verifica se o apelido está em uso por outro
+    Optional<Usuario> apelidoExistente = usuarioRepository.findByApelido(usuarioAtualizado.getApelido());
+    if (apelidoExistente.isPresent() && !apelidoExistente.get().getIdPadrao().equals(usuario.getIdPadrao())) {
+        model.addAttribute("erroApelido", true);
+        model.addAttribute("usuario", usuarioAtualizado);
+        return "usuarios/editar";
+    }
+
+    // Atualiza os campos
+    usuario.setNome(usuarioAtualizado.getNome());
+    usuario.setApelido(usuarioAtualizado.getApelido());
+    usuario.setEmail(usuarioAtualizado.getEmail());
+
+    usuarioRepository.save(usuario);
+
+    // Atualiza os dados do usuário autenticado manualmente
+    userDetails.getUsuario().setNome(usuario.getNome());
+    userDetails.getUsuario().setApelido(usuario.getApelido());
+    userDetails.getUsuario().setEmail(usuario.getEmail());
+
+    return "redirect:/usuarios/perfil";
+}
 
 }

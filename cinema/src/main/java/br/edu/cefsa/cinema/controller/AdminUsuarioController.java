@@ -35,21 +35,35 @@ public class AdminUsuarioController {
     }
 
     @PostMapping("/editar/{id}")
-    public String salvarEdicaoUsuario(@PathVariable UUID id, @ModelAttribute Usuario usuarioAtualizado) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-        if (usuarioOptional.isEmpty()) {
-            return "redirect:/erro";
-        }
-
-        Usuario usuario = usuarioOptional.get();
-        usuario.setNome(usuarioAtualizado.getNome());
-        usuario.setApelido(usuarioAtualizado.getApelido());
-        usuario.setEmail(usuarioAtualizado.getEmail());
-        usuario.setRoles(usuarioAtualizado.getRoles());
-
-        usuarioRepository.save(usuario);
-        return "redirect:/administracao/lista-usuarios";
+public String salvarEdicaoUsuario(@PathVariable UUID id, @ModelAttribute Usuario usuarioAtualizado, Model model) {
+    Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+    if (usuarioOptional.isEmpty()) {
+        return "redirect:/erro";
     }
+
+    Usuario usuarioExistente = usuarioOptional.get();
+
+    // Verificar se o apelido já está em uso por outro usuário
+    Optional<Usuario> usuarioComMesmoApelido = usuarioRepository.findByApelido(usuarioAtualizado.getApelido());
+    if (usuarioComMesmoApelido.isPresent() && !usuarioComMesmoApelido.get().getIdPadrao().equals(id)) {
+        usuarioAtualizado.setIdPadrao(id); // 🔥 GARANTE que o ID esteja presente na view
+        model.addAttribute("erroApelido", true);
+        model.addAttribute("usuario", usuarioAtualizado);
+        model.addAttribute("rolesDisponiveis", Arrays.asList(Role.values()));
+        return "administracao/editar-usuario";
+    }
+
+    // Atualiza os dados
+    usuarioExistente.setNome(usuarioAtualizado.getNome());
+    usuarioExistente.setApelido(usuarioAtualizado.getApelido());
+    usuarioExistente.setEmail(usuarioAtualizado.getEmail());
+    usuarioExistente.setRoles(usuarioAtualizado.getRoles());
+
+    usuarioRepository.save(usuarioExistente);
+    return "redirect:/administracao/lista-usuarios";
+}
+
+
 
     @GetMapping("/lista-usuarios")
     public String listarUsuarios(Model model) {

@@ -18,6 +18,12 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow p-4">
                 <h3 class="text-center mb-4">Editar Perfil</h3>
+                <!-- Alerta: apelido já em uso -->
+                <div th:if="${erroApelido}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erro!</strong> Apelido já está em uso. Escolha outro.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+
 
                 <form th:action="@{/usuarios/editar/{id}(id=${usuario.idPadrao})}" th:object="${usuario}" method="post">
                     <input type="hidden" th:field="*{idPadrao}" />
