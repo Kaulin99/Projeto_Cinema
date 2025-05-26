@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal; // Updated import for the new annotation
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -122,7 +122,4 @@ public String excluirConta(@PathVariable UUID id,
 
     return "redirect:/"; // redireciona para a home (ou página de sucesso)
 }
-
-
-
 }
