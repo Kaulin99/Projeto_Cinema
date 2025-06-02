@@ -1,76 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Lista de Usuários</title>
-    <link rel="stylesheet" th:href="@{/css/bonito.css}">
-    <link rel="stylesheet" th:href="@{/css/lista-usuarios.css}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">GamesCon</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/genericos/sobre">Sobre</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" href="/administracao/lista-usuarios">Admin</a>
-                </li>
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Conta
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/usuarios/perfil">Perfil</a></li>
-                        <li>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="d-flex" sec:authorize="isAnonymous()">
-                <a class="btn btn-outline-light" href="/usuarios/login">Login</a>
-            </div>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <h1>Usuários Cadastrados</h1>
+<head th:replace="~{fragments/_layout :: header('Lista de Usuários - Admin', '/css/lista-usuarios.css')}">
+</head>
+
+<body class="admin-gamer-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
+<div class="container mt-4"> <h1>Usuários Cadastrados</h1>
     <div class="table-responsive">
-        <table class="table table-bordered text-center align-middle">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Apelido</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
+        <table class="table table-bordered table-hover text-center align-middle"> <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Apelido</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
             <tbody>
             <tr th:each="usuario : ${usuarios}">
                 <td th:text="${usuario.nome}"></td>
                 <td th:text="${usuario.apelido}"></td>
                 <td th:text="${usuario.email}"></td>
-                <td th:text="${usuario.roles}"></td>
+                <td th:text="${#strings.arrayJoin(usuario.roles, ', ')}"></td>
                 <td>
-                    <a th:href="@{'/administracao/editar/' + ${usuario.idPadrao}}" class="btn btn-sm btn-primary">Editar</a>
+                    <a th:if="${!#strings.equals(#authentication.principal.username, usuario.apelido) OR !#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+                       th:href="@{'/administracao/editar/' + ${usuario.idPadrao}}"
+                       class="btn btn-sm btn-primary">Editar</a>
+
+                    <span th:if="${#strings.equals(#authentication.principal.username, usuario.apelido) AND #authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+                          class="text-muted"><i>(Próprio Usuário)</i></span>
                 </td>
             </tr>
             </tbody>

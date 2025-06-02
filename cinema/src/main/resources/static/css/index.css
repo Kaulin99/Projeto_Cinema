@@ -1,12 +1,10 @@
-.main-container {
-    display: flex;
-    height: calc(100vh - 100px); /* Altura da tela menos o footer */
+/*
     padding: 20px;
     box-sizing: border-box;
     gap: 20px;
 }
 
-/* Coluna esquerda */
+
 .content-left {
     flex: 1;
     background-color: #f4f4f4;
@@ -15,7 +13,7 @@
     overflow-y: auto;
 }
 
-/* Coluna direita com rolagem interna */
+
 .content-right-scrollable {
     flex: 2;
     background-color: #eaeaea;
@@ -24,13 +22,163 @@
     overflow-y: auto;
 }
 
-/* Artigos */
+
 .content-right-scrollable article {
     max-height: 100%;
     overflow-y: auto;
 }
 
-/* Ajustar conteúdo principal para não ficar escondido atrás do footer */
+
 body {
     margin-bottom: 120px;
+}
+*/
+/* ===== Estilos Gerais da Home e Fundo ===== */
+body.home-valorant-theme {
+    background-image: url('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt2dd32dde46239342/62a28ce2313a48784ccff22c/VALORANT_Ep_5_Player_Card_Background_1920x1080.jpg'); /* Mesma imagem de fundo ou outra de sua escolha */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #0f1923; /* Cor escura de fallback do Valorant */
+    color: #ece8e1; /* Cor de texto padrão clara */
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px; /* Ajuste conforme a altura da sua navbar */
+}
+
+/* Ajuste para a navbar (o mesmo do valorant-detalhe.css, pode ser movido para um CSS global) */
+.navbar.bg-dark {
+    background-color: rgba(10, 10, 20, 0.9) !important;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #ff4655;
+}
+
+/* ===== Cabeçalho/Jumbotron da Home ===== */
+.home-header {
+    background-color: rgba(15, 25, 35, 0.8); /* Overlay escuro semi-transparente */
+    color: #ece8e1;
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: .3rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.home-header .fw-light { /* Para o título principal "Bem-vindo..." */
+    color: #fff !important;
+    font-weight: 300 !important;
+}
+
+.home-header .lead { /* Para o parágrafo de descrição */
+    color: #d0d0d0 !important;
+}
+
+.home-header .btn-primary {
+    background-color: #ff4655; /* Botão primário com cor Valorant */
+    border-color: #ff4655;
+}
+.home-header .btn-primary:hover {
+    background-color: #e03845;
+    border-color: #d02a38;
+}
+
+.home-header .btn-danger { /* Ajuste para o botão de Valorant */
+    background-color: #fd4556;
+    border-color: #fd4556;
+}
+.home-header .btn-danger:hover {
+    background-color: #e23242;
+    border-color: #c82333;
+}
+
+
+/* Container para as seções de conteúdo principal da Home */
+.home-content-section {
+    background-color: rgba(20, 30, 40, 0.88);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 70, 85, 0.2);
+}
+
+/* Títulos das seções na Home */
+.home-section-title {
+    font-size: 2.2em;
+    color: #ece8e1;
+    border-bottom: 2px solid #ff4655;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Cards dos Jogos */
+.game-card {
+    background-color: rgba(25, 35, 50, 0.9);
+    border: 1px solid rgba(79, 91, 103, 0.5);
+    color: #c0c0d0; /* Cor do texto dentro do card */
+    height: 100%; /* Para que os cards na mesma linha tenham a mesma altura */
+}
+
+.game-card .card-title {
+    color: #ff4655; /* Título do jogo com cor Valorant */
+    font-weight: bold;
+}
+
+.game-card img {
+    max-height: 180px; /* Ajuste a altura máxima da imagem do jogo no card */
+    object-fit: cover;
+    border-bottom: 1px solid rgba(79, 91, 103, 0.5);
+}
+.game-card ul {
+    padding-left: 20px;
+    font-size: 0.95em;
+}
+.game-card .btn-outline-primary {
+    border-color: #0d6efd; /* Cor original do Bootstrap para contraste ou mude para #ff4655 */
+    color: #0d6efd;
+}
+.game-card .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+.game-card .btn-outline-danger {
+    border-color: #fd4556;
+    color: #fd4556;
+}
+.game-card .btn-outline-danger:hover {
+    background-color: #fd4556;
+    color: white;
+}
+
+
+/* Cards dos Personagens em Destaque */
+.featured-character-card {
+    background-color: rgba(25, 35, 50, 0.9);
+    border: 1px solid rgba(79, 91, 103, 0.5);
+    color: #c0c0d0;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.featured-character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 70, 85, 0.25);
+}
+
+.featured-character-card img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%; /* Ícones redondos */
+    margin-bottom: 10px;
+    border: 2px solid #ff4655;
+}
+
+.featured-character-card .card-title, .featured-character-card h5 {
+    color: #ece8e1;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.featured-character-card a.text-dark:hover h5 {
+    color: #ff4655 !important; /* Muda a cor do nome ao passar o mouse sobre o link */
 }

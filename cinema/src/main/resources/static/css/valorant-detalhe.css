@@ -1,0 +1,297 @@
+/* ===== Estilos Gerais e Fundo ===== */
+body.valorant-theme {
+    background-image: url('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt2dd32dde46239342/62a28ce2313a48784ccff22c/VALORANT_Ep_5_Player_Card_Background_1920x1080.jpg'); /* Imagem de fundo tema Valorant - ESCOLHA UMA! */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #0f1923; /* Cor escura de fallback do Valorant */
+    color: #ece8e1; /* Cor de texto padrão clara (quase branco) */
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px; /* Ajuste conforme a altura da sua navbar */
+}
+
+/* Ajuste para a navbar, se estiver usando a do _layout.html que é bg-dark */
+.navbar.bg-dark {
+    background-color: rgba(10, 10, 20, 0.9) !important; /* Fundo da navbar um pouco transparente */
+    backdrop-filter: blur(8px); /* Efeito de desfoque no fundo da navbar */
+    border-bottom: 1px solid #ff4655; /* Detalhe vermelho Valorant */
+}
+
+/* Container principal para o conteúdo da página de detalhes */
+.agent-detail-container {
+    background-color: rgba(15, 25, 35, 0.88); /* Fundo semi-transparente mais escuro para a área de conteúdo */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 70, 85, 0.3); /* Borda sutil com cor Valorant */
+}
+
+/* ===== Seção Principal do Agente (Imagem, Nome, Role, Lore) ===== */
+.agent-main-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px; /* Espaço entre a imagem e a info */
+    align-items: flex-start;
+    margin-bottom: 40px; /* Espaço antes da próxima seção */
+}
+
+.agent-portrait-container {
+    flex: 1;
+    max-width: 380px; /* Limita o tamanho máximo da imagem */
+    min-width: 250px; /* Largura mínima para a imagem */
+    margin-right: auto; /* Tenta alinhar à esquerda em telas maiores */
+    margin-left: auto; /* Tenta alinhar à esquerda em telas maiores */
+}
+
+.agent-portrait-detail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 3px solid #ff4655;
+    box-shadow: 0 5px 20px rgba(255, 70, 85, 0.3); /* Sombra com cor Valorant */
+}
+
+.agent-text-info {
+    flex: 2;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.agent-name-detail {
+    font-size: 3.2em;
+    font-weight: 700;
+    color: #ece8e1;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 3px rgba(255, 70, 85, 0.5); /* Sombra no texto com cor Valorant */
+}
+
+.agent-role-detail {
+    font-size: 1.6em;
+    color: #ff4655; /* Cor tema do Valorant para a role */
+    font-weight: 500;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.section-title { /* Classe unificada para os títulos de seção */
+    font-size: 2em;
+    color: #ece8e1;
+    border-bottom: 2px solid #ff4655;
+    padding-bottom: 8px;
+    margin-top: 30px; /* Espaço acima dos títulos de seção */
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.agent-lore p {
+    font-size: 1.05em;
+    line-height: 1.75;
+    color: #c0c0c0;
+    text-align: justify;
+}
+
+/* ===== Seção de Habilidades ===== */
+.abilities-section .card {
+    background-color: rgba(25, 35, 50, 0.9);
+    border: 1px solid rgba(79, 91, 103, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+}
+
+.abilities-section .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(255, 70, 85, 0.2);
+}
+
+.ability-icon-container {
+    background-color: rgba(15, 25, 35, 0.8);
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(79, 91, 103, 0.5);
+    height: 90px; /* Altura fixa para o container do ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ability-icon-detail {
+    max-width: 60px; /* Tamanho para ícones de habilidade */
+    max-height: 60px;
+    object-fit: contain;
+}
+
+.abilities-section .card-title {
+    color: #ff4655;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 10px; /* Espaço acima do nome da habilidade */
+}
+
+.abilities-section .card-text {
+    font-size: 0.85em;
+    color: #b0b0b0;
+    line-height: 1.5;
+}
+
+/* ===== Seção de Falas ===== */
+.voice-lines-section .list-group-item {
+    background-color: rgba(25, 35, 50, 0.85);
+    border-color: rgba(79, 91, 103, 0.5);
+    color: #ece8e1;
+    padding: 10px 15px;
+}
+
+.voice-lines-section audio {
+    width: 100%;
+    margin-top: 8px;
+    height: 40px; /* Altura padrão para o player de áudio */
+}
+
+/* ===== Responsividade Adicional ===== */
+@media (max-width: 992px) { /* Tablets e telas menores */
+    .agent-main-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    .agent-portrait-container {
+        width: 65%;
+        max-width: 350px; /* Garante que a imagem não fique enorme mesmo com width % */
+        margin-bottom: 25px;
+        margin-right: 0; /* Reseta margens para centralização com flex-direction column */
+        margin-left: 0;
+    }
+    .agent-text-info {
+        text-align: center;
+        width: 100%;
+    }
+    .agent-lore p {
+        text-align: left; /* Pode manter justificado ou mudar */
+    }
+    .agent-name-detail {
+        font-size: 2.6em;
+    }
+    .agent-role-detail {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 576px) { /* Celulares */
+    body.valorant-theme {
+        padding-top: 56px; /* Ajuste para navbar menor */
+    }
+    .agent-detail-container {
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .agent-portrait-container {
+        width: 85%;
+    }
+    .agent-name-detail {
+        font-size: 2.2em;
+    }
+    .agent-role-detail {
+        font-size: 1.2em;
+    }
+    .section-title {
+        font-size: 1.7em;
+    }
+    .agent-lore p {
+        font-size: 0.95em;
+    }
+    .abilities-section .card-body {
+        padding: 0.8rem;
+    }
+    .abilities-section .card-title {
+        font-size: 1em;
+    }
+    .abilities-section .card-text {
+        font-size: 0.8em;
+    }
+}
+/* ============================================= */
+/* ===== Estilos para Estrelas de Avaliação (Tema Valorant) ===== */
+/* ============================================= */
+
+/* Estrelas de Avaliação Interativas (Input do Usuário) */
+.rating-stars-input {
+    display: inline-flex; /* Alinha as estrelas e permite que fiquem na mesma linha */
+    flex-direction: row-reverse; /* Magia do CSS: faz as estrelas preencherem da direita para a esquerda no hover/seleção */
+    justify-content: flex-end; /* Alinha as estrelas à esquerda na prática, devido ao row-reverse */
+}
+
+.rating-stars-input input[type="radio"] {
+    display: none; /* Esconde os botões de rádio reais, vamos estilizar os labels */
+}
+
+.rating-stars-input label {
+    font-size: 2.2em;       /* Tamanho das estrelas interativas */
+    color: #4a525a;         /* Cor da estrela vazia - um cinza escuro azulado */
+    cursor: pointer;
+    padding: 0 0.05em;      /* Pequeno espaço entre as estrelas */
+    transition: color 0.2s ease-in-out, text-shadow 0.2s ease-in-out; /* Transição suave */
+    text-shadow: 0 0 2px rgba(0,0,0,0.5); /* Sombra sutil para profundidade */
+}
+
+/* Estrela checada e as anteriores (à "direita" no HTML, esquerda visual devido ao row-reverse) */
+.rating-stars-input input[type="radio"]:checked ~ label,
+    /* Efeito hover: estrela sob o mouse e todas as anteriores ficam com a cor de destaque */
+.rating-stars-input label:hover,
+.rating-stars-input label:hover ~ label {
+    color: #ff4655; /* Vermelho Valorant para estrela preenchida/hover */
+    text-shadow:
+            0 0 5px #ff4655,
+            0 0 10px #ff4655,
+            0 0 15px rgba(255, 70, 85, 0.7); /* Efeito de brilho (glow) neon */
+}
+
+/* Estrelas de Exibição (para Média da Comunidade e Avaliação do Usuário já feita) */
+.rating-stars-display .star-filled {
+    color: #ff4655;         /* Vermelho Valorant para estrelas preenchidas */
+    font-size: 1.3em;       /* Tamanho para estrelas de exibição (pode ser diferente das de input) */
+    text-shadow: 0 0 4px rgba(255, 70, 85, 0.6); /* Brilho sutil */
+    margin-right: 1px;      /* Pequeno espaço entre estrelas de exibição */
+}
+
+.rating-stars-display .star-empty {
+    color: #4a525a;         /* Cor da estrela vazia, igual às de input */
+    font-size: 1.3em;
+    margin-right: 1px;
+}
+
+/* Ajuste no botão de submissão de avaliação para o tema Valorant */
+.btn-valorant-custom { /* Certifique-se que seu botão no HTML tem esta classe */
+    background-color: #ff4655;
+    border-color: #e03845;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-valorant-custom:hover, .btn-valorant-custom:focus {
+    background-color: #e03845;
+    border-color: #d02a38;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Ajuste na cor do link "Faça login para avaliar" para o tema Valorant */
+.valorant-theme a, .valorant-list-theme a, .lol-detail-theme a, .lol-list-theme a, .home-valorant-theme a, .admin-gamer-theme a {
+    /* Se você tiver uma cor de link padrão para o tema, defina aqui,
+       caso contrário, o estilo inline no HTML para o link de login pode ser mantido ou ajustado.
+       Exemplo:
+       color: #00BFFF; (para o admin gamer theme)
+       color: #ff4655; (para o valorant theme)
+    */
+}
+/* No seu HTML, o link já está com style="color: #ff4655;", o que é bom para o tema Valorant. */

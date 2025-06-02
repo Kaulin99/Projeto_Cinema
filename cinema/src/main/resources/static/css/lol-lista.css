@@ -1,0 +1,80 @@
+/* ===== Estilos Gerais para a Página de Lista de Campeões LoL ===== */
+body.lol-list-theme {
+    background-image: url('https://ddragon.leagueoflegends.com/cdn/img/champion/centered/Aatrox_0.jpg'); /* Imagem de fundo tema LoL - Escolha uma ou use um padrão/gradiente */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #010a13; /* Azul bem escuro, cor de fallback do LoL */
+    color: #c8aa6e; /* Dourado pálido/Bege para texto padrão */
+    font-family: 'Georgia', 'Times New Roman', serif; /* Fonte com serifa para um toque mais clássico/épico */
+    padding-top: 70px; /* Ajuste para a navbar fixa */
+}
+
+/* Ajuste para a navbar (pode estar em um CSS global) */
+.navbar.bg-dark { /* Supondo que sua navbar ainda use bg-dark */
+    background-color: rgba(1, 5, 10, 0.9) !important; /* Azul mais escuro e transparente */
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #c89b3c; /* Detalhe dourado LoL */
+}
+
+/* Cabeçalho da Página de Lista */
+.list-page-header-lol h1.display-4 {
+    color: #f0e6d2; /* Dourado mais claro/pergaminho para o título principal */
+    font-weight: normal; /* Fontes serifadas muitas vezes ficam bem sem negrito excessivo */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    font-family: 'BeaufortforLOL', 'Georgia', serif; /* Fonte temática do LoL se disponível, senão fallback */
+}
+
+.list-page-header-lol p.lead {
+    color: #a09480; /* Um tom de bege/dourado mais suave para o subtítulo */
+}
+
+/* Cards dos Campeões na Lista */
+.champion-list-card {
+    background-color: rgba(10, 25, 40, 0.85); /* Fundo do card com azul escuro e transparência */
+    border: 1px solid #2c3e50; /* Borda azul acinzentada */
+    color: #c8aa6e; /* Cor do texto padrão dentro do card */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    display: block;
+    border-radius: 4px; /* Bordas levemente arredondadas */
+    overflow: hidden; /* Para garantir que a imagem não ultrapasse as bordas arredondadas */
+}
+
+.champion-list-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2); /* Sombra com um leve tom dourado/bronze no hover */
+    border-color: #c89b3c;
+}
+
+.champion-list-card .card-img-top {
+    /* As imagens de loading do LoL são retangulares e já se ajustam bem */
+    /* Não precisamos de altura mínima fixa aqui, deixamos a imagem ditar */
+    border-bottom: 1px solid #2c3e50;
+    aspect-ratio: 308 / 560; /* Proporção aproximada das loading arts para consistência se necessário */
+    object-fit: cover; /* Garante que a imagem cubra a área, pode cortar um pouco se a proporção não bater */
+}
+
+.champion-list-card .card-body {
+    padding: 0.8rem 1rem; /* Ajuste no padding */
+}
+
+.champion-list-card .card-title {
+    color: #f0e6d2; /* Nome do campeão em dourado claro */
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: 'BeaufortforLOL', 'Georgia', serif; /* Fonte temática */
+    margin-bottom: 0.25rem; /* Menor margem abaixo do título */
+}
+
+.champion-list-card .card-text { /* Para o título do campeão */
+    color: #7c8799; /* Azul acinzentado para o título */
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+/* Mensagem de "Nenhum campeão encontrado" */
+.no-champions-message {
+    color: #a09480; /* Cor dourada pálida para a mensagem */
+    font-size: 1.2em;
+}

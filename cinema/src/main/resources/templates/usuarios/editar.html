@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Perfil</title>
-    <link rel="stylesheet" th:href="@{/css/bonito.css}">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!-- Sua navbar existente -->
-</nav>
+<head th:replace="~{fragments/_layout :: header('Editar Perfil - GamesCon', '/css/lol-theme.css')}">
+</head>
+
+<body class="lol-auth-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
 
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <div class="card shadow p-4">
+            <div class="auth-card-lol shadow p-4">
                 <h3 class="text-center mb-4">Editar Perfil</h3>
-                <!-- Alerta: apelido já em uso -->
-                <div th:if="${erroApelido}" class="alert alert-danger alert-dismissible fade show" role="alert">
+
+                <div th:if="${erroApelido}" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
                     <strong>Erro!</strong> Apelido já está em uso. Escolha outro.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
 
-
                 <form th:action="@{/usuarios/editar/{id}(id=${usuario.idPadrao})}" th:object="${usuario}" method="post">
                     <input type="hidden" th:field="*{idPadrao}" />
-                    
+
                     <div class="mb-3">
-                        <label class="form-label">Nome:</label>
-                        <input type="text" class="form-control" th:field="*{nome}" required />
+                        <label for="nomeEdit" class="form-label">Nome:</label> <input type="text" class="form-control" id="nomeEdit" th:field="*{nome}" required />
                     </div>
-                
+
                     <div class="mb-3">
-                        <label class="form-label">Apelido:</label>
-                        <input type="text" class="form-control" th:field="*{apelido}" required />
+                        <label for="apelidoEdit" class="form-label">Apelido:</label> <input type="text" class="form-control" id="apelidoEdit" th:field="*{apelido}" required />
                     </div>
-                
+
                     <div class="mb-3">
-                        <label class="form-label">Email:</label>
-                        <input type="email" class="form-control" th:field="*{email}" required />
+                        <label for="emailEdit" class="form-label">Email:</label> <input type="email" class="form-control" id="emailEdit" th:field="*{email}" required />
                     </div>
-                
+
                     <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-success">Salvar Alterações</button>
-                        <a href="/usuarios/perfil" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success me-2">Salvar Alterações</button>
+                        <a th:href="@{/usuarios/perfil}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </form>
             </div>
@@ -53,10 +44,7 @@
     </div>
 </div>
 
-<footer class="bg-dark text-white py-4 mt-auto">
-    <!-- Seu footer existente -->
-</footer>
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

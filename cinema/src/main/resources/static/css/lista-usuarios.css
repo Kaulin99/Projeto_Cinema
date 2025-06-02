@@ -1,155 +1,228 @@
-/*.container{
-    text-align: center;
-    width: 90%;
-    margin: auto;
-    background-color: #363636;
-    height: 100%;
-    border: 1px solid #000000;
-    border-radius: 10px;
+/* ===== Tema Gamer Escuro para Páginas Admin ===== */
+
+body.admin-gamer-theme {
+    background-color: #121212; /* Fundo principal bem escuro */
+    /* Opcional: Adicionar uma textura sutil ou imagem de fundo abstrata escura */
+    /* background-image: url('/img/dark-abstract-pattern.png'); */
+    color: #e0e0e0; /* Texto principal claro */
+    font-family: 'Roboto', 'Open Sans', Arial, sans-serif; /* Fonte moderna sans-serif */
+    padding-top: 70px; /* Para a navbar fixa */
 }
-.container table{
-    font-size: 18px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: auto;
-    background-color: #555;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
-}
-.form_container{
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    margin: auto;
-    width: 50%;
-    height: 60%;
-    background-color: #363636;
-    border-radius: 10px;
-    border: 1px solid #000000;
-}
-.form_grupo{
-    text-align: justify;
-    width: 90%;
-    margin: auto;
+
+/* Ajuste para a navbar (garantindo consistência com outros temas, se houver) */
+/* Se você quer uma navbar específica para o tema admin, adicione estilos aqui.
+   Caso contrário, os estilos de _layout.html ou de outros temas podem ser suficientes.
+   Este exemplo assume que a navbar de _layout.html (bg-dark) já é adequada.
+   Se precisar de uma cor de borda específica:
+.admin-gamer-theme .navbar.fixed-top {
+    border-bottom: 1px solid #00BFFF; /* Ciano como destaque */
+
+
+
+/* Container principal do conteúdo */
+.admin-gamer-theme .container {
+    background-color: rgba(26, 26, 30, 0.85); /* Caixa de conteúdo um pouco mais clara e semi-transparente */
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 30px;
     margin-bottom: 30px;
-    position: relative;
-    border-bottom: 1px solid #000000;
-}
-.form_label{
-    text-align: justify;
-    color: white;
-    font-size: 20px;
-    font-family: Arial, sans-serif;
-}
-.form_button button{
-    background-color: #555;
-    border: none;
-    color: white;
-    width: 10%;
-    padding: 1% 2%;
-    margin: 0 4%;
-    cursor: pointer;
-    font-size: 16px;
-}
-.form_input {
-    background-color: #555;
-    color: white;
-    width: 50%;
-    margin: 0 4%;
-    cursor: pointer;
-    font-size: 16px;
-}
-h1{
-    text-align: center;
-    color: white;
-    font-size: 30px;
-    font-family: Arial, sans-serif;
-}
-*/
-.container {
-    background-color: #363636;
-    border-radius: 10px;
-    color: white;
-    padding: 2rem;
-    margin-top: 2rem;
+    border: 1px solid #007bff; /* Borda azul vibrante */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
 }
 
-.table {
-    background-color: #555;
-    color: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.form_container {
-    background-color: #363636;
-    color: white;
-    border-radius: 10px;
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 600px;
-}
-
-.form_grupo {
+.admin-gamer-theme h1,
+.admin-gamer-theme h2 {
+    color: #00BFFF; /* Ciano para títulos principais */
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
     margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+    padding-bottom: 0.5rem;
 }
 
-.form_label {
-    display: block;
-    margin-bottom: 0.5rem;
+/* Estilos para a Tabela de Lista de Usuários */
+.admin-gamer-theme .table {
+    color: #c0c0c0; /* Texto da tabela */
+    border-color: #007bff;
+}
+
+.admin-gamer-theme .table thead {
+    background-color: rgba(0, 123, 255, 0.2); /* Fundo do cabeçalho da tabela */
+    color: #00BFFF; /* Texto do cabeçalho da tabela */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-gamer-theme .table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Efeito hover nas linhas */
+    color: #fff;
+}
+
+.admin-gamer-theme .table th,
+.admin-gamer-theme .table td {
+    border-color: rgba(0, 123, 255, 0.25);
+    vertical-align: middle;
+}
+
+.admin-gamer-theme .btn-primary {
+    background-color: #007bff;
+    border-color: #0069d9;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+.admin-gamer-theme .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Estilos para Formulários (Página Editar Usuário) */
+.admin-gamer-theme .form_container { /* Já tem essa classe no seu HTML */
+    /* O estilo do .container já se aplica, mas podemos adicionar mais se necessário */
+}
+
+.admin-gamer-theme .form_label { /* Já tem essa classe no seu HTML */
+    color: #00BFFF; /* Labels com cor de destaque */
     font-weight: bold;
+    margin-bottom: 0.3rem;
+    display: block;
 }
 
-.form_input, select {
-    width: 100%;
-    background-color: #555;
-    color: white;
-    border: 1px solid #888;
-    padding: 0.5rem;
-    border-radius: 5px;
+.admin-gamer-theme .form_input.form-control, /* Combinação de suas classes com Bootstrap */
+.admin-gamer-theme .form-control {
+    background-color: rgba(10, 10, 15, 0.7); /* Fundo escuro para inputs */
+    border: 1px solid #007bff;
+    color: #e0e0e0; /* Texto claro no input */
+    border-radius: 4px;
+}
+.admin-gamer-theme .form_input.form-control:focus,
+.admin-gamer-theme .form-control:focus {
+    background-color: rgba(0, 0, 5, 0.8);
+    border-color: #00BFFF;
+    box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+    color: #fff;
 }
 
-.form_button {
-    text-align: center;
-    margin-top: 1rem;
+.admin-gamer-theme .btn-success {
+    background-color: #28a745; /* Verde gamer */
+    border-color: #1e7e34;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+}
+.admin-gamer-theme .btn-success:hover {
+    background-color: #1e7e34;
+    border-color: #155724;
 }
 
-.form_button button {
-    background-color: #555;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
+/* Estilização dos Modais de Erro */
+.admin-gamer-theme .modal-content {
+    background-color: #1a1a1e;
+    border: 1px solid #007bff;
+    color: #e0e0e0;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 2rem;
+.admin-gamer-theme .modal-header {
+    background-color: #dc3545; /* Mantendo o vermelho para erros */
+    color: #fff;
+    border-bottom: 1px solid #007bff;
+}
+.admin-gamer-theme .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(2);
 }
 
-footer {
-    background-color: #212529;
-    color: white;
-    padding: 1rem 0;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+.admin-gamer-theme .modal-footer {
+    border-top: 1px solid #007bff;
 }
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+.admin-gamer-theme .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #5a6268;
 }
-
-body {
-    display: flex;
-    flex-direction: column;
+.admin-gamer-theme .modal-footer .btn-secondary:hover {
+    background-color: #545b62;
+    border-color: #4e555b;
 }
-
-main {
-    flex: 1;
+/* ===== Estilos para a Tabela de Lista de Usuários - Tema Neon Gamer ===== */
+.admin-gamer-theme .table {
+    color: #c0c0c0; /* Texto da tabela um pouco mais suave */
+    border: 1px solid #007bff; /* Borda externa da tabela com o azul base */
+    /* Opcional: uma sombra sutil para destacar a tabela do fundo */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.15);
+    margin-top: 1.5rem; /* Um pouco mais de espaço acima da tabela */
 }
 
+.admin-gamer-theme .table thead {
+    /* Removido background-color para um visual mais limpo, o texto neon se destacará */
+    color: #00BFFF; /* Azul Ciano Neon para o texto do cabeçalho */
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.7), 0 0 12px rgba(0, 191, 255, 0.5); /* Efeito de brilho neon */
+    text-transform: uppercase;
+    letter-spacing: 1px; /* Espaçamento entre letras para um visual mais "tech" */
+}
+
+.admin-gamer-theme .table th {
+    border-bottom: 2px solid #00BFFF; /* Linha neon mais grossa abaixo do cabeçalho */
+    border-top: none; /* Remove a borda superior padrão do Bootstrap para um visual mais limpo */
+    border-left: none;
+    border-right: none;
+    padding: 0.85rem 0.75rem; /* Ajuste no padding do cabeçalho */
+}
+
+.admin-gamer-theme .table td {
+    border-color: rgba(0, 123, 255, 0.2); /* Bordas internas das células mais suaves */
+    padding: 0.85rem 0.75rem; /* Ajuste no padding das células */
+}
+
+.admin-gamer-theme .table tbody tr {
+    background-color: transparent; /* Garante que as linhas não tenham fundo por padrão */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.admin-gamer-theme .table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.15); /* Fundo azulado sutil no hover */
+    color: #fff; /* Texto mais claro no hover */
+    /* Opcional: adicionar um brilho à linha inteira no hover
+    box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.3);
+    */
+}
+
+/* Ajuste nos botões dentro da tabela, se necessário, para o tema neon */
+.admin-gamer-theme .table .btn-primary {
+    background-color: transparent;
+    border: 1px solid #00BFFF;
+    color: #00BFFF;
+    padding: 0.25rem 0.6rem; /* Botões um pouco menores na tabela */
+    font-size: 0.85em;
+    text-shadow: 0 0 3px rgba(0, 191, 255, 0.5);
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-gamer-theme .table .btn-primary:hover {
+    background-color: #00BFFF;
+    color: #121212; /* Texto escuro no botão com fundo neon */
+    border-color: #00BFFF;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.7);
+}
+
+/* Certifique-se que as outras regras do tema (body, container, h1) estão como antes */
+/* Exemplo: */
+body.admin-gamer-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+    padding-top: 70px;
+}
+
+.admin-gamer-theme .container {
+    background-color: rgba(26, 26, 30, 0.85);
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #007bff;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+}
+
+.admin-gamer-theme h1 {
+    color: #00BFFF;
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+/* ... Mantenha as outras regras para formulários, modais, etc. ... */

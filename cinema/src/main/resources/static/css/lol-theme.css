@@ -1,0 +1,171 @@
+body.lol-auth-theme {
+    background-image: url('https://universe.leagueoflegends.com/images/bg_gradient_1920x1080.jpg');
+    background-color: #010a13;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    color: #c8aa6e;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    padding-top: 70px;
+    height: 100%;
+}
+
+.navbar.bg-dark { /* Estilo para navbar, se usado com este tema */
+    background-color: rgba(1, 5, 10, 0.92) !important;
+    backdrop-filter: blur(7px);
+    border-bottom: 1px solid #c89b3c;
+}
+
+.auth-card-lol {
+    background-color: rgba(5, 15, 25, 0.92);
+    border: 1px solid #4b371c;
+    border-radius: 8px;
+    box-shadow: 0 0 35px rgba(10, 30, 60, 0.6), inset 0 0 20px rgba(200, 155, 60, 0.15);
+    padding: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.auth-card-lol h2,
+.auth-card-lol h3 {
+    color: #f0e6d2;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 0.5px;
+}
+
+.form-label {
+    color: #a09480;
+    font-size: 1em;
+    margin-bottom: .4rem;
+}
+
+.form-control {
+    background-color: rgba(1, 10, 19, 0.75);
+    border: 1px solid #3c5c7c;
+    color: #ece8e1;
+    border-radius: 4px;
+    padding: .7rem .85rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-control::placeholder {
+    color: #5c6f82;
+}
+
+.form-control:focus {
+    background-color: rgba(1, 10, 19, 0.9);
+    border-color: #c89b3c;
+    box-shadow: 0 0 0 0.25rem rgba(200, 155, 60, 0.3);
+    color: #ece8e1;
+}
+
+.btn-lol-custom {
+    background: linear-gradient(180deg, #3a2a0f, #1e1507);
+    border: 1px solid #c8aa6e;
+    color: #f0e6d2;
+    font-weight: bold;
+    padding: .8rem 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn-lol-custom:hover, .btn-lol-custom:focus {
+    background: linear-gradient(180deg, #4a3a1f, #2e2517);
+    border-color: #f0e6d2;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15);
+    transform: translateY(-1px);
+}
+
+.profile-data-item {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(60, 92, 124, 0.3);
+}
+.profile-data-item:last-child {
+    border-bottom: none;
+}
+.profile-data-item .form-label {
+    margin-bottom: 0.1rem;
+    font-size: 0.9em;
+    color: #a09480;
+}
+.profile-data-item div {
+    font-size: 1.1em;
+    color: #ece8e1;
+    word-break: break-all;
+}
+
+.lol-auth-theme .btn-primary {
+    background-color: #1a3e63; border-color: #122a42; color: #c8aa6e;
+}
+.lol-auth-theme .btn-primary:hover {
+    background-color: #122a42; border-color: #0a1f30;
+}
+.lol-auth-theme .btn-warning {
+    background-color: #c89b3c; border-color: #a77a1a; color: #010a13;
+}
+.lol-auth-theme .btn-warning:hover {
+    background-color: #a77a1a; border-color: #865f08;
+}
+.lol-auth-theme .btn-danger {
+    background-color: #dc3545; border-color: #dc3545; color: #fff;
+}
+.lol-auth-theme .btn-danger:hover {
+    background-color: #c82333; border-color: #bd2130;
+}
+.lol-auth-theme .btn-success {
+    background-color: #1e7e34; border-color: #155724; color: #fff;
+}
+.lol-auth-theme .btn-success:hover {
+    background-color: #155724; border-color: #0b2e13;
+}
+.lol-auth-theme .btn-secondary {
+    background-color: #3c5c7c; border-color: #2c4a64; color: #ece8e1;
+}
+.lol-auth-theme .btn-secondary:hover {
+    background-color: #2c4a64; border-color: #1c3a54;
+}
+
+.modal-content.lol-auth-theme {
+    background-color: #0a1428; border: 1px solid #c89b3c; color: #c8aa6e; border-radius: 5px;
+}
+.modal-header.lol-auth-theme {
+    background-color: #785a28; color: #f0e6d2; border-bottom: 1px solid #4b371c; padding: 1rem 1.5rem;
+}
+.modal-header.lol-auth-theme .btn-close {
+    filter: invert(90%) sepia(25%) saturate(500%) hue-rotate(350deg) brightness(100%) contrast(90%);
+}
+.modal-body.lol-auth-theme {
+    color: #c8aa6e; padding: 1.5rem;
+}
+.modal-footer.lol-auth-theme {
+    border-top: 1px solid #3c5c7c; padding: 0.75rem 1.5rem;
+}
+
+.lol-auth-theme #confirmarExclusaoModal .modal-header.lol-auth-theme { /* Especificidade para o modal de exclusão */
+    background-color: #c82333; /* Vermelho para header de exclusão */
+    color: #fff;
+    border-bottom: 1px solid #a71d2a;
+}
+
+.lol-auth-theme .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.5);
+    color: #f8d7da;
+}
+.lol-auth-theme .alert-danger .btn-close {
+    filter: invert(80%) sepia(10%) saturate(5000%) hue-rotate(320deg) brightness(100%) contrast(100%);
+}
+
+.auth-form-link a { color: #a09480; font-size: 0.9em; }
+.auth-form-link a:hover { color: #c8aa6e; text-decoration: underline; }

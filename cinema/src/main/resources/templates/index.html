@@ -1,161 +1,151 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>GamesCon</title>
-    <link rel="stylesheet" th:href="@{/css/bonito.css}">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/_layout :: header('GamesCon - Avalie Personagens', '/css/index.css')}">
+    <link rel="stylesheet" type="text/css" th:href="@{}">
+    <style>
+        /* Estilos que eram inline antes, agora podem estar no home-theme.css ou aqui se muito específicos */
+    </style>
 </head>
-<body>
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">GamesCon</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/genericos/sobre">Sobre</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" href="/administracao/lista-usuarios">Admin</a>
-                </li>
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Conta
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/usuarios/perfil">Perfil</a></li>
-                        <li>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="d-flex" sec:authorize="isAnonymous()">
-                <a class="btn btn-outline-light" href="/usuarios/login">Login</a>
-                 <a class="btn btn-outline-light" href="/usuarios/cadastro">Cadastrar</a>
-            </div>
+<body class="home-valorant-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
+<header class="py-5 text-center home-header">
+    <div class="row py-lg-3">
+        <div class="col-lg-8 col-md-10 mx-auto"><h1 class="fw-light display-4">
+            Bem-vindo à GamesCon!</h1>
+            <p class="lead mt-3">Sua plataforma definitiva para explorar, discutir e avaliar os personagens mais
+                icônicos dos seus E-Sports favoritos. Mergulhe nas informações, compartilhe suas opiniões e conecte-se
+                com outros fãs!</p>
+
         </div>
     </div>
-</nav>
+</header>
 
-<!-- USUÁRIO AUTENTICADO -->
-<div class="text-end me-4 mt-2" sec:authorize="isAuthenticated()">
-    <span><strong>Bem-vindo </strong> <span sec:authentication="name"></span></span> |
-    <span><strong>LOGADO</strong></span>
-</div>
+<main class="container my-4">
+    <section class="mb-5 home-content-section"><h2 class="home-section-title">Nossos Jogos em Destaque</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card game-card"><img src="/img/lol.jpeg" class="card-img-top" alt="League of Legends">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">League of Legends</h3>
+                        <p class="card-text">Explore o vasto universo de Runeterra! Na nossa seção de League of Legends,
+                            você pode:</p>
+                        <ul class="mb-3">
+                            <li>Visualizar todos os campeões.</li>
+                            <li>Conhecer suas habilidades e lore.</li>
+                            <li>(Em breve) Avaliar seus campeões favoritos e ver rankings.</li>
+                        </ul>
+                        <a th:href="@{/lol/campeoes}" class="btn btn-outline-primary mt-auto">Ver Lista de Campeões</a>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-6 mb-4">
+                <div class="card game-card"><img src="/img/va.jpeg" class="card-img-top" alt="Valorant">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">Valorant</h3>
+                        <p class="card-text">Entre no mundo tático do Protocolo Valorant! Aqui você encontra:</p>
+                        <ul class="mb-3">
+                            <li>Todos os agentes e suas funções.</li>
+                            <li>Detalhes de habilidades, lore e falas.</li>
+                            <li>(Em breve) Avalie os agentes e suas performances.</li>
+                        </ul>
+                        <a th:href="@{/valorant/agentes}" class="btn btn-outline-danger mt-auto">Ver Lista de
+                            Agentes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="container my-4">
-    <div class="row">
-        <!-- Coluna Esquerda -->
-        <div class="col-md-4 mb-3">
-            <div class="p-3 bg-light rounded shadow-sm h-100">
-                <h4>Seção de Navegação</h4>
-                <p>Links, descrições, menus, etc.</p>
+    <section class="home-content-section"><h2 class="home-section-title">Personagens Populares</h2>
+
+        <h3 class="mb-3 mt-4 text-light">League of Legends</h3>
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/lol/campeoes/Jinx'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="http://ddragon.leagueoflegends.com/cdn/14.10.1/img/champion/Jinx.png" class="mx-auto"
+                             alt="Jinx">
+                        <h5 class="mt-2 card-title">Jinx</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/lol/campeoes/AurelionSol'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="http://ddragon.leagueoflegends.com/cdn/14.10.1/img/champion/AurelionSol.png"
+                             class="mx-auto" alt="Ahri">
+                        <h5 class="mt-2 card-title">Aurelion Sol</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/lol/campeoes/Ahri'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="http://ddragon.leagueoflegends.com/cdn/14.10.1/img/champion/Ahri.png" class="mx-auto"
+                             alt="Ahri">
+                        <h5 class="mt-2 card-title">Ahri</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/lol/campeoes/Yone'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="http://ddragon.leagueoflegends.com/cdn/14.10.1/img/champion/Yone.png" class="mx-auto"
+                             alt="Ahri">
+                        <h5 class="mt-2 card-title">Yone</h5>
+                    </div>
+                </a>
             </div>
         </div>
 
-        <!-- Coluna Direita com rolagem -->
-        <div class="col-md-8">
-            <div class="p-3 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 70vh;">
-                <h2>Bem-vindo ao <strong>GamesCon</strong></h2>
-                <p>Seu site de jogos oficial.</p>
-                <article>
-                    <p class="text-justify">orem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mauris arcu,
-                        sollicitudin non eros non, dapibus feugiat magna. Vivamus maximus erat eget luctus varius.
-                        Quisque quis
-                        ipsum luctus, ultrices magna eu, lacinia diam. Sed a sapien interdum, luctus ex sed, elementum
-                        sem.
-                        Aliquam ac auctor ligula. Curabitur finibus suscipit nibh in tristique. Phasellus tellus nibh,
-                        ullamcorper nec ultricies sed, mattis in orci. Suspendisse id imperdiet neque. Sed in nisi sed
-                        dolor
-                        fringilla aliquam sed mollis tortor. Nullam lobortis tortor ac sem iaculis iaculis. Suspendisse
-                        vitae
-                        vulputate ligula, id porttitor velit. Donec arcu ligula, mollis a dapibus non, consequat sed
-                        est.</p>
-                    <p class="text-justify">Vivamus gravida, magna ac dictum volutpat, lectus quam convallis orci, eu
-                        malesuada
-                        erat leo in nisl. Proin suscipit faucibus fringilla. Mauris sodales, enim ut imperdiet
-                        consequat, enim
-                        orci sagittis nisl, vel posuere leo elit eu felis. Sed tempus risus eu velit laoreet, sed
-                        consectetur
-                        lacus ultricies. Integer tincidunt congue auctor. Praesent id ullamcorper nunc, interdum posuere
-                        mi.
-                        Cras at ultrices nisl. Vivamus dignissim ligula dignissim suscipit cursus.</p>
-                    <p class="text-justify">Fusce volutpat sit amet arcu in sagittis. Vivamus in enim sit amet lacus
-                        pharetra
-                        sagittis. Suspendisse potenti. Donec mattis aliquet tempus. Nulla fermentum scelerisque erat,
-                        quis
-                        pharetra arcu mattis id. Etiam ultricies odio eget urna bibendum, vestibulum imperdiet metus
-                        pretium.
-                        Suspendisse eget eros id mauris rutrum euismod. Morbi vitae tristique enim.</p>
-                    <p class="text-justify">Quisque ut ligula eu elit facilisis hendrerit non ut augue. Mauris convallis
-                        venenatis
-                        laoreet. Aenean ut finibus elit. Ut in odio vitae lectus laoreet aliquet in et purus. Cras
-                        auctor eget
-                        neque ut bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean sodales
-                        faucibus
-                        ultricies. Morbi a diam imperdiet, finibus nunc ut, lobortis libero. Fusce congue, erat vel
-                        vulputate
-                        euismod, leo sapien varius ipsum, non faucibus magna ante quis augue. In viverra nisl non mollis
-                        tincidunt. Integer non placerat risus, nec semper arcu. Mauris tortor magna, viverra sit amet
-                        ipsum
-                        quis, hendrerit gravida augue. Nulla eget lacus eu ipsum vehicula fringilla. Vivamus molestie
-                        erat eu
-                        nibh consequat condimentum. Vivamus lectus magna, convallis sed ante vel, accumsan rhoncus
-                        libero.
-                        Praesent quis enim facilisis tortor commodo molestie.</p>
-                    <p class="par_right">In pharetra tempus purus et fermentum. Nullam tortor metus, faucibus id diam
-                        id,
-                        aliquam condimentum lacus. Mauris at ultricies nibh. Aenean in mi eget ex dignissim lacinia.
-                        Quisque
-                        ultricies urna sapien, et luctus libero sollicitudin ac. Morbi imperdiet congue mauris et
-                        pharetra.
-                        Morbi euismod arcu vel libero tincidunt ultricies. Vestibulum eu lacinia ligula. Cras eget quam
-                        id elit
-                        eleifend rutrum. Nullam scelerisque sollicitudin massa, vel malesuada mauris placerat a. Nulla
-                        porta
-                        felis at justo sodales, nec tincidunt lorem scelerisque. Orci varius natoque penatibus et magnis
-                        dis
-                        parturient montes, nascetur ridiculus mus. Aenean finibus viverra nisl, vel tristique ante
-                        varius sit
-                        amet.</p>
-                    <!-- demais parágrafos -->
-                </article>
+        <h3 class="mb-3 mt-4 text-light">Valorant</h3>
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/valorant/agentes/add6443a-41bd-e414-f6ad-e58d267f4e95'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png"
+                             class="mx-auto" alt="Jett">
+                        <h5 class="mt-2 card-title">Jett</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/valorant/agentes/1e58de9c-4950-5125-93e9-a0aee9f98746'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png"
+                             class="mx-auto" alt="Sage">
+                        <h5 class="mt-2 card-title">Killjoy</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/valorant/agentes/320b2a48-4d9b-a075-30f1-1f93a9b638fa'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png"
+                             class="mx-auto" alt="Sage">
+                        <h5 class="mt-2 card-title">Sova</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/valorant/agentes/8e253930-4c05-31dd-1b6c-968525494517'}" class="text-decoration-none">
+                    <div class="card featured-character-card p-3">
+                        <img src="https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png"
+                             class="mx-auto" alt="Sage">
+                        <h5 class="mt-2 card-title">Omen</h5>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
-<!-- FOOTER -->
-<footer class="bg-dark text-white py-4 mt-auto">
-    <div class="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start">
-        <div class="mb-2 mb-md-0">
-            <strong>GamesCon.com</strong>
-        </div>
-        <div>
-            <strong>Contatos:</strong><br>
-            <small>Email: 082220015@faculdade.cefsa.edu.br</small><br>
-            <small>Email: 082220027@faculdade.cefsa.edu.br</small>
-        </div>
-    </div>
-</footer>
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

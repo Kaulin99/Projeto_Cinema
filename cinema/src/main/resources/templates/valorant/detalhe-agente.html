@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/_layout :: header( (${agente != null ? agente.nome : 'Agente'}) + ' - Detalhes', '/css/valorant-detalhe.css')}"></head>
+
+<body class="valorant-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
+<div class="agent-detail-container" th:if="${agente != null}">
+
+    <section class="agent-main-info">
+        <div class="agent-portrait-container">
+            <img th:if="${agente.fullPortrait != null}" th:src="${agente.fullPortrait}"
+                 th:alt="${'Retrato de ' + agente.nome}" class="agent-portrait-detail">
+            <div th:unless="${agente.fullPortrait != null}"
+                 class="img-fluid rounded shadow d-flex align-items-center justify-content-center bg-secondary text-white"
+                 style="height: 400px; border: 3px solid #ff4655;">
+                <span>Retrato Indisponível</span>
+            </div>
+        </div>
+        <div class="agent-text-info">
+            <h1 class="agent-name-detail" th:text="${agente.nome}">Nome do Agente</h1>
+            <p class="agent-role-detail"
+               th:text="${agente.role != null ? agente.role.displayName : 'Função não definida'}">Função do Agente</p>
+
+            <div class="agent-lore mt-3"><h2 class="section-title">Lore</h2>
+                <p th:text="${agente.descricao}" style="white-space: pre-line;">Descrição do agente (Lore).</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="abilities-section">
+        <h2 class="section-title">Habilidades</h2>
+        <div class="row">
+            <div th:each="habilidade : ${agente.abilities}" class="col-md-6 col-lg-3 mb-4">
+                <div class="card">
+                    <div class="ability-icon-container">
+                        <img th:if="${habilidade.displayIcon != null}" th:src="${habilidade.displayIcon}"
+                             class="ability-icon-detail" th:alt="${'Ícone de ' + habilidade.displayName}">
+                        <div th:unless="${habilidade.displayIcon != null}"
+                             class="d-flex align-items-center justify-content-center text-white" style="height: 64px;">
+                            <small>Ícone N/D</small>
+                        </div>
+                    </div>
+                    <div class="card-body text-center"><h5 class="card-title" th:text="${habilidade.displayName}">Nome
+                        da Habilidade</h5>
+                        <p class="card-text" th:text="${habilidade.description}">Descrição da Habilidade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rating-section mt-4 pt-3" style="border-top: 1px solid rgba(255, 70, 85, 0.4);"><h3
+            class="section-title-valorant">Avaliações</h3>
+        <div class="mb-3">
+            <strong>Média da Comunidade: </strong>
+            <span th:if="${mediaAvaliacoes != 'N/A'}" th:text="${mediaAvaliacoes} + ' / 5.0'"
+                  style="color: #ece8e1; font-weight:bold;"></span>
+            <span th:if="${mediaAvaliacoes == 'N/A'}"
+                  style="color: #b0b0b0;"><em>Ainda não avaliado pela comunidade.</em></span>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">
+            <h4>Sua Avaliação Atual:
+                <span th:if="${avaliacaoUsuario != null}" class="rating-stars-display">
+                <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+                    <span th:if="${i <= avaliacaoUsuario}" class="star-filled">★</span>
+                    <span th:if="${i > avaliacaoUsuario}" class="star-empty">☆</span>
+                </th:block>
+            </span>
+                <span th:if="${avaliacaoUsuario == null}" style="color: #b0b0b0; font-style: italic;">Você ainda não avaliou</span>
+            </h4>
+
+            <form th:action="@{/avaliar/personagem}" method="post" class="mt-2">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" name="personagemIdApi" th:value="${agente.uuid}"/>
+                <input type="hidden" name="nomePersonagem" th:value="${agente.nome}"/>
+                <input type="hidden" name="jogo" value="VALORANT"/>
+                <input type="hidden" name="classeRole"
+                       th:value="${agente.role != null ? agente.role.displayName : ''}"/>
+
+                <div class="rating-stars-input mb-3">
+                    <input type="radio" id="valorant-star5" name="nota" value="5"
+                           th:checked="${avaliacaoUsuario == 5}"/><label for="valorant-star5"
+                                                                         title="5 estrelas">★</label>
+                    <input type="radio" id="valorant-star4" name="nota" value="4"
+                           th:checked="${avaliacaoUsuario == 4}"/><label for="valorant-star4"
+                                                                         title="4 estrelas">★</label>
+                    <input type="radio" id="valorant-star3" name="nota" value="3"
+                           th:checked="${avaliacaoUsuario == 3}"/><label for="valorant-star3"
+                                                                         title="3 estrelas">★</label>
+                    <input type="radio" id="valorant-star2" name="nota" value="2"
+                           th:checked="${avaliacaoUsuario == 2}"/><label for="valorant-star2"
+                                                                         title="2 estrelas">★</label>
+                    <input type="radio" id="valorant-star1" name="nota" value="1"
+                           th:checked="${avaliacaoUsuario == 1}"/><label for="valorant-star1"
+                                                                         title="1 estrela">★</label>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-valorant-custom">Enviar/Atualizar Avaliação</button>
+                </div>
+            </form>
+        </div>
+
+        <div sec:authorize="isAnonymous()" class="mt-3">
+            <p><a th:href="@{/usuarios/login}" style="color: #ff4655;">Faça login</a> para avaliar este agente.</p>
+        </div>
+
+        <div th:if="${sucessoAvaliacao}" class="alert alert-success mt-3" role="alert"
+             style="background-color: rgba(16, 170, 116, 0.2); border-color: rgba(16, 170, 116, 0.5); color: #d1e7dd;"
+             th:text="${sucessoAvaliacao}"></div>
+        <div th:if="${erroAvaliacao}" class="alert alert-danger mt-3" role="alert"
+             style="background-color: rgba(253, 69, 86, 0.2); border-color: rgba(253, 69, 86, 0.5); color: #f8d7da;"
+             th:text="${erroAvaliacao}"></div>
+    </section>
+</div>
+
+<div th:unless="${agente != null}" class="container my-5 text-center text-white bg-danger p-5 rounded shadow-lg">
+    <h2>Agente não encontrado!</h2>
+    <p class="lead">Não foi possível carregar os detalhes para o agente solicitado.</p>
+    <a th:href="@{/valorant/agentes}" class="btn btn-light mt-3">Voltar para a Lista de Agentes</a>
+</div>
+
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
+
+</body>
+</html>

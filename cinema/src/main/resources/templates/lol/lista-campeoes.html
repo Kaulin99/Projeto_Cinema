@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/_layout :: header('Lista de Campeões LoL', '/css/lol-lista.css')}"></head>
+
+<body class="lol-list-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
+<main class="container my-5">
+    <header class="text-center mb-5 list-page-header-lol">
+        <h1 class="display-4">Escolha seu Campeão</h1>
+        <p class="lead">Explore os heróis de Runeterra</p>
+    </header>
+
+    <div class="row">
+        <div th:each="campeao : ${listaDeCampeoes}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+
+            <a th:href="@{'/lol/campeoes/' + ${campeao.id}}" class="champion-list-card h-100 shadow-sm">
+                <img th:src="@{'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + ${campeao.id} + '_0.jpg'}"
+                     class="card-img-top" th:alt="${'Imagem de ' + campeao.nome}">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0" th:text="${campeao.nome}">Nome do Campeão</h5>
+                    <p class="card-text" th:text="${campeao.titulo}">Título</p> </div>
+            </a> </div>
+
+        <div th:if="${listaDeCampeoes == null or listaDeCampeoes.isEmpty()}" class="col-12">
+            <p class="text-center no-champions-message">Nenhum campeão encontrado.</p>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
+
+</body>
+</html>

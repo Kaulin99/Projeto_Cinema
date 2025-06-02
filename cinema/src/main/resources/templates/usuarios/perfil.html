@@ -1,112 +1,68 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil do Usuário</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-    <link rel="stylesheet" th:href="@{/css/bonito.css}">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">GamesCon</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<head th:replace="~{fragments/_layout :: header('Perfil do Usuário - GamesCon', '/css/lol-theme.css')}"></head>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/genericos/sobre">Sobre</a></li>
-            </ul>
-            <div class="d-flex">
-                <a class="btn btn-outline-light me-2" href="/">Voltar</a>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+<body class="lol-auth-theme">
 
-<!-- CONTEÚDO -->
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <div class="card shadow p-4">
+            <div class="auth-card-lol p-4">
                 <h3 class="text-center mb-4">Perfil do Usuário</h3>
 
-                <div class="mb-3">
+                <div class="profile-data-item">
                     <label class="form-label fw-bold">Nome:</label>
                     <div th:text="${usuario.nome}">Nome do usuário</div>
                 </div>
 
-                <div class="mb-3">
+                <div class="profile-data-item">
                     <label class="form-label fw-bold">Nickname:</label>
                     <div th:text="${usuario.apelido}">Apelido do usuário</div>
                 </div>
 
-                <div class="mb-3">
+                <div class="profile-data-item">
                     <label class="form-label fw-bold">E-mail:</label>
                     <div th:text="${usuario.email}">email@exemplo.com</div>
                 </div>
 
-                <div class="text-center mt-4">
-                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.idPadrao})}" class="btn btn-warning">Editar Perfil</a>
-                    <a href="/" class="btn btn-primary">Voltar à Home</a>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusaoModal">
+                <div class="text-center mt-4 pt-3">
+                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.idPadrao})}" class="btn btn-warning me-2">Editar Perfil</a>
+                    <a th:href="@{/}" class="btn btn-primary me-2">Voltar à Home</a>
+                    <button sec:authorize="!hasAuthority('ROLE_ADMIN')" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusaoModal">
                         Excluir Conta
                     </button>
-                    
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
-<!-- FOOTER -->
-<footer class="bg-dark text-white py-4 mt-auto">
-    <div class="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start">
-        <div class="mb-2 mb-md-0">
-            <strong>GamesCon.com</strong>
-        </div>
-        <div>
-            <strong>Contatos:</strong><br>
-            <small>Email: 082220015@faculdade.cefsa.edu.br</small><br>
-            <small>Email: 082220027@faculdade.cefsa.edu.br</small>
-        </div>
-    </div>
-</footer>
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content lol-auth-theme">
+            <div class="modal-header lol-auth-theme">
+                <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body lol-auth-theme">
+                Tem certeza que deseja excluir sua conta? Esta ação <strong>não poderá ser desfeita</strong>.
+            </div>
+            <div class="modal-footer lol-auth-theme">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form th:action="@{/usuarios/excluir/{id}(id=${usuario.idPadrao})}" sec:authorize="!hasAuthority('ROLE_ADMIN')" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Excluir Conta</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          Tem certeza que deseja excluir sua conta? Esta ação <strong>não poderá ser desfeita</strong>.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-  
-          <form th:action="@{/usuarios/excluir/{id}(id=${usuario.idPadrao})}" method="post">
-              <button type="submit" class="btn btn-danger">Excluir Conta</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-  
+</div>
+
 </body>
 </html>

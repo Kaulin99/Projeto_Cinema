@@ -1,0 +1,196 @@
+/* ===== Estilos para a Página de Detalhes do Campeão LoL ===== */
+body.lol-detail-theme {
+    background-image: url('https://universe.leagueoflegends.com/images/bg_gradient_1920x1080.jpg'); /* Ou outra imagem tema LoL */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #010a13;
+    color: #c8aa6e;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    padding-top: 70px;
+}
+
+.navbar.bg-dark { /* Repetindo para garantir, caso não esteja global */
+    background-color: rgba(1, 5, 10, 0.92) !important;
+    backdrop-filter: blur(7px);
+    border-bottom: 1px solid #c89b3c;
+}
+
+.champion-detail-container {
+    background-color: rgba(5, 15, 25, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(10, 30, 60, 0.4);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(200, 155, 60, 0.3); /* Borda dourada sutil */
+}
+
+.champion-main-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 35px;
+}
+
+.champion-splash-container {
+    flex: 0 0 40%; /* Ajuste a largura da imagem */
+    max-width: 450px; /* Limite máximo */
+    min-width: 280px;
+}
+
+.champion-splash-art {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #c89b3c; /* Borda dourada na splash art */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.champion-text-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.champion-name-detail {
+    font-size: 3em; /* Fonte grande para o nome */
+    font-weight: bold;
+    color: #f0e6d2; /* Dourado claro/pergaminho */
+    margin-bottom: 0.1em;
+    text-shadow: 1px 1px 3px #000;
+    /* font-family: 'BeaufortforLOL', 'Georgia', serif; */
+}
+
+.champion-title-detail {
+    font-size: 1.6em;
+    color: #a09480; /* Dourado mais suave para o título */
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.section-title-lol {
+    font-size: 2em;
+    color: #f0e6d2;
+    border-bottom: 1px solid #c89b3c;
+    padding-bottom: 8px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    /* font-family: 'BeaufortforLOL', 'Georgia', serif; */
+}
+
+.champion-lore p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: #b0bec5; /* Azul acinzentado claro para o texto da lore */
+    text-align: justify;
+}
+
+/* Habilidades */
+.abilities-section-lol .card {
+    background-color: rgba(15, 30, 50, 0.85);
+    border: 1px solid #3c5c7c; /* Borda azul metálico */
+    color: #c8aa6e;
+    height: 100%;
+}
+.ability-icon-lol-container {
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(1,10,19,0.7);
+    border-bottom: 1px solid #3c5c7c;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ability-icon-lol {
+    max-width: 54px; /* Tamanho para ícones de habilidade */
+    max-height: 54px;
+    object-fit: contain;
+}
+.abilities-section-lol .card-title {
+    color: #f0e6d2;
+    font-weight: bold;
+    font-size: 1.05em;
+}
+.abilities-section-lol .card-text {
+    font-size: 0.8em;
+    color: #a0c4ff; /* Azul claro para descrição da habilidade */
+    line-height: 1.4;
+}
+
+/* Estatísticas */
+.stats-section-lol ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+.stats-section-lol li {
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(60, 92, 124, 0.2);
+    font-size: 0.95em;
+}
+.stats-section-lol li strong {
+    color: #c8aa6e; /* Dourado para o nome da estatística */
+}
+.stats-section-lol li span {
+    color: #ece8e1; /* Valor da estatística */
+    float: right;
+}
+.stats-section-lol li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .champion-main-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    .champion-splash-container {
+        width: 80%;
+        max-width: 400px;
+        margin-bottom: 20px;
+    }
+    .champion-text-info {
+        text-align: center;
+    }
+    .champion-name-detail { font-size: 2.5em; }
+    .champion-title-detail { font-size: 1.4em; }
+    .section-title-lol { font-size: 1.8em; }
+    .champion-lore p { text-align: left; }
+}
+/* Estrelas de Avaliação Interativas */
+.rating-stars-input {
+    display: inline-flex; /* Para alinhar as estrelas */
+    flex-direction: row-reverse; /* Faz as estrelas preencherem da direita para a esquerda no hover/seleção */
+    justify-content: flex-end; /* Alinha à esquerda na prática devido ao row-reverse */
+}
+.rating-stars-input input[type="radio"] {
+    display: none; /* Esconde os radio buttons reais */
+}
+.rating-stars-input label {
+    font-size: 2em; /* Tamanho das estrelas */
+    color: #444; /* Cor da estrela vazia (cinza escuro) */
+    cursor: pointer;
+    padding: 0 0.05em; /* Pequeno espaço entre estrelas */
+    transition: color 0.2s ease-in-out;
+}
+/* Quando um radio está checado, ele e todas as labels ANTERIORES (devido ao row-reverse) ficam douradas */
+.rating-stars-input input[type="radio"]:checked ~ label {
+    color: #ffc107; /* Dourado para estrela cheia */
+}
+/* Efeito hover: estrela sob o mouse e todas as anteriores ficam douradas */
+.rating-stars-input label:hover,
+.rating-stars-input label:hover ~ label {
+    color: #ffd04e; /* Dourado um pouco mais claro no hover */
+}
+
+/* Estrelas de Exibição (Média/Avaliação do Usuário) */
+.rating-stars-display .star-filled {
+    color: #ffc107; /* Dourado */
+    font-size: 1.2em; /* Ajuste o tamanho conforme necessário */
+}
+.rating-stars-display .star-empty {
+    color: #ccc; /* Cinza claro */
+    font-size: 1.2em;
+}

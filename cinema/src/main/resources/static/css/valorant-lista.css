@@ -1,0 +1,81 @@
+/* ===== Estilos Gerais para a Página de Lista de Agentes Valorant ===== */
+body.valorant-list-theme {
+    background-image: url('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt2dd32dde46239342/62a28ce2313a48784ccff22c/VALORANT_Ep_5_Player_Card_Background_1920x1080.jpg'); /* Mesma imagem de fundo ou uma de sua escolha */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #0f1923; /* Cor escura de fallback */
+    color: #ece8e1; /* Cor de texto padrão clara */
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 70px; /* Ajuste para a navbar fixa */
+}
+
+/* Ajuste para a navbar (se ainda não estiver em um CSS global) */
+.navbar.bg-dark {
+    background-color: rgba(10, 10, 20, 0.9) !important;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #ff4655;
+}
+
+/* Cabeçalho da Página de Lista */
+.list-page-header h1.display-4 {
+    color: #ece8e1;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(255, 70, 85, 0.5);
+}
+
+.list-page-header p.lead {
+    color: #c0c0d0; /* Um cinza claro para o subtítulo */
+}
+
+/* Cards dos Agentes na Lista */
+.agent-list-card {
+    background-color: rgba(25, 35, 50, 0.9); /* Fundo do card */
+    border: 1px solid rgba(79, 91, 103, 0.4);
+    color: #c0c0d0; /* Cor do texto padrão dentro do card */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none; /* Para o link <a> */
+    display: block; /* Para o link <a> ocupar o espaço do card */
+    border-radius: .375rem; /* Raio da borda padrão do Bootstrap para cards */
+}
+
+.agent-list-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(255, 70, 85, 0.3); /* Sombra com cor Valorant no hover */
+    color: #ece8e1; /* Pode clarear o texto no hover se desejar */
+}
+
+.agent-list-card .card-img-top {
+    border-bottom: 1px solid rgba(79, 91, 103, 0.4);
+    background-color: rgba(15, 25, 35, 0.7); /* Fundo para a área da imagem */
+    min-height: 200px; /* Garante uma altura mínima se a imagem estiver quebrada */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.agent-list-card .card-img-top img { /* Garante que a imagem não ultrapasse seu container */
+    max-height: 200px;
+    object-fit: cover; /* ou contain, dependendo de como quer que a imagem se ajuste */
+}
+
+
+.agent-list-card .card-body {
+    padding: 1rem; /* Padding padrão do card */
+}
+
+.agent-list-card .card-title {
+    color: #ece8e1; /* Nome do agente mais claro */
+    font-weight: bold;
+    font-size: 1.15em;
+}
+
+.agent-list-card .text-primary.fw-bold { /* Para a função do agente */
+    color: #ff4655 !important; /* Cor Valorant para a função */
+    font-size: 0.9em;
+}
+
+/* Mensagem de "Nenhum agente encontrado" */
+.no-agents-message {
+    color: #c0c0d0; /* Cor clara para a mensagem */
+    font-size: 1.2em;
+}

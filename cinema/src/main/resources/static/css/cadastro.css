@@ -1,212 +1,117 @@
-.container_form {
-
-    width: 700px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    background:#edf5e1;
-    box-shadow: 1px 0 1.2px 0 #e3e3e3;
-    border-radius:3px;
-    padding:1em;
-    padding-top: 2em;
-    text-align: justify;
+/* ===== Estilos Gerais para Páginas de Autenticação LoL ===== */
+body.lol-auth-theme {
+    background-image: url('https://universe.leagueoflegends.com/images/bg_gradient_1920x1080.jpg'); /* Fundo gradiente sutil do LoL Universe */
+    background-color: #010a13; /* Azul bem escuro de fallback */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    color: #c8aa6e; /* Dourado pálido/Bege para texto padrão */
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    padding-top: 70px; /* Ajuste para navbar fixa, se estiver usando */
 }
 
-.container_form h1 {
-
-    font-family:'open_sansregular';
-    font-size: 2.3em;
-    color: #00dae0;
-    border-bottom: 1px #f0eded solid;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-
+/* Ajuste para a navbar (se for a mesma do _layout.html) */
+.navbar.bg-dark {
+    background-color: rgba(1, 5, 10, 0.92) !important;
+    backdrop-filter: blur(7px);
+    border-bottom: 1px solid #c89b3c;
 }
 
-.form_grupo {
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.submit { width:100%; float:left; }
-
-.submit_btn {
-
-    float: left;
-    display: block;
-    padding: 5px 30px;
-    border: none;
-    outline: none;
-    background-color: #6fcffb;
-    color: #fff;
-    text-shadow: 0 0 5px rgb(0, 0, 0);
-    font-family: inherit;
-    font-size: 25px;
-    font-family:'open_sansregular';
+/* Card Principal do Formulário */
+.auth-card {
+    background-color: rgba(5, 15, 25, 0.9); /* Azul escuro, quase opaco */
+    border: 1px solid #4b371c; /* Borda dourada escura */
     border-radius: 6px;
-    margin: 20px auto;
-    cursor: pointer;
-    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(10, 30, 60, 0.5), inset 0 0 15px rgba(200, 155, 60, 0.1); /* Sombra azulada e brilho dourado interno */
+    padding: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
-.submit_btn:hover {
-
-    background-color: #444444;
-    transform: scale(1.03);
-
+.auth-card h2 {
+    color: #f0e6d2; /* Dourado bem claro, tipo pergaminho */
+    font-family: 'Times New Roman', Times, serif; /* Ou uma fonte mais temática se tiver */
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px #000;
 }
 
-.dropdown {
-    display: block;
-    margin: 0 auto;
-    font-size: 16px;
-    font-family: inherit;
-    color: #222222;
+.form-label {
+    color: #a09480; /* Dourado/Bege mais suave para labels */
+    font-size: 0.95em;
+    margin-bottom: .3rem;
+}
+
+.form-control {
+    background-color: rgba(1, 10, 19, 0.7); /* Fundo do input ainda mais escuro */
+    border: 1px solid #3c5c7c; /* Borda azul metálico */
+    color: #ece8e1; /* Texto claro no input */
     border-radius: 4px;
-    border: 1px #f2f2f2 solid;
-    background: #fdfdfd;
-    outline: none;
-    padding-left: 10px;
-    width: 100%;
+    padding: .6rem .75rem;
 }
 
-.form_new_input {
-    display: none;
+.form-control::placeholder {
+    color: #5c6f82; /* Placeholder um pouco mais claro */
 }
 
-.radio_label,
-.check_label {
-
-    float: left;
-    width: 100%;
-    padding-left: 30px;
-    cursor: pointer;
-    margin-bottom: 8px;
-
+.form-control:focus {
+    background-color: rgba(1, 10, 19, 0.9);
+    border-color: #c89b3c; /* Borda dourada no focus */
+    box-shadow: 0 0 0 0.2rem rgba(200, 155, 60, 0.25); /* Brilho dourado no focus */
+    color: #ece8e1;
 }
 
-
-.radio_new_btn {
-
-    position: absolute;
-    left: 0;
-    transform: translateY(3px);
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    border: 0.2em solid #4c4c4c;
-
-}
-
-.radio_new_btn::after {
-
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #6fcffb;
-    visibility: hidden;
-
-}
-
-.check_new_btn {
-
-    position: absolute;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    border: 0.2em solid #4c4c4c;
-
-}
-
-.check_new_btn::after {
-
-    content: "";
-    height: 8px;
-    width: 8px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #6fcffb;
-    visibility: hidden;
-
-}
-
-.form_new_input:checked ~ .radio_label .radio_new_btn::after,
-.form_new_input:checked ~ .check_label .check_new_btn::after {
-
-    visibility: visible;
-}
-
-.form_new_input:checked ~ .radio_label,
-.form_new_input:checked ~ .check_label {
-    color: #6fcffb;
-}
-
-
-.form_grupo {
-
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-
-}
-
-.form_input {
-
-    font-size: 16px;
-    font-family: inherit;
-    padding: 8px 15px;
-    border-radius: 4px;
-    border: 1px #f2f2f2 solid;
-    background: #fdfdfd;
-    outline: none;
-    width: 100%;
-    transition: all 0.3s;
-
-}
-
-.form_message,
-.form_message .message_input {
-
-    width: 100%;
-    float:left;
-
-}
-
-.form_message_label {
-
-    width: 100%;
-    float: left;
-    margin-top: 15px;
-    margin-bottom: 15px;
+.btn-custom-lol { /* Nova classe para o botão LoL */
+    background: linear-gradient(180deg, #3a2a0f, #1e1507); /* Gradiente marrom/dourado escuro */
+    border: 1px solid #c8aa6e; /* Borda dourada */
+    color: #f0e6d2; /* Texto dourado claro */
     font-weight: bold;
-
+    padding: .75rem 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.2s ease-in-out;
 }
 
-.container_form button{
-    background-color:#05386b;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-.container_form input{
-    width: 95%;
+.btn-custom-lol:hover, .btn-custom-lol:focus {
+    background: linear-gradient(180deg, #4a3a1f, #2e2517);
+    border-color: #f0e6d2; /* Borda mais clara no hover */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15);
 }
 
-.separacao{
-    height: 70px;
+/* Estilização dos Modais de Erro */
+.modal-content.lol-theme {
+    background-color: #0a1428; /* Fundo azul escuro do modal */
+    border: 1px solid #c89b3c; /* Borda dourada */
+    color: #c8aa6e; /* Texto padrão dourado pálido */
+    border-radius: 5px;
 }
-.separacaoCad{
-    height: 60px;
+
+.modal-header.lol-theme {
+    background-color: #785a28; /* Dourado mais escuro/bronze para o header do modal */
+    color: #f0e6d2;
+    border-bottom: 1px solid #4b371c; /* Borda interna dourada escura */
+}
+.modal-header.lol-theme .btn-close {
+    filter: invert(90%) sepia(25%) saturate(500%) hue-rotate(350deg) brightness(100%) contrast(90%); /* Tenta deixar o X dourado/branco */
+}
+
+.modal-body.lol-theme {
+    color: #c8aa6e;
+}
+
+.modal-footer.lol-theme {
+    border-top: 1px solid #3c5c7c; /* Borda azul metálico */
+}
+.modal-footer.lol-theme .btn-secondary {
+    background-color: #3c5c7c;
+    border-color: #2c4a64;
+    color: #ece8e1;
+}
+.modal-footer.lol-theme .btn-secondary:hover {
+    background-color: #2c4a64;
+    border-color: #1c3a54;
 }
