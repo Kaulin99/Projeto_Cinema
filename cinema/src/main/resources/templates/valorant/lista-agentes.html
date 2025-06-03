@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/_layout :: header('Agentes de Valorant', '/css/valorant-lista.css')}"></head>
+<head th:replace="~{fragments/_layout :: header('Agentes de Valorant', '/css/valorant-lista.css')}">
+    <div class="mt-4">
+        <a th:href="@{/valorant/dashboard-popularidade}" class="btn btn-outline-primary">
+            Ver Dashboard de Popularidade
+        </a>
+    </div>
+</head>
 
 <body class="valorant-list-theme">
 

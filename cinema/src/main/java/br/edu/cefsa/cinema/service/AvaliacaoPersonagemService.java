@@ -1,16 +1,18 @@
 package br.edu.cefsa.cinema.service;
 
-import br.edu.cefsa.cinema.model.AvaliacaoPersonagem;
-import br.edu.cefsa.cinema.model.Usuario;
-import br.edu.cefsa.cinema.repository.AvaliacaoPersonagemRepository;
-import br.edu.cefsa.cinema.security.CustomUserDetails; // Sua classe CustomUserDetails
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder; // Sua classe CustomUserDetails
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import br.edu.cefsa.cinema.model.AvaliacaoPersonagem;
+import br.edu.cefsa.cinema.model.Usuario;
+import br.edu.cefsa.cinema.repository.AvaliacaoPersonagemRepository;
+import br.edu.cefsa.cinema.security.CustomUserDetails;
 
 @Service
 public class AvaliacaoPersonagemService {
@@ -67,5 +69,9 @@ public class AvaliacaoPersonagemService {
             return ((CustomUserDetails) authentication.getPrincipal()).getUsuario();
         }
         return null; // Retorna null se não houver usuário logado ou o principal não for CustomUserDetails
+    }
+
+     public List<Object[]> getPopularidadeValorant() {
+        return avaliacaoRepository.buscarPopularidadeValorant();
     }
 }

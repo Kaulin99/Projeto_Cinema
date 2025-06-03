@@ -1,20 +1,24 @@
 package br.edu.cefsa.cinema.controller;
 
-import br.edu.cefsa.cinema.model.Usuario;
-import br.edu.cefsa.cinema.model.ValorantAgent; // Modelo para dados da valorant-api.com
-import br.edu.cefsa.cinema.service.AvaliacaoPersonagemService;
-import br.edu.cefsa.cinema.service.ValorantApiService;
-import br.edu.cefsa.cinema.security.CustomUserDetails; // Para @AuthenticationPrincipal
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Optional;
+import br.edu.cefsa.cinema.model.Usuario;
+import br.edu.cefsa.cinema.model.ValorantAgent; // Modelo para dados da valorant-api.com
+import br.edu.cefsa.cinema.repository.AvaliacaoPersonagemRepository;
+import br.edu.cefsa.cinema.service.AvaliacaoPersonagemService;
+import br.edu.cefsa.cinema.service.ValorantApiService;
 
 @Controller
 @RequestMapping("/valorant")
@@ -28,6 +32,9 @@ public class ValorantController {
         this.valorantApiService = valorantApiService;
         this.avaliacaoService = avaliacaoService;
     }
+
+    @Autowired
+    private AvaliacaoPersonagemRepository repository;
 
     /**
      * Exibe a lista de todos os agentes jogáveis do Valorant.
@@ -103,4 +110,26 @@ public class ValorantController {
 
         return "valorant/detalhe-agente";
     }
+
+    @GetMapping("/api/popularidade")
+    @ResponseBody
+    public List<Map<String, Object>> popularidadeValorantJson() {
+        List<Object[]> resultados = avaliacaoService.getPopularidadeValorant();
+
+        List<Map<String, Object>> resposta = new ArrayList<>();
+        for (Object[] linha : resultados) {
+            Map<String, Object> mapa = new HashMap<>();
+            mapa.put("nome", linha[0]);
+            mapa.put("quantidade", linha[1]);
+            mapa.put("media", linha[2]);
+            resposta.add(mapa);
+        }
+        return resposta;
+    }
+
+    @GetMapping("/dashboard-popularidade")
+    public String dashboardPopularidade(Model model) {
+        return "valorant/dashboard-popularidade"; // nome do arquivo .html em templates (Thymeleaf)
+    }
+ 
 }
