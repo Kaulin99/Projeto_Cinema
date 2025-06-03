@@ -74,4 +74,8 @@ public class AvaliacaoPersonagemService {
      public List<Object[]> getPopularidadeValorant() {
         return avaliacaoRepository.buscarPopularidadeValorant();
     }
+
+    public List<Object[]> getPopularidadeLOL() {
+        return avaliacaoRepository.buscarPopularidadeLOL();
+    }
 }

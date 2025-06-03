@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/_layout :: header('Dashboard de Popularidade lol', '/css/lol-lista.css')}">
+</head>
+
+<body class="lol-list-theme">
+
+<nav th:replace="~{fragments/_layout :: navbar}"></nav>
+
+<main class="container my-5">
+    <header class="text-center mb-5 list-page-header">
+        <h1 class="display-4">Dashboard de Popularidade</h1>
+        <p class="lead">Avaliações médias dos campeão LOL</p>
+        <div class="mt-4">
+            <a th:href="@{/lol/campeoes}" class="btn btn-outline-primary">
+                Voltar para lista de campeões
+            </a>
+        </div>
+    </header>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+            <canvas id="graficoPopularidade" width="800" height="400"></canvas>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/_layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    async function buscarDados() {
+        const response = await fetch('/lol/api/popularidade');
+        if (!response.ok) {
+            console.error('Erro ao buscar dados:', response.statusText);
+            return [];
+        }
+        return await response.json();
+    }
+
+    async function criarGrafico() {
+        const dados = await buscarDados();
+
+        const labels = dados.map(item => item.nome);
+        const medias = dados.map(item => parseFloat(item.media));
+
+        const ctx = document.getElementById('graficoPopularidade').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Média de Avaliações',
+                    data: medias,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+    scales: {
+        y: {
+            beginAtZero: true,
+            max: 5,
+            title: {
+                display: true,
+                text: 'Avaliação Média',
+                font: {
+                    size: 18,
+                    weight: 'bold'
+                }
+            },
+            ticks: {
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                }
+            }
+        },
+        x: {
+            title: {
+                display: true,
+                text: 'Campeões',
+                font: {
+                    size: 18,
+                    weight: 'bold'
+                }
+            },
+            ticks: {
+                font: {
+                    size: 14,
+                    weight: 'bold'
+                }
+            }
+        }
+    },
+    plugins: {
+        legend: {
+            display: true,
+            position: 'top',
+            labels: {
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                }
+            }
+        },
+        tooltip: {
+            enabled: true,
+            titleFont: {
+                size: 16,
+                weight: 'bold'
+            },
+            bodyFont: {
+                size: 14
+            }
+        }
+    }
+}
+        });
+    }
+
+    window.onload = criarGrafico;
+</script>
+
+</body>
+</html>

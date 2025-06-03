@@ -1,18 +1,23 @@
 package br.edu.cefsa.cinema.controller;
 
 import br.edu.cefsa.cinema.model.LolChampion;
-import br.edu.cefsa.cinema.model.Usuario; // Certifique-se que este import está correto
-import br.edu.cefsa.cinema.service.AvaliacaoPersonagemService; // Importe o serviço de avaliação
+import br.edu.cefsa.cinema.model.Usuario;
+import br.edu.cefsa.cinema.service.AvaliacaoPersonagemService;
 import br.edu.cefsa.cinema.service.LolApiService;
-import br.edu.cefsa.cinema.security.CustomUserDetails; // Se for usar para pegar o usuário logado via @AuthenticationPrincipal
-import org.springframework.beans.factory.annotation.Autowired; // Se for usar @Autowired
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Optional; // Para lidar com o Optional retornado pelo serviço
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/lol")
@@ -75,5 +80,26 @@ public class LolController {
         System.out.println("----------------------------------------------");
 
         return "lol/detalhe-campeao";
+    }
+
+    @GetMapping("/api/popularidade")
+    @ResponseBody
+    public List<Map<String, Object>> popularidadeLOLJson() {
+        List<Object[]> resultados = avaliacaoService.getPopularidadeLOL();
+
+        List<Map<String, Object>> resposta = new ArrayList<>();
+        for (Object[] linha : resultados) {
+            Map<String, Object> mapa = new HashMap<>();
+            mapa.put("nome", linha[0]);
+            mapa.put("quantidade", linha[1]);
+            mapa.put("media", linha[2]);
+            resposta.add(mapa);
+        }
+        return resposta;
+    }
+
+    @GetMapping("/dashboard-popularidade")
+    public String dashboardPopularidade(Model model) {
+        return "lol/dashboard-popularidade"; // nome do arquivo .html em templates (Thymeleaf)
     }
 }
