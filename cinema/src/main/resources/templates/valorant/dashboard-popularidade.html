@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/_layout :: header('Dashboard de Popularidade Valorant', '/css/valorant-lista.css')}">
+<head th:replace="~{fragments/_layout :: header('Dashboards de Popularidade Valorant', '/css/valorant-lista.css')}">
 </head>
 
 <body class="valorant-list-theme">
@@ -9,120 +9,156 @@
 <nav th:replace="~{fragments/_layout :: navbar}"></nav>
 
 <main class="container my-5">
-    <header class="text-center mb-5 list-page-header">
-        <h1 class="display-4">Dashboard de Popularidade</h1>
-        <p class="lead">Avaliações médias dos agentes Valorant</p>
+    <header class="text-center mb-5 list-page-header"> <h1 class="display-4">Dashboards de Popularidade - VALORANT</h1>
+        <p class="lead">Média e Quantidade de Avaliações dos Agentes</p>
         <div class="mt-4">
-            <a th:href="@{/valorant/agentes}" class="btn btn-outline-primary">
-                Voltar para lista de agentes
+            <a th:href="@{/valorant/agentes}" class="btn btn-outline-danger">
+                Voltar para lista de Agentes
             </a>
         </div>
     </header>
 
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10">
-            <canvas id="graficoPopularidade" width="800" height="400"></canvas>
+    <section class="mb-5">
+        <h2 class="text-center mb-3" style="color: #ece8e1; border-bottom: 1px solid #ff4655; padding-bottom: 10px;">Média de Avaliação por Agente</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="p-3 rounded" style="background-color: rgba(25, 35, 50, 0.9);">
+                    <canvas id="graficoMediaAvaliacoes" width="800" height="450"></canvas>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section>
+        <h2 class="text-center mb-3" style="color: #ece8e1; border-bottom: 1px solid #00BFFF; padding-bottom: 10px;">Número de Avaliações por Agente</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="p-3 rounded" style="background-color: rgba(25, 35, 50, 0.9);">
+                    <canvas id="graficoQuantidadeAvaliacoes" width="800" height="450"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <footer th:replace="~{fragments/_layout :: footer}"></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    async function buscarDados() {
-        const response = await fetch('/valorant/api/popularidade');
+    // Função para buscar os dados da API
+    async function buscarDadosPopularidadeValorant() {
+        const response = await fetch('/valorant/api/popularidade-valorant');
+        const errorContainerMedia = document.getElementById('graficoMediaAvaliacoes')?.parentElement;
+        const errorContainerQuantidade = document.getElementById('graficoQuantidadeAvaliacoes')?.parentElement;
+
+        function displayError(container, message) {
+            if (container) {
+                container.innerHTML = `<p class="text-center text-danger mt-4 p-3">${message}</p>`;
+            }
+        }
+
         if (!response.ok) {
-            console.error('Erro ao buscar dados:', response.statusText);
+            const errorMsg = `Erro ao buscar dados: ${response.statusText}`;
+            console.error('Erro ao buscar dados de popularidade do Valorant:', response.statusText);
+            displayError(errorContainerMedia, errorMsg);
+            displayError(errorContainerQuantidade, errorMsg);
             return [];
         }
-        return await response.json();
-    }
-
-    async function criarGrafico() {
-        const dados = await buscarDados();
-
-        const labels = dados.map(item => item.nome);
-        const medias = dados.map(item => parseFloat(item.media));
-
-        const ctx = document.getElementById('graficoPopularidade').getContext('2d');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Média de Avaliações',
-                    data: medias,
-                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-    scales: {
-        y: {
-            beginAtZero: true,
-            max: 5,
-            title: {
-                display: true,
-                text: 'Avaliação Média',
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                }
-            },
-            ticks: {
-                font: {
-                    size: 16,
-                    weight: 'bold'
-                }
-            }
-        },
-        x: {
-            title: {
-                display: true,
-                text: 'Agentes',
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                }
-            },
-            ticks: {
-                font: {
-                    size: 14,
-                    weight: 'bold'
-                }
-            }
-        }
-    },
-    plugins: {
-        legend: {
-            display: true,
-            position: 'top',
-            labels: {
-                font: {
-                    size: 16,
-                    weight: 'bold'
-                }
-            }
-        },
-        tooltip: {
-            enabled: true,
-            titleFont: {
-                size: 16,
-                weight: 'bold'
-            },
-            bodyFont: {
-                size: 14
-            }
+        try {
+            return await response.json();
+        } catch (e) {
+            const errorMsg = 'Erro ao processar dados do servidor. Formato inválido.';
+            console.error('Erro ao processar JSON de popularidade do Valorant:', e);
+            displayError(errorContainerMedia, errorMsg);
+            displayError(errorContainerQuantidade, errorMsg);
+            return [];
         }
     }
-}
+
+    // Função para criar os gráficos
+    async function criarGraficosValorant() {
+        const dadosCompletos = await buscarDadosPopularidadeValorant();
+
+        const canvasMedia = document.getElementById('graficoMediaAvaliacoes');
+        const canvasQuantidade = document.getElementById('graficoQuantidadeAvaliacoes');
+
+        if (!dadosCompletos || dadosCompletos.length === 0) {
+            if (canvasMedia && canvasMedia.parentElement) {
+                canvasMedia.parentElement.innerHTML = '<p class="text-center text-info mt-4 p-3">Ainda não há dados de média de avaliações suficientes.</p>';
+            }
+            if (canvasQuantidade && canvasQuantidade.parentElement) {
+                canvasQuantidade.parentElement.innerHTML = '<p class="text-center text-info mt-4 p-3">Ainda não há dados de quantidade de avaliações suficientes.</p>';
+            }
+            return;
+        }
+
+        const labels = dadosCompletos.map(item => item.nome);
+        const medias = dadosCompletos.map(item => parseFloat(item.media).toFixed(1));
+        const quantidades = dadosCompletos.map(item => parseInt(item.quantidade, 10));
+
+        // Configurações comuns de eixos e plugins
+        const commonChartOptions = (yAxisTitle, xAxisTitle) => ({
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: yAxisTitle.includes('Média') ? 5 : undefined, // Max 5 para média
+                    title: { display: true, text: yAxisTitle, font: { size: 16, weight: 'bold' }, color: '#ece8e1' },
+                    ticks: { font: { size: 12 }, color: '#c8d6e5' },
+                    grid: { color: 'rgba(200, 200, 200, 0.1)' }
+                },
+                x: {
+                    title: { display: true, text: xAxisTitle, font: { size: 16, weight: 'bold' }, color: '#ece8e1' },
+                    ticks: { font: { size: 12, weight: 'normal' }, color: '#c8d6e5', autoSkip: false, maxRotation: 60, minRotation: 60 }
+                }
+            },
+            plugins: {
+                legend: { display: true, position: 'top', labels: { font: { size: 14, weight: 'bold' }, color: '#ece8e1' } },
+                tooltip: { titleFont: { size: 14, weight: 'bold' }, bodyFont: { size: 12 } }
+            }
         });
+
+        // Criar Gráfico de Média de Avaliações
+        if (canvasMedia) {
+            const ctxMedia = canvasMedia.getContext('2d');
+            new Chart(ctxMedia, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Média de Avaliações (1-5)',
+                        data: medias,
+                        backgroundColor: 'rgba(255, 70, 85, 0.7)', // Vermelho Valorant
+                        borderColor: 'rgba(255, 70, 85, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: commonChartOptions('Avaliação Média', 'Agentes')
+            });
+        }
+
+        // Criar Gráfico de Quantidade de Avaliações
+        if (canvasQuantidade) {
+            const ctxQuantidade = canvasQuantidade.getContext('2d');
+            new Chart(ctxQuantidade, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Número de Avaliações',
+                        data: quantidades,
+                        backgroundColor: 'rgba(0, 191, 255, 0.7)', // Azul Ciano Neon
+                        borderColor: 'rgba(0, 191, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: commonChartOptions('Nº de Avaliações', 'Agentes')
+            });
+        }
     }
 
-    window.onload = criarGrafico;
+    window.onload = criarGraficosValorant;
 </script>
 
 </body>

@@ -30,7 +30,7 @@ public interface AvaliacaoPersonagemRepository extends JpaRepository<AvaliacaoPe
 
     @Query("SELECT a.nomePersonagem, COUNT(a), AVG(a.avaliacao) " +
             "FROM AvaliacaoPersonagem a " +
-            "WHERE a.jogo = 'VALORANT' " +
+            "WHERE a.jogo = 'LOL' " +
             "GROUP BY a.nomePersonagem " +
             "ORDER BY COUNT(a) DESC")
     List<Object[]> buscarPopularidadeLOL();

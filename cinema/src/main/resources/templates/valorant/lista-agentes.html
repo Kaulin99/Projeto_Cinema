@@ -2,11 +2,6 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/_layout :: header('Agentes de Valorant', '/css/valorant-lista.css')}">
-    <div class="mt-4">
-        <a th:href="@{/valorant/dashboard-popularidade}" class="btn btn-outline-primary">
-            Ver Dashboard de Popularidade
-        </a>
-    </div>
 </head>
 
 <body class="valorant-list-theme">
@@ -14,31 +9,47 @@
 <nav th:replace="~{fragments/_layout :: navbar}"></nav>
 
 <main class="container my-5">
-    <header class="text-center mb-5 list-page-header">
-        <h1 class="display-4">Conheça os Agentes</h1>
-        <p class="lead">A elite do Protocolo Valorant</p>
-    </header>
 
-    <div class="row">
-        <div th:each="agente : ${listaDeAgentes}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+    <div class="text-center mb-4">
+        <a th:href="@{/valorant/dashboard-popularidade-valorant}" class="btn btn-outline-danger btn-lg"> Ver Dashboard de Popularidade (Valorant)
+        </a>
+    </div>
 
-            <a th:href="@{'/valorant/agentes/' + ${agente.uuid}}" class="agent-list-card h-100 shadow-sm">
-                <div class="card-img-top"> <img th:if="${agente.fullPortrait != null}" th:src="${agente.fullPortrait}"
-                                                class="img-fluid" th:alt="${'Imagem de ' + agente.nome}">
-                    <div th:unless="${agente.fullPortrait != null}" class="d-flex align-items-center justify-content-center text-white" style="height: 200px; background-color: rgba(0,0,0,0.3);">
-                        <span>Imagem Indisponível</span>
+    <div th:if="${erroApi}" class="alert alert-danger text-center home-content-section" role="alert" style="color: #f8d7da; background-color: rgba(120,20,20,0.7); border-color: rgba(253,69,86,0.7);">
+        <h4 class="alert-heading">Oops! Algo deu errado.</h4>
+        <p th:text="${erroApi}" class="mb-0">Falha ao carregar os agentes.</p>
+        <hr style="border-top: 1px solid rgba(255,255,255,0.3);">
+        <p class="mb-0"><small>Por favor, tente recarregar a página em alguns instantes.</small></p>
+    </div>
+
+    <div th:unless="${erroApi}">
+        <header class="text-center mb-5 list-page-header"> <h1 class="display-4">Conheça os Agentes</h1>
+            <p class="lead">A elite do Protocolo Valorant</p>
+        </header>
+
+        <div class="row">
+            <div th:each="agente : ${listaDeAgentes}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/valorant/agentes/' + ${agente.uuid}}" class="agent-list-card h-100 shadow-sm">
+                    <div class="card-img-top">
+                        <img th:if="${agente.fullPortrait != null}" th:src="${agente.fullPortrait}"
+                             class="img-fluid"
+                             th:alt="${'Imagem de ' + agente.nome}">
+                        <div th:unless="${agente.fullPortrait != null}" class="d-flex align-items-center justify-content-center text-white" style="height: 200px; background-color: rgba(0,0,0,0.3);">
+                            <span>Imagem Indisponível</span>
+                        </div>
                     </div>
-                </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0" th:text="${agente.nome}">Nome do Agente</h5>
+                        <p class="card-text text-primary fw-bold"
+                           th:text="${agente.role != null ? agente.role.displayName : 'Função não definida'}">Função</p>
+                    </div>
+                </a>
+            </div>
 
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-0" th:text="${agente.nome}">Nome do Agente</h5>
-                    <p class="card-text text-primary fw-bold"
-                       th:text="${agente.role != null ? agente.role.displayName : 'Função não definida'}">Função</p>
-                </div>
-            </a> </div>
-
-        <div th:if="${listaDeAgentes == null or listaDeAgentes.isEmpty()}" class="col-12">
-            <p class="text-center no-agents-message">Nenhum agente encontrado.</p>
+            <div th:if="${listaDeAgentes != null and listaDeAgentes.isEmpty() and erroApi == null}" class="col-12">
+                <p th:if="${avisoListaVazia != null}" class="text-center no-agents-message" th:text="${avisoListaVazia}"></p>
+                <p th:if="${avisoListaVazia == null}" class="text-center no-agents-message">Nenhum agente encontrado no momento.</p>
+            </div>
         </div>
     </div>
 </main>

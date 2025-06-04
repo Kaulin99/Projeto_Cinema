@@ -1,0 +1,70 @@
+/* Adicione ou ajuste estas regras no seu lol-lista.css ou crie um lol-dashboard.css */
+
+/* Estilos Gerais (já devem existir no lol-lista.css) */
+body.lol-list-theme { /* ou lol-dashboard-theme se criar um novo CSS/body class */
+    background-image: url('https://universe.leagueoflegends.com/images/bg_gradient_1920x1080.jpg');
+    background-color: #010a13;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    color: #c8aa6e;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    padding-top: 70px;
+}
+
+/* Navbar (já deve estar estilizada) */
+/* .navbar.bg-dark { ... } */
+
+/* Cabeçalho da Página de Lista/Dashboard */
+.list-page-header-lol h1.display-4 {
+    color: #f0e6d2;
+    font-weight: normal;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+}
+
+.list-page-header-lol p.lead {
+    color: #a09480;
+    font-weight: 300;
+}
+
+/* Botão Voltar */
+.lol-list-theme .btn-outline-primary { /* Adapte se usar outra classe de botão */
+    border-color: #c89b3c;
+    color: #c89b3c;
+    font-weight: bold;
+}
+.lol-list-theme .btn-outline-primary:hover {
+    background-color: #c89b3c;
+    color: #010a13;
+}
+
+/* Container do Gráfico */
+.chart-container-lol {
+    background-color: rgba(5, 15, 25, 0.92); /* Mesmo fundo dos cards de autenticação */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #4b371c; /* Borda dourada escura */
+    box-shadow: 0 0 20px rgba(10, 30, 60, 0.4);
+}
+
+/* Títulos das Seções dos Gráficos */
+.dashboard-section-title-lol {
+    color: #f0e6d2;
+    border-bottom: 1px solid #c89b3c;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-family: 'Times New Roman', Times, serif; /* Ou sua fonte temática */
+    font-size: 1.8em;
+    font-weight: normal;
+}
+
+/* Estilo para mensagens de erro/aviso no lugar do gráfico */
+.chart-message {
+    color: #a09480;
+    padding: 2rem;
+    text-align: center;
+    font-style: italic;
+}
+.chart-message.text-danger { /* Para erros */
+    color: #e74c3c !important; /* Um vermelho que combine */
+}

@@ -2,36 +2,47 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/_layout :: header('Lista de Campeões LoL', '/css/lol-lista.css')}">
-    <div class="mt-4">
-        <a th:href="@{/lol/dashboard-popularidade}" class="btn btn-outline-primary">
-            Ver Dashboard de Popularidade
-        </a>
-    </div>
 </head>
 
 <body class="lol-list-theme">
 <nav th:replace="~{fragments/_layout :: navbar}"></nav>
 
 <main class="container my-5">
-    <header class="text-center mb-5 list-page-header-lol">
-        <h1 class="display-4">Escolha seu Campeão</h1>
-        <p class="lead">Explore os heróis de Runeterra</p>
-    </header>
 
-    <div class="row">
-        <div th:each="campeao : ${listaDeCampeoes}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+    <div class="text-center mb-4">
+        <a th:href="@{/lol/dashboard-popularidade}" class="btn btn-outline-primary btn-lg" style="border-color: #c89b3c; color: #c89b3c;"> Ver Dashboard de Popularidade
+        </a>
+    </div>
 
-            <a th:href="@{'/lol/campeoes/' + ${campeao.id}}" class="champion-list-card h-100 shadow-sm">
-                <img th:src="@{'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + ${campeao.id} + '_0.jpg'}"
-                     class="card-img-top" th:alt="${'Imagem de ' + campeao.nome}">
+    <div th:if="${erroApi}" class="alert alert-danger text-center home-content-section" role="alert" style="color: #f8d7da; background-color: rgba(120,20,20,0.7); border-color: rgba(220,53,69,0.7);">
+        <h4 class="alert-heading">Oops! Algo deu errado.</h4>
+        <p th:text="${erroApi}" class="mb-0">Falha ao carregar os campeões.</p>
+        <hr style="border-top: 1px solid rgba(255,255,255,0.3);">
+        <p class="mb-0"><small>Por favor, tente recarregar a página em alguns instantes.</small></p>
+    </div>
 
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-0" th:text="${campeao.nome}">Nome do Campeão</h5>
-                    <p class="card-text" th:text="${campeao.titulo}">Título</p></div>
-            </a></div>
+    <div th:unless="${erroApi}">
+        <header class="text-center mb-5 list-page-header-lol">
+            <h1 class="display-4">Escolha seu Campeão</h1>
+            <p class="lead">Explore os heróis de Runeterra</p>
+        </header>
 
-        <div th:if="${listaDeCampeoes == null or listaDeCampeoes.isEmpty()}" class="col-12">
-            <p class="text-center no-champions-message">Nenhum campeão encontrado.</p>
+        <div class="row">
+            <div th:each="campeao : ${listaDeCampeoes}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a th:href="@{'/lol/campeoes/' + ${campeao.id}}" class="champion-list-card h-100 shadow-sm">
+                    <img th:src="@{'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + ${campeao.id} + '_0.jpg'}"
+                         class="card-img-top" th:alt="${'Imagem de ' + campeao.nome}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0" th:text="${campeao.nome}">Nome do Campeão</h5>
+                        <p class="card-text" th:text="${campeao.titulo}">Título</p>
+                    </div>
+                </a>
+            </div>
+
+            <div th:if="${listaDeCampeoes != null and listaDeCampeoes.isEmpty() and erroApi == null}" class="col-12">
+                <p th:if="${avisoListaVazia != null}" class="text-center no-champions-message" th:text="${avisoListaVazia}"></p>
+                <p th:if="${avisoListaVazia == null}" class="text-center no-champions-message">Nenhum campeão encontrado no momento.</p>
+            </div>
         </div>
     </div>
 </main>
