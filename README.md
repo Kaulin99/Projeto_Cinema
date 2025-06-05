@@ -136,9 +136,7 @@ Esta seção detalha as estruturas de dados do projeto, incluindo entidades de b
 ### 3.5 Diagrama de Classes e Modelo Entidade-Relacionamento
 
 ---
-**[ESPAÇO PARA IMAGEM DO DIAGRAMA DE CLASSES E/OU MODELO ENTIDADE-RELACIONAMENTO]**
-
-*Cole aqui a imagem gerada a partir do código PlantUML ou outro software de modelagem, ilustrando as classes principais, seus atributos chave e relacionamentos.*
+![Diagrama de Classes do GamesCon](./diagrama_gamescon.png "Diagrama de Classes e Entidades")
 ---
 
 ---
