@@ -1,231 +1,218 @@
-# Documentação Técnica do Projeto: GamesCon
+# Documentação GamesCon
 
-**Versão:** 1.0 (Conforme desenvolvimento até 02/06/2025)
+**Autores:**
+* Robson Guilherme Ferrarezi - RA: 082220015
+* Kauê dos Santos Andrade - RA: 082220027
+
+**Disciplinas:**
+* Linguagem de Programação 2
+* Modelagem de Software
+
+---
 
 ## 1. Visão Geral do Projeto
 
-### 1.1. Propósito
-O GamesCon é uma plataforma web desenvolvida para entusiastas de E-Sports, com foco em fornecer informações detalhadas sobre personagens de jogos populares como League of Legends e Valorant. Atualmente, permite aos usuários visualizar listas de personagens, seus detalhes (lore, habilidades, estatísticas, visuais), e implementar um sistema de avaliação por estrelas para cada personagem. O projeto também inclui funcionalidades de gerenciamento de usuários e autenticação.
-
-### 1.2. Tecnologias Principais
-* **Backend:** Java 17+, Spring Boot 3.x, Spring MVC, Spring Security, Spring Data JPA
-* **Frontend:** Thymeleaf, HTML5, CSS3, Bootstrap 5
-* **Banco de Dados:** H2 Database (em memória para desenvolvimento)
-* **Build Tool:** Apache Maven
-* **APIs Externas:**
-    * Riot Data Dragon (League of Legends)
-    * valorant-api.com (Valorant)
-* **IDE:** IntelliJ IDEA (implícito pelo contexto)
-
----
-
-## 2. Estrutura do Projeto (Maven)
-
-O projeto segue a estrutura padrão do Maven:
-
-* **`pom.xml`**: Define as dependências do projeto (Spring Boot starters, Thymeleaf, Spring Security, Jackson, etc.) e configurações de build.
-* **`src/main/java`**: Contém o código fonte Java.
-    * **`br.edu.cefsa.cinema`**: Pacote raiz.
-        * `config`: Classes de configuração (ex: `SecurityConfig.java`).
-        * `controller`: Controladores Spring MVC.
-        * `Enum`: Enumerações (ex: `Role.java`).
-        * `model`: Entidades JPA e DTOs.
-        * `repository`: Interfaces Spring Data JPA.
-        * `security`: Classes de segurança (ex: `CustomUserDetailsService.java`, `CustomUserDetails.java`).
-        * `service`: Classes de serviço (lógica de negócios).
-        * `CinemaApplication.java`: Classe principal Spring Boot.
-* **`src/main/resources`**: Arquivos de configuração e recursos.
-    * `application.properties`: Configurações da aplicação.
-    * `static/`: Arquivos estáticos.
-        * `css/`: Folhas de estilo customizadas.
-        * `img/`: Imagens locais.
-    * `templates/`: Templates Thymeleaf.
-        * `fragments/`: Fragmentos reutilizáveis (ex: `_layout.html`).
-        * Outras pastas específicas por funcionalidade (`lol/`, `valorant/`, `administracao/`, `usuarios/`, `genericos/`).
-        * `index.html` (Página Home).
+* **Projeto:** "GamesCon"
+* **Descrição:** Criação de um site de avaliação de jogos (inicialmente Valorant e LoL) utilizando Java com Spring Boot, HTML, CSS, entre outras tecnologias.
+* **Funcionalidades Principais:**
+    * Login de usuários (com papéis de usuário normal e ADMIN).
+    * Usuários normais podem ter perfil e fazer avaliações de campeões/agentes.
+    * Usuários ADMIN têm acesso a um painel de administração e também podem fazer avaliações.
+    * As avaliações (jogo, agente/campeão, nota, usuário) são salvas em um banco de dados.
+    * Dashboards exibem a média de avaliações por agente/campeão e a quantidade de avaliações (um para cada jogo).
+    * As informações dos jogos são consumidas de APIs públicas.
+* **Objetivo da Documentação:**
+    * Incluir informações sobre as tecnologias utilizadas e como são empregadas.
+    * Conter dados de modelagem, como diagramas de classe (ou suas descrições textuais) e outros aspectos da modelagem de software.
 
 ---
 
-## 3. Componentes do Backend
+## 2. Arquitetura e Tecnologias Utilizadas
 
-### 3.1. Modelos (Entidades JPA e DTOs)
-
-#### `Usuario.java`
-* **Propósito:** Entidade JPA para usuários.
-* **Mapeamento:** Tabela `tb_usuario`.
-* **Campos Chave:** `idPadrao` (UUID, PK), `nome`, `email`, `apelido` (username), `senha` (hash), `roles` (Set<`Role`>).
-* **Anotações JPA Comuns:** `@Entity`, `@Table`, `@Id`, `@Column`, etc.
-
-#### `Role.java` (Enum)
-* **Propósito:** Define papéis de usuário (ex: `ADMIN`, `LOGADO`).
-* **Localização:** `br.edu.cefsa.cinema.Enum.Role`.
-
-#### `AvaliacaoPersonagem.java`
-* **Propósito:** Entidade JPA para avaliações de personagens.
-* **Mapeamento:** Tabela `tb_avaliacao_personagem`.
-* **Campos Chave:** `id` (UUID, PK), `personagemIdApi` (String), `nomePersonagem`, `jogo` (String), `classeRole`, `avaliacao` (int), `usuario` (@ManyToOne `Usuario`), `dataAvaliacao` (LocalDateTime).
-* **Constraint:** Única para (`personagem_id_api`, `jogo`, `usuario_id`).
-* **Callbacks:** `@PrePersist`, `@PreUpdate`.
-
-#### Modelos para League of Legends API (Data Dragon)
-* **`ChampionDataResponse.java`**: Wrapper para lista de campeões.
-* **`SingleLolChampionResponse.java`**: Wrapper para dados de um campeão.
-* **`LolChampion.java`**: Dados de um campeão (id, nome, título, lore, imagem, stats, spells).
-* **`ChampionImage.java`**: Dados de imagem do campeão.
-* **`ChampionStats.java`**: Estatísticas do campeão.
-* **`LolSpell.java`**: Habilidades do campeão.
-* **`LolSpellImage.java`**: Imagem da habilidade.
-* **Anotações Jackson:** `@JsonIgnoreProperties(ignoreUnknown = true)`, `@JsonProperty`.
-
-#### Modelos para Valorant API (valorant-api.com / Riot API)
-* **Modelos para `valorant-api.com` (usado para detalhes/lista):**
-    * `ValorantApiResponse.java`: Wrapper para lista de agentes.
-    * `SingleValorantAgentResponse.java`: Wrapper para um agente.
-    * `ValorantAgent.java`: Dados de um agente (uuid, nome, descrição, fullPortrait, role, abilities, voiceLine).
-    * `AgentRole.java`: Função do agente.
-    * `AgentAbility.java`: Habilidades do agente.
-* **Modelos para Riot API Conteúdo (alternativa para lista):**
-    * `RiotValorantContent.java`: Wrapper para conteúdo da Riot.
-    * `RiotValorantCharacter.java`: Personagem da API da Riot (id, name, localizedNames).
-* **Anotações Jackson:** `@JsonIgnoreProperties(ignoreUnknown = true)`, `@JsonProperty`.
-
-### 3.2. Repositórios (Spring Data JPA)
-
-#### `UsuarioRepository.java`
-* Estende `JpaRepository<Usuario, UUID>`.
-* Método customizado: `Optional<Usuario> findByApelido(String apelido)`.
-
-#### `AvaliacaoPersonagemRepository.java`
-* Estende `JpaRepository<AvaliacaoPersonagem, UUID>`.
-* Métodos customizados:
-    * `Optional<AvaliacaoPersonagem> findByPersonagemIdApiAndJogoAndUsuario(...)`
-    * `@Query("SELECT AVG(a.avaliacao) ...") Optional<Double> findAverageRatingByPersonagem(...)`
-
-### 3.3. Serviços (Lógica de Negócios)
-
-#### `CustomUserDetailsService.java`
-* Implementa `UserDetailsService`.
-* `loadUserByUsername(String apelido)`: Busca `Usuario` e encapsula em `CustomUserDetails`.
-
-#### `LolApiService.java`
-* Usa `WebClient` para Riot Data Dragon.
-* `getChampions()`: Lista de campeões.
-* `getChampionById(String championId)`: Detalhes de um campeão.
-* `getGameVersion()`: Versão do Data Dragon.
-
-#### `ValorantApiService.java`
-* Usa `WebClient` para `valorant-api.com` ou API da Riot.
-* Configurado com `maxInMemorySize` aumentado para WebClient (se usando endpoint de conteúdo da Riot).
-* `getAgents()`: Lista de agentes.
-* `getAgentByUuid(String uuid)`: Detalhes de um agente (da `valorant-api.com`).
-
-#### `AvaliacaoPersonagemService.java`
-* Lógica para avaliações.
-* `salvarOuAtualizarAvaliacao(...)`: Salva ou atualiza a nota de um personagem por um usuário.
-* `getAvaliacaoDoUsuario(...)`: Busca a nota de um usuário.
-* `getMediaAvaliacoes(...)`: Calcula a média de notas.
-* `getUsuarioLogado()`: Helper para obter o usuário autenticado.
-
-### 3.4. Controladores (Spring MVC)
-
-#### `CinemaController.java`
-* Rotas base: `/`, `/usuarios/cadastro`, `/usuarios/login`.
-
-#### `UsuarioController.java` (`/usuarios`)
-* `POST /cadastrar`: Cadastro de usuários.
-* `GET /perfil`, `GET /editar/{id}`, `POST /editar/{id}`: Perfil e edição do próprio usuário.
-* `POST /excluir/{id}`: Exclusão da própria conta.
-
-#### `AdminUsuarioController.java` (`/administracao`)
-* Protegido com `@PreAuthorize("hasRole('ADMIN')")`.
-* `GET /lista-usuarios`: Lista todos os usuários.
-* `GET /editar/{id}`, `POST /editar/{id}`: Edição de usuários pelo admin (com lógica para proteger contas admin específicas).
-
-#### `LolController.java` (`/lol`)
-* `GET /campeoes`: Lista de campeões.
-* `GET /campeoes/{championId}`: Detalhes de um campeão (inclui dados de avaliação).
-
-#### `ValorantController.java` (`/valorant`)
-* `GET /agentes`: Lista de agentes.
-* `GET /agentes/{uuid}`: Detalhes de um agente (inclui dados de avaliação).
-
-#### `AvaliacaoController.java`
-* `POST /avaliar/personagem`: Processa submissão de avaliações.
-
-### 3.5. Segurança (`SecurityConfig.java`)
-* Configuração do `SecurityFilterChain`:
-    * Autorização de rotas (`/administracao/**` para ADMIN, rotas públicas, outras autenticadas).
-    * Form Login customizado.
-    * Logout.
-    * CSRF e CORS.
-* `PasswordEncoder` (BCrypt).
-* `UserDetailsService` (`CustomUserDetailsService`) e `UserDetails` (`CustomUserDetails`).
-
-### 3.6. Configuração (`application.properties`)
-* **H2 Database:** Configurações de URL, driver, username, password, console.
-* **JPA/Hibernate:** Plataforma, `ddl-auto`.
-* **API Keys:** `riot.api.key=SUA_CHAVE_AQUI`.
-* **Server Port:** `server.port=8080`.
+* **Arquitetura Geral:**
+    * O projeto segue uma arquitetura **MVC (Model-View-Controller)**, comum em aplicações Spring Boot Web.
+        * **Model:** Representado pelas entidades JPA (`Usuario`, `AvaliacaoPersonagem`, entidades de cache), DTOs para APIs externas e o Enum `Role`.
+        * **View:** Implementada utilizando **Thymeleaf** para renderização de HTML no lado do servidor.
+        * **Controller:** Representado pelas classes `@Controller` que lidam com as requisições HTTP.
+    * A arquitetura também pode ser descrita como uma **aplicação em camadas**: Apresentação (Controllers, Views), Serviço, Acesso a Dados (Repositories) e Configuração.
+* **Componentes Principais:**
+    * **Backend:** Desenvolvido em **Java 17** com o framework **Spring Boot 3.4.5**.
+    * **Frontend:** Utiliza **Thymeleaf** para a renderização de páginas HTML dinâmicas, com **HTML5** e **CSS**.
+    * **Banco de Dados:** **H2 Database** configurado em modo arquivo, para persistência de dados de usuários, avaliações e cache.
+* **Tecnologias e Frameworks Chave:**
+    * **Java:** Versão 17.
+    * **Spring Boot:** Versão 3.4.5 (incluindo Starters para Web, Data JPA, Security, Thymeleaf, WebFlux).
+    * **Spring MVC:** Para a construção da aplicação web.
+    * **Spring Data JPA:** Com Hibernate como provedor, para persistência de dados.
+    * **Spring Security:** Para gerenciamento de autenticação e autorização.
+    * **Spring WebFlux:** Utilizado para o `WebClient` (chamadas reativas a APIs).
+    * **Thymeleaf:** Motor de templates, com `thymeleaf-extras-springsecurity6`.
+    * **H2 Database:** Banco de dados relacional.
+    * **Jackson Databind:** Para manipulação de JSON.
+    * **Maven:** Gerenciamento de dependências e build.
+    * **Lombok:** (Presente no `pom.xml`).
+    * **Spring Boot DevTools:** Para desenvolvimento.
+* **APIs Externas Consumidas:**
+    * **Riot Data Dragon API (League of Legends):** Para dados de campeões do LoL (`https://ddragon.leagueoflegends.com`).
+    * **valorant-api.com:** Para dados de agentes do Valorant (`https://valorant-api.com/v1`).
 
 ---
 
-## 4. Componentes do Frontend
+## 3. Modelagem de Software
 
-### 4.1. Thymeleaf Templates
-* Motor de templates para renderização dinâmica.
-* **Fragmentos (`resources/templates/fragments/_layout.html`):**
-    * `header(pageTitle, pageSpecificCssPath)`: Cabeçalho HTML (metatags, título, CSS global e específico).
-    * `navbar`: Barra de navegação responsiva (Bootstrap) com links condicionais (`sec:authorize`).
-    * `footer`: Rodapé padrão (inclui Bootstrap JS).
-* **Páginas Chave:** `index.html`, `login.html`, `cadastro.html`, `perfil.html`, `editar-perfil.html`, `lista-usuarios.html`, `editar-usuario.html`, `lista-campeoes.html`, `detalhe-campeao.html`, `lista-agentes.html`, `detalhe-agente.html`, `sobre.html`.
-* **Atributos Thymeleaf:** Uso extensivo de `th:text`, `th:href`, `th:src`, `th:object`, `th:field`, `th:each`, `th:if`, `th:unless`, `th:replace`.
-* **Dialeto Spring Security:** `sec:authorize`, `#authentication.principal`.
+Esta seção detalha as estruturas de dados do projeto, incluindo entidades de banco de dados, objetos de transferência de dados para APIs externas e enumerações.
 
-### 4.2. CSS
-* **Bootstrap 5:** Framework base para layout e componentes.
-* **CSS Customizados (em `static/css/`):**
-    * `lol-auth-theme.css`: Tema LoL para login/cadastro.
-    * `lol-lista.css` & `lol-detalhe.css`: Tema LoL para páginas de campeões.
-    * `valorant-detalhe.css` & `valorant-lista.css`: Tema Valorant para páginas de agentes.
-    * `admin-gamer-theme.css`: Tema "gamer escuro" para admin.
-    * `home-theme.css`: Tema para a Home.
-* **Abordagens:** Temas escuros, cores de destaque temáticas, fundos com imagens, responsividade.
+### 3.1 Entidades JPA Principais
 
-### 4.3. JavaScript
-* **Bootstrap Bundle (`bootstrap.bundle.min.js`):** Essencial para dropdowns, modais.
-* **Scripts Inline:** Para exibição de modais de erro baseados em parâmetros de URL/atributos do modelo.
+**a. Classe `Usuario`**
+* **Tipo:** Entidade JPA
+* **Tabela Mapeada:** `tb_usuario`
+* **Propósito:** Representa um usuário do sistema, contendo informações de identificação, credenciais para login, dados pessoais e os papéis (permissões) que o usuário possui. Implementa `java.io.Serializable`.
+* **Atributos Chave:**
+    * `idPadrao` (UUID, `@Id`, `@GeneratedValue`, PK)
+    * `nome` (String, Não Nulo, `length=50`)
+    * `email` (String, Não Nulo)
+    * `apelido` (String, Não Nulo, Único)
+    * `senha` (String, Não Nulo)
+    * `roles` (Set<Role>, `@ElementCollection`, `FetchType.EAGER`, mapeado para tabela `tb_usuario_role` com `EnumType.STRING`)
+* **Relacionamentos:**
+    * Com `Role` (Enum): Muitos-para-Muitos implícito via `tb_usuario_role`.
+    * Com `AvaliacaoPersonagem`: Um `Usuario` para Muitas `AvaliacaoPersonagem` (lado "Um").
+
+**b. Classe `AvaliacaoPersonagem`**
+* **Tipo:** Entidade JPA
+* **Tabela Mapeada:** `tb_avaliacao_personagem` (com `UniqueConstraint` para `personagem_id_api`, `jogo`, `usuario_id`)
+* **Propósito:** Representa a avaliação (nota) de um personagem de jogo feita por um usuário.
+* **Atributos Chave:**
+    * `id` (UUID, `@Id`, `@GeneratedValue`, PK)
+    * `personagemIdApi` (String, Não Nulo)
+    * `nomePersonagem` (String, Não Nulo)
+    * `jogo` (String, Não Nulo)
+    * `classeRole` (String)
+    * `avaliacao` (int, Não Nulo)
+    * `usuario` (`Usuario`, `@ManyToOne`, `FetchType.LAZY`, `JoinColumn(name="usuario_id")`, Não Nulo)
+    * `dataAvaliacao` (LocalDateTime, Não Nulo, gerenciado por `@PrePersist`, `@PreUpdate`)
+* **Relacionamentos:**
+    * Com `Usuario`: Muitos-para-Um (lado "Muitos").
+
+### 3.2 Enum
+
+**a. Enum `Role`**
+* **Tipo:** Enum
+* **Pacote:** `br.edu.cefsa.cinema.Enum`
+* **Propósito:** Define os papéis (níveis de permissão) que um usuário pode ter (`ADMIN`, `LOGADO`).
+* **Uso:** Associado à entidade `Usuario` e utilizado nas configurações do Spring Security.
+
+### 3.3 Entidades de Cache JPA
+
+**a. Classe `CampeaoLoLCacheado`**
+* **Tipo:** Entidade de Cache JPA
+* **Tabela Mapeada:** `tb_campeao_lol_cache`
+* **Propósito:** Armazena dados cacheados de Campeões do LoL da API Data Dragon.
+* **Atributos Chave:**
+    * `id` (String, `@Id`, ID da API, PK)
+    * `nome`, `titulo`, `biografia` (`@Lob`), `imagemIconeFull`, `hp`, `armor`, `attackDamage`
+    * `spellsJson` (String, `@Lob`, armazena lista de `LolSpell` como JSON)
+    * `jogo` (String, final "LOL")
+    * `dataCache` (LocalDateTime, gerenciado por `@PrePersist`, `@PreUpdate`)
+
+**b. Classe `AgenteValorantCacheado`**
+* **Tipo:** Entidade de Cache JPA
+* **Tabela Mapeada:** `tb_agente_valorant_cache`
+* **Propósito:** Armazena dados cacheados de Agentes do Valorant da API valorant-api.com.
+* **Atributos Chave:**
+    * `uuid` (String, `@Id`, UUID da API, PK)
+    * `nome`, `descricao` (`@Lob`), `fullPortraitUrl`, `roleDisplayName`
+    * `abilitiesJson` (String, `@Lob`, armazena lista de `AgentAbility` como JSON)
+    * `voiceLinesJson` (String, `@Lob`)
+    * `jogo` (String, final "VALORANT")
+    * `dataCache` (LocalDateTime, gerenciado por `@PrePersist`, `@PreUpdate`)
+
+### 3.4 Data Transfer Objects (DTOs)
+
+* **Propósito Geral:** Classes POJO (como `LolChampion`, `ValorantAgent`, `ChampionImage`, `LolSpell`, `AgentAbility`, `AgentRole`, e DTOs de resposta como `ChampionDataResponse`, `SingleValorantAgentResponse`, `ValorantApiResponse`) usadas para mapear dados de/para as APIs externas utilizando anotações Jackson (`@JsonProperty`).
+* **Relacionamentos:** DTOs frequentemente contêm outros DTOs ou listas de DTOs, representando relações de composição (ex: `LolChampion` contém `ChampionImage` e `List<LolSpell>`). Os serviços (`LolApiService`, `ValorantApiService`) convertem DTOs para/de Entidades de Cache.
+
+### 3.5 Diagrama de Classes e Modelo Entidade-Relacionamento
+
+---
+![Diagrama de Classes do GamesCon](diagrama/DiagramaDeClasse.png "Diagrama de Classes e Entidades")
+---
 
 ---
 
-## 5. Banco de Dados
-* **H2 Database (em memória):**
-    * Console: `/h2-console` (se habilitado).
-    * Esquema: Gerado/atualizado por Hibernate (`ddl-auto`).
-* **Tabelas:** `tb_usuario` (e join table de roles), `tb_avaliacao_personagem`.
+## 4. Camada de Repositório (Interfaces Spring Data JPA)
+
+Interfaces responsáveis pela interação com o banco de dados, estendendo `JpaRepository` para fornecer métodos CRUD e consultas customizadas.
+
+* **`UsuarioRepository`:** Gerencia a entidade `Usuario`. Método customizado: `findByApelido(String apelido)`.
+* **`AvaliacaoPersonagemRepository`:** Gerencia `AvaliacaoPersonagem`. Métodos customizados para buscar avaliação específica, média de personagem e dados de popularidade para LoL e Valorant (via `@Query`).
+* **`AgenteValorantCacheadoRepository`:** Gerencia `AgenteValorantCacheado`. Métodos customizados para buscar por jogo, UUID e jogo, e deletar por jogo.
+* **`CampeaoLoLCacheadoRepository`:** Gerencia `CampeaoLoLCacheado`. Métodos customizados similares aos do cache de Valorant.
 
 ---
 
-## 6. APIs Externas Utilizadas
+## 5. Configuração de Segurança (Spring Security)
 
-* **Riot Data Dragon (League of Legends):**
-    * Base URL: `https://ddragon.leagueoflegends.com`
-    * Endpoints: `/cdn/{v}/data/pt_BR/champion.json`, `/cdn/{v}/data/pt_BR/champion/{id}.json`.
-* **valorant-api.com (Valorant):**
-    * Base URL: `https://valorant-api.com/v1`
-    * Endpoints: `/agents?isPlayableCharacter=true&language=pt-BR`, `/agents/{uuid}?language=pt-BR`.
-* **Riot Games API (Valorant - Conteúdo):**
-    * Base URL: `https://{region}.api.riotgames.com/val`
-    * Endpoint: `/content/v1/contents`
-    * Requer `X-Riot-Token`.
+Implementada usando Spring Security para autenticação, autorização e proteção.
+
+* **`SecurityConfig.java`:**
+    * Configura CORS, CSRF (com `CookieCsrfTokenRepository`).
+    * **Regras de Autorização:**
+        * `/administracao/**`: Requer `ROLE_ADMIN`.
+        * Rotas públicas: `/`, `/usuarios/cadastro`, `/usuarios/login`, `/lol/**`, `/valorant/**`, recursos estáticos.
+        * Outras: Requerem autenticação.
+    * **Formulário de Login:** Customizado (`/usuarios/login`), com URLs de sucesso e falha.
+    * **Logout:** Configurado (`/logout`).
+    * **PasswordEncoder:** `BCryptPasswordEncoder`.
+    * Ignora requisições para `/h2-console/**`.
+* **`CustomUserDetailsService.java`:** Implementa `UserDetailsService` para carregar `Usuario` (via `UsuarioRepository`) pelo apelido.
+* **`CustomUserDetails.java`:** Implementa `UserDetails`, encapsulando `Usuario` e fornecendo seus detalhes (username como apelido, senha, roles prefixadas com "ROLE_") para o Spring Security.
 
 ---
 
-## 7. Como Construir e Executar
-* **Requisitos:** JDK 17+, Maven.
-* **Build:** `mvn clean install` ou `mvn clean package`.
-* **Execução:**
-    * Via IDE: Rodar `CinemaApplication.java`.
-    * Linha de Comando: `java -jar target/cinema-0.0.1-SNAPSHOT.jar`.
-* **Acesso:** `http://localhost:8080`.
+## 6. Camada de Serviço (Services)
+
+Contém a lógica de negócios da aplicação.
+
+* **`UsuarioService.java`:**
+    * Responsável por operações de negócio de `Usuario`.
+    * Método principal: `@Transactional salvarUsuario(Usuario usuario)`.
+* **`AvaliacaoPersonagemService.java`:**
+    * Gerencia a lógica de avaliações: salvar/atualizar (com validações), obter avaliação do usuário, calcular média, obter usuário logado, e buscar dados para dashboards de popularidade.
+* **`LolApiService.java`:**
+    * Interage com a API Riot Data Dragon (LoL) usando `WebClient`.
+    * Implementa estratégia de cache "API primeiro, depois cache local (`CampeaoLoLCacheadoRepository`)".
+    * Converte DTOs da API para entidades de cache (serializando `spells` para JSON) e vice-versa.
+* **`ValorantApiService.java`:**
+    * Interage com a API valorant-api.com usando `WebClient`.
+    * Implementa estratégia de cache similar para agentes do Valorant (usando `AgenteValorantCacheadoRepository` e serializando `abilities` para JSON).
+
+---
+
+## 7. Camada de Controller (Controllers)
+
+Lida com as requisições HTTP, interage com serviços e prepara dados para as views Thymeleaf.
+
+* **`CinemaController.java` (`@RequestMapping("")`):** Rotas base (home, login, cadastro).
+* **`UsuarioController.java` (`@RequestMapping("/usuarios")`):** Cadastro, perfil, edição e exclusão de conta do usuário.
+* **`AdminUsuarioController.java` (`@RequestMapping("/administracao")`, `@PreAuthorize("hasRole('ADMIN')")`):** Gerenciamento de usuários por administradores.
+* **`AvaliacaoController.java`:** Processa submissão de avaliações.
+* **`LolController.java` (`@RequestMapping("/lol")`):** Exibe campeões do LoL, detalhes, e fornece dados para dashboard de popularidade (incluindo endpoint JSON `@ResponseBody`).
+* **`ValorantController.java` (`@RequestMapping("/valorant")`):** Exibe agentes do Valorant, detalhes, e fornece dados para dashboard de popularidade (incluindo endpoint JSON `@ResponseBody`).
+* **`GenericoController.java` (`@RequestMapping("/genericos")`):** Páginas genéricas (ex: "Sobre").
+
+---
+
+## 8. Arquivos de Configuração do Projeto
+
+* **`pom.xml` (Maven):**
+    * Define identificação do projeto, parent POM (`spring-boot-starter-parent:3.4.5`), Java 17.
+    * Gerencia dependências chave: Spring Boot Starters (Web, Data JPA, Security, Thymeleaf, WebFlux), H2, Jackson, Thymeleaf Security Extras, DevTools, Lombok.
+    * Configura `spring-boot-maven-plugin`.
+* **`application.properties`:**
+    * Define `spring.application.name=gamescon`, `server.port=8080`.
+    * **Configuração H2:** Banco de dados em arquivo (`jdbc:h2:file:./data/banco_cinema`), driver, credenciais (sa/vazia), console H2 habilitado em `/h2-console`.
+    * **Configuração JPA/Hibernate:** `spring.jpa.hibernate.ddl-auto=update`.
 
 ---
