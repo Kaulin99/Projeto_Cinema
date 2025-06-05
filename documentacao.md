@@ -358,3 +358,4 @@ Projeto de testes para verificar se os Requisitos Funcionais são atendidos corr
     * valorant-api.com (Valorant): `https://valorant-api.com/`
 * **Ferramentas de Modelagem:**
     * PlantUML: `https://plantuml.com/`
+    * Lucidhat: 'https://lucidhart.com'
