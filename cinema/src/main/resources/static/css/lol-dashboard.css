@@ -1,7 +1,4 @@
-/* Adicione ou ajuste estas regras no seu lol-lista.css ou crie um lol-dashboard.css */
-
-/* Estilos Gerais (já devem existir no lol-lista.css) */
-body.lol-list-theme { /* ou lol-dashboard-theme se criar um novo CSS/body class */
+body.lol-list-theme {
     background-image: url('https://universe.leagueoflegends.com/images/bg_gradient_1920x1080.jpg');
     background-color: #010a13;
     background-size: cover;
@@ -11,9 +8,6 @@ body.lol-list-theme { /* ou lol-dashboard-theme se criar um novo CSS/body class 
     font-family: 'Georgia', 'Times New Roman', Times, serif;
     padding-top: 70px;
 }
-
-/* Navbar (já deve estar estilizada) */
-/* .navbar.bg-dark { ... } */
 
 /* Cabeçalho da Página de Lista/Dashboard */
 .list-page-header-lol h1.display-4 {
@@ -28,7 +22,7 @@ body.lol-list-theme { /* ou lol-dashboard-theme se criar um novo CSS/body class 
 }
 
 /* Botão Voltar */
-.lol-list-theme .btn-outline-primary { /* Adapte se usar outra classe de botão */
+.lol-list-theme .btn-outline-primary {
     border-color: #c89b3c;
     color: #c89b3c;
     font-weight: bold;

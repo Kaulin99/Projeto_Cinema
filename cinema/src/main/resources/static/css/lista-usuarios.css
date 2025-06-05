@@ -2,22 +2,10 @@
 
 body.admin-gamer-theme {
     background-color: #121212; /* Fundo principal bem escuro */
-    /* Opcional: Adicionar uma textura sutil ou imagem de fundo abstrata escura */
-    /* background-image: url('/img/dark-abstract-pattern.png'); */
     color: #e0e0e0; /* Texto principal claro */
     font-family: 'Roboto', 'Open Sans', Arial, sans-serif; /* Fonte moderna sans-serif */
     padding-top: 70px; /* Para a navbar fixa */
 }
-
-/* Ajuste para a navbar (garantindo consistência com outros temas, se houver) */
-/* Se você quer uma navbar específica para o tema admin, adicione estilos aqui.
-   Caso contrário, os estilos de _layout.html ou de outros temas podem ser suficientes.
-   Este exemplo assume que a navbar de _layout.html (bg-dark) já é adequada.
-   Se precisar de uma cor de borda específica:
-.admin-gamer-theme .navbar.fixed-top {
-    border-bottom: 1px solid #00BFFF; /* Ciano como destaque */
-
-
 
 /* Container principal do conteúdo */
 .admin-gamer-theme .container {
@@ -73,19 +61,14 @@ body.admin-gamer-theme {
     border-color: #004085;
 }
 
-/* Estilos para Formulários (Página Editar Usuário) */
-.admin-gamer-theme .form_container { /* Já tem essa classe no seu HTML */
-    /* O estilo do .container já se aplica, mas podemos adicionar mais se necessário */
-}
-
-.admin-gamer-theme .form_label { /* Já tem essa classe no seu HTML */
+.admin-gamer-theme .form_label {
     color: #00BFFF; /* Labels com cor de destaque */
     font-weight: bold;
     margin-bottom: 0.3rem;
     display: block;
 }
 
-.admin-gamer-theme .form_input.form-control, /* Combinação de suas classes com Bootstrap */
+.admin-gamer-theme .form_input.form-control,
 .admin-gamer-theme .form-control {
     background-color: rgba(10, 10, 15, 0.7); /* Fundo escuro para inputs */
     border: 1px solid #007bff;
@@ -141,13 +124,11 @@ body.admin-gamer-theme {
 .admin-gamer-theme .table {
     color: #c0c0c0; /* Texto da tabela um pouco mais suave */
     border: 1px solid #007bff; /* Borda externa da tabela com o azul base */
-    /* Opcional: uma sombra sutil para destacar a tabela do fundo */
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.15);
     margin-top: 1.5rem; /* Um pouco mais de espaço acima da tabela */
 }
 
 .admin-gamer-theme .table thead {
-    /* Removido background-color para um visual mais limpo, o texto neon se destacará */
     color: #00BFFF; /* Azul Ciano Neon para o texto do cabeçalho */
     text-shadow: 0 0 8px rgba(0, 191, 255, 0.7), 0 0 12px rgba(0, 191, 255, 0.5); /* Efeito de brilho neon */
     text-transform: uppercase;
@@ -175,9 +156,6 @@ body.admin-gamer-theme {
 .admin-gamer-theme .table tbody tr:hover {
     background-color: rgba(0, 123, 255, 0.15); /* Fundo azulado sutil no hover */
     color: #fff; /* Texto mais claro no hover */
-    /* Opcional: adicionar um brilho à linha inteira no hover
-    box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.3);
-    */
 }
 
 /* Ajuste nos botões dentro da tabela, se necessário, para o tema neon */
@@ -198,8 +176,6 @@ body.admin-gamer-theme {
     box-shadow: 0 0 10px rgba(0, 191, 255, 0.7);
 }
 
-/* Certifique-se que as outras regras do tema (body, container, h1) estão como antes */
-/* Exemplo: */
 body.admin-gamer-theme {
     background-color: #121212;
     color: #e0e0e0;
@@ -224,5 +200,3 @@ body.admin-gamer-theme {
     border-bottom: 1px solid rgba(0, 191, 255, 0.3);
     padding-bottom: 0.5rem;
 }
-
-/* ... Mantenha as outras regras para formulários, modais, etc. ... */

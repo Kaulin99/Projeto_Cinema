@@ -10,7 +10,7 @@ body.valorant-theme {
     padding-top: 60px; /* Ajuste conforme a altura da sua navbar */
 }
 
-/* Ajuste para a navbar, se estiver usando a do _layout.html que é bg-dark */
+/* Ajuste para a navbar*/
 .navbar.bg-dark {
     background-color: rgba(10, 10, 20, 0.9) !important; /* Fundo da navbar um pouco transparente */
     backdrop-filter: blur(8px); /* Efeito de desfoque no fundo da navbar */
@@ -137,19 +137,6 @@ body.valorant-theme {
     line-height: 1.5;
 }
 
-/* ===== Seção de Falas ===== */
-.voice-lines-section .list-group-item {
-    background-color: rgba(25, 35, 50, 0.85);
-    border-color: rgba(79, 91, 103, 0.5);
-    color: #ece8e1;
-    padding: 10px 15px;
-}
-
-.voice-lines-section audio {
-    width: 100%;
-    margin-top: 8px;
-    height: 40px; /* Altura padrão para o player de áudio */
-}
 
 /* ===== Responsividade Adicional ===== */
 @media (max-width: 992px) { /* Tablets e telas menores */
@@ -287,11 +274,4 @@ body.valorant-theme {
 
 /* Ajuste na cor do link "Faça login para avaliar" para o tema Valorant */
 .valorant-theme a, .valorant-list-theme a, .lol-detail-theme a, .lol-list-theme a, .home-valorant-theme a, .admin-gamer-theme a {
-    /* Se você tiver uma cor de link padrão para o tema, defina aqui,
-       caso contrário, o estilo inline no HTML para o link de login pode ser mantido ou ajustado.
-       Exemplo:
-       color: #00BFFF; (para o admin gamer theme)
-       color: #ff4655; (para o valorant theme)
-    */
 }
-/* No seu HTML, o link já está com style="color: #ff4655;", o que é bom para o tema Valorant. */

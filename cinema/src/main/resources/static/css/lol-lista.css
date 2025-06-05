@@ -49,7 +49,6 @@ body.lol-list-theme {
 
 .champion-list-card .card-img-top {
     /* As imagens de loading do LoL são retangulares e já se ajustam bem */
-    /* Não precisamos de altura mínima fixa aqui, deixamos a imagem ditar */
     border-bottom: 1px solid #2c3e50;
     aspect-ratio: 308 / 560; /* Proporção aproximada das loading arts para consistência se necessário */
     object-fit: cover; /* Garante que a imagem cubra a área, pode cortar um pouco se a proporção não bater */
