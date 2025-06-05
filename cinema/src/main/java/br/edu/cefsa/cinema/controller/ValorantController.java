@@ -150,6 +150,6 @@ public class ValorantController {
      */
     @GetMapping("/dashboard-popularidade-valorant")
     public String dashboardPopularidadeValorant(Model model) {
-        return "valorant/dashboard-popularidade-valorant";
+        return "valorant/dashboard-popularidade";
     }
 }

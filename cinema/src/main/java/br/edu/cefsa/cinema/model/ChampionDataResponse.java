@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 /**
- * Esta classe representa o objeto de nível superior retornado pela API do Data Dragon,
- * que contém um mapa de todos os campeões.
+ * DTO para representar o objeto de nível superior retornado pela API do Data Dragon (LoL),
+ * especificamente do endpoint que lista todos os campeões.
+ * O campo principal "data" é um mapa onde a chave é o ID do campeão e o valor são os detalhes do campeão.
  */
 public class ChampionDataResponse {
 
+    /**
+     * Mapa de campeões. A chave é o ID textual do campeão (ex: "Aatrox"),
+     * e o valor é um objeto LolChampion contendo os detalhes.
+     * Mapeado do campo "data" no JSON.
+     */
     @JsonProperty("data")
     private Map<String, LolChampion> data;
 
