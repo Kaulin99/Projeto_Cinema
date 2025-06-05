@@ -13,50 +13,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.Collections; // Import para Collections.emptyList()
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/lol")
+@RequestMapping("/lol") // Define que todas as rotas neste controller começarão com /lol
 public class LolController {
 
-    private final LolApiService lolApiService;
-    private final AvaliacaoPersonagemService avaliacaoService;
+    private final LolApiService lolApiService; // Serviço para buscar dados da API do LoL
+    private final AvaliacaoPersonagemService avaliacaoService; // Serviço para lidar com avaliações
 
+    // Injeção de dependências via construtor
     @Autowired
     public LolController(LolApiService lolApiService, AvaliacaoPersonagemService avaliacaoService) {
         this.lolApiService = lolApiService;
         this.avaliacaoService = avaliacaoService;
     }
 
+    /**
+     * Mapeia a rota GET /lol/campeoes.
+     * Busca a lista de todos os campeões do LoL e os adiciona ao modelo para exibição.
+     * Trata exceções caso a API externa falhe.
+     * @param model Objeto para passar dados para a view.
+     * @return O nome do template Thymeleaf para renderizar a lista de campeões.
+     */
     @GetMapping("/campeoes")
     public String listarCampeoes(Model model) {
         try {
-            var campeoes = lolApiService.getChampions().block(); // Chamada à API
-            model.addAttribute("listaDeCampeoes", campeoes);
+            // Busca campeões através do serviço da API
+            var campeoes = lolApiService.getChampions().block();
+            model.addAttribute("listaDeCampeoes", campeoes); // Adiciona a lista ao modelo
+
+            // Verifica se a lista retornada é nula ou vazia (mesmo sem exceção)
             if (campeoes == null || campeoes.isEmpty()) {
-                // Se a API retornar uma lista vazia ou nula (sem lançar exceção)
                 model.addAttribute("avisoListaVazia", "Nenhum campeão encontrado na API no momento.");
             }
         } catch (Exception e) {
-            // Loga o erro no console do servidor para depuração
+            // Em caso de erro na chamada da API
             System.err.println("Falha ao carregar campeões da API LoL: " + e.getMessage());
-            // Adiciona uma mensagem de erro amigável para o usuário
             model.addAttribute("erroApi", "Oops! Não conseguimos carregar a lista de campeões no momento. Tente novamente mais tarde.");
-            // Garante que listaDeCampeoes exista no modelo, mesmo que vazia, para evitar erros no Thymeleaf
-            model.addAttribute("listaDeCampeoes", Collections.emptyList());
+            model.addAttribute("listaDeCampeoes", Collections.emptyList()); // Garante que a lista exista no modelo, mesmo vazia
         }
-        return "lol/lista-campeoes";
+        return "lol/lista-campeoes"; // Retorna o nome do template HTML
     }
 
+    /**
+     * Mapeia a rota GET /lol/campeoes/{championId} para exibir detalhes de um campeão.
+     * Busca dados detalhados do campeão, incluindo avaliações.
+     * @param championId O ID do campeão vindo da URL.
+     * @param model Objeto para passar dados para a view.
+     * @return O nome do template Thymeleaf para renderizar os detalhes do campeão.
+     */
     @GetMapping("/campeoes/{championId}")
     public String detalheCampeao(@PathVariable String championId, Model model) {
         LolChampion campeao = null;
         boolean erroNaBusca = false;
+
         try {
+            // Busca o campeão específico pelo ID através do serviço da API
             campeao = lolApiService.getChampionById(championId).block();
         } catch (Exception e) {
             System.err.println("Falha ao carregar detalhes do campeão " + championId + ": " + e.getMessage());
@@ -64,74 +81,74 @@ public class LolController {
             erroNaBusca = true;
         }
 
-        if (campeao == null && !erroNaBusca) { // Se campeao é null mas não houve exceção na API (ex: ID não existe)
+        // Verifica se o campeão foi encontrado ou se houve erro na busca
+        if (campeao == null && !erroNaBusca) {
             model.addAttribute("erroCampeaoNaoEncontrado", true);
             model.addAttribute("erroMensagemGeral", "Campeão com ID '" + championId + "' não encontrado.");
         } else if (campeao == null && erroNaBusca) {
-            // A mensagem erroApiCampeao já foi setada
-            model.addAttribute("campeaoNaoEncontrado", true); // Para o th:unless funcionar na página
+            model.addAttribute("campeaoNaoEncontrado", true);
         }
 
-        model.addAttribute("campeao", campeao); // Pode ser null aqui se a busca falhou
-        model.addAttribute("gameVersion", lolApiService.getGameVersion());
+        model.addAttribute("campeao", campeao); // Adiciona o campeão (pode ser null) ao modelo
+        model.addAttribute("gameVersion", lolApiService.getGameVersion()); // Adiciona a versão do jogo para URLs de imagens
 
+        // Busca e adiciona informações de avaliação ao modelo
         Usuario usuarioLogado = avaliacaoService.getUsuarioLogado();
         boolean isLogado = (usuarioLogado != null);
-        model.addAttribute("usuarioLogado", isLogado);
+        model.addAttribute("usuarioLogado", isLogado); // Informa à view se o usuário está logado
 
-        if (campeao != null) { // Só tenta buscar avaliações se o campeão foi carregado
+        if (campeao != null) { // Só processa avaliações se o campeão foi carregado
             if (isLogado) {
                 Optional<Integer> notaOpt = avaliacaoService.getAvaliacaoDoUsuario(campeao.getId(), "LOL", usuarioLogado);
-                model.addAttribute("avaliacaoUsuario", notaOpt.orElse(null));
+                model.addAttribute("avaliacaoUsuario", notaOpt.orElse(null)); // Avaliação do usuário logado (ou null)
             } else {
                 model.addAttribute("avaliacaoUsuario", null);
             }
 
+            // Busca a média de avaliações para este campeão
             avaliacaoService.getMediaAvaliacoes(campeao.getId(), "LOL")
                     .ifPresentOrElse(
                             media -> model.addAttribute("mediaAvaliacoes", String.format("%.1f", media)),
                             () -> model.addAttribute("mediaAvaliacoes", "N/A")
                     );
-        } else { // Se o campeão não foi carregado, define valores padrão para avaliações
+        } else {
+            // Se o campeão não foi carregado, define valores padrão para avaliações
             model.addAttribute("avaliacaoUsuario", null);
             model.addAttribute("mediaAvaliacoes", "N/A");
         }
-
-        // Debug (pode ser mantido ou removido em produção)
-        System.out.println("--- DEBUG LOL CONTROLLER (DETALHE CAMPEAO) ---");
-        System.out.println("Campeão ID Requisitado: " + championId);
-        System.out.println("Objeto Campeão (no model): " + (model.getAttribute("campeao") != null ? ((LolChampion)model.getAttribute("campeao")).getNome() : "NULO"));
-        System.out.println("Usuário está logado? " + isLogado);
-        System.out.println("Avaliação do Usuário (no model): " + model.getAttribute("avaliacaoUsuario"));
-        System.out.println("Média de Avaliações (no model): " + model.getAttribute("mediaAvaliacoes"));
-        System.out.println("----------------------------------------------");
-
-        return "lol/detalhe-campeao";
+        return "lol/detalhe-campeao"; // Retorna o nome do template HTML
     }
 
+    /**
+     * Mapeia a rota GET /lol/api/popularidade para fornecer dados JSON.
+     * Usado pelo gráfico de popularidade para buscar dados de forma assíncrona.
+     * @return Uma lista de mapas contendo nome, quantidade de avaliações e média para cada campeão.
+     */
     @GetMapping("/api/popularidade")
-    @ResponseBody
+    @ResponseBody // Indica que o retorno do método deve ser diretamente no corpo da resposta (JSON)
     public List<Map<String, Object>> popularidadeLOLJson() {
-        // Você precisará implementar getPopularidadeLOL() no seu AvaliacaoPersonagemService
-        // e ajustar a query no AvaliacaoPersonagemRepository para 'LOL'.
-        // A query atual no seu repositório está como 'VALORANT' para buscarPopularidadeLOL.
-        List<Object[]> resultados = avaliacaoService.getPopularidadeLOL();
+        List<Object[]> resultados = avaliacaoService.getPopularidadeLOL(); // Busca dados agregados do serviço
 
         List<Map<String, Object>> resposta = new ArrayList<>();
+        // Transforma o resultado da query (List<Object[]>) em uma lista de mapas para fácil consumo pelo JSON
         for (Object[] linha : resultados) {
             Map<String, Object> mapa = new HashMap<>();
             mapa.put("nome", linha[0]);
             mapa.put("quantidade", linha[1]);
-            mapa.put("media", linha[2]); // Certifique-se que o AVG(a.avaliacao) não seja null
+            mapa.put("media", linha[2] != null ? linha[2] : 0.0); // Trata média nula como 0.0
             resposta.add(mapa);
         }
         return resposta;
     }
 
+    /**
+     * Mapeia a rota GET /lol/dashboard-popularidade.
+     * Simplesmente retorna a página HTML que conterá o gráfico (que buscará os dados via JS).
+     * @param model Objeto para passar dados para a view (não usado neste método específico).
+     * @return O nome do template Thymeleaf para o dashboard de popularidade.
+     */
     @GetMapping("/dashboard-popularidade")
     public String dashboardPopularidade(Model model) {
-        // Nenhuma alteração necessária aqui para a lógica de erro,
-        // pois os dados são carregados via JavaScript/API separadamente.
         return "lol/dashboard-popularidade";
     }
 }
