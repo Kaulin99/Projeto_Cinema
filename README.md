@@ -136,7 +136,7 @@ Esta seção detalha as estruturas de dados do projeto, incluindo entidades de b
 ### 3.5 Diagrama de Classes e Modelo Entidade-Relacionamento
 
 ---
-![Diagrama de Classes do GamesCon](./diagrama_gamescon.png "Diagrama de Classes e Entidades")
+![Diagrama de Classes do GamesCon](diagrama/DiagramaDeClasse.png "Diagrama de Classes e Entidades")
 ---
 
 ---
