@@ -12,7 +12,7 @@
 
 ## 1. Visão Geral do Projeto
 
-* **Projeto:** "GamesCon" (nome da aplicação conforme `application.properties`)
+* **Projeto:** "GamesCon"
 * **Descrição:** Criação de um site de avaliação de jogos (inicialmente Valorant e LoL) utilizando Java com Spring Boot, HTML, CSS, entre outras tecnologias.
 * **Funcionalidades Principais:**
     * Login de usuários (com papéis de usuário normal e ADMIN).
@@ -22,7 +22,6 @@
     * Dashboards exibem a média de avaliações por agente/campeão e a quantidade de avaliações (um para cada jogo).
     * As informações dos jogos são consumidas de APIs públicas.
 * **Objetivo da Documentação:**
-    * Produzir uma documentação técnica para ser apresentada aos professores.
     * Incluir informações sobre as tecnologias utilizadas e como são empregadas.
     * Conter dados de modelagem, como diagramas de classe (ou suas descrições textuais) e outros aspectos da modelagem de software.
 
