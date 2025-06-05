@@ -74,20 +74,3 @@ public class ValorantAgent {
     public void setAbilities(List<AgentAbility> abilities) { this.abilities = abilities; }
 }
 
-/**
- * Modelo para a função (role) de um agente do Valorant.
- * Geralmente definida no mesmo arquivo de ValorantAgent.java ou como uma classe separada.
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-class AgentRole { // Se em arquivo separado, declarar como 'public class AgentRole'
-    /**
-     * Nome de exibição da função (ex: "Duelista", "Controlador").
-     * Mapeado do campo "displayName" no JSON.
-     */
-    @JsonProperty("displayName")
-    private String displayName;
-
-    public String getDisplayName() { return displayName; }
-    public void setDisplayName(String displayName) { this.displayName = displayName; }
-}
-
